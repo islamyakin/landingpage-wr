@@ -6,6 +6,7 @@ import { siteConfig } from "./siteConfig.js";
 import "./landing.css";
 import "./redesign.css";
 import "./gateway.css";
+import StitchPage from "./StitchPage.jsx";
 
 const trafficLevels = [
   { label: "Normal", visitors: 6 },
@@ -859,7 +860,7 @@ function Trust() {
   );
 }
 
-export default function LandingPage() {
+export function GatewayLandingPage() {
   const menuButtonRef = useRef(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const navLinks = (
@@ -1085,5 +1086,17 @@ export default function LandingPage() {
         </div>
       </footer>
     </div>
+  );
+}
+
+export default function LandingPage() {
+  return (
+    <StitchPage
+      queueDemo={<QueueDemo />}
+      integrations={<Integrations />}
+      faqs={faqs}
+      scenarios={scenarios}
+      features={features}
+    />
   );
 }

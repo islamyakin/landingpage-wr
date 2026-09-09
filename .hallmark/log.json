@@ -1,5 +1,23 @@
 [
   {
+    "date": "2026-09-10",
+    "macrostructure": "Split Hero / Architectural Product Story",
+    "theme": "studied-DNA — Stitch architectural simulation",
+    "source": "projects/14784201623519037146/screens/b031a7bba17748c2ab73371de2cde111",
+    "nav": "Floating product navigation",
+    "footer": "Source four-column footer",
+    "enrichment": "Stitch gate artwork, native interactive architecture simulator",
+    "brief": "Apply the exact user-selected Stitch screen to standalone Antosan landing page",
+    "scores": {
+      "P": 4,
+      "H": 5,
+      "E": 4,
+      "S": 5,
+      "R": 4,
+      "V": 4
+    }
+  },
+  {
     "date": "2026-09-09",
     "macrostructure": "Map / Diagram",
     "previous_macrostructure": "Split Studio",

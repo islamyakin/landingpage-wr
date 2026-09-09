@@ -1,15 +1,10 @@
 {
-  "date": "2026-09-09",
+  "date": "2026-09-10",
   "framework": "React 19 + Vite 6, standalone static landing page",
-  "sources": [
-    "package.json",
-    "src/tokens.css",
-    "src/landing.css",
-    "src/gateway.css"
-  ],
-  "font": "Manrope Variable, self-hosted Latin WOFF2",
-  "palette": "User-supplied Gateway A identity; navy, orange, cool blue surfaces",
-  "motion": "CSS interaction feedback, reduced-motion support",
+  "sources": ["package.json", "tokens.css", "src/stitch.css"],
+  "font": "Plus Jakarta Sans Variable, self-hosted Latin WOFF2",
+  "palette": "User-selected Stitch screen: teal, turquoise, mint, slate",
+  "motion": "Interaction feedback only; reduced motion supported",
   "spacing": "Existing 4px token scale",
   "preserved": [
     "routes",

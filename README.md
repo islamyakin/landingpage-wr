@@ -1,18 +1,45 @@
-# Antosan — Gateway A
+# Antosan — Stitch Architecture
 
 Landing page berbahasa Indonesia untuk [Antosan](https://antosan.com/). Proyek React + Vite mandiri,
 berisi simulasi antrean, alur kerja, fitur, pilihan integrasi, dan FAQ.
-Mendukung layar mobile, mode terang/gelap, dan navigasi keyboard.
+Mendukung layar mobile dan navigasi keyboard, dengan tema terang mengikuti desain Stitch.
 
 Repo ini hanya berisi website pemasaran. Backend Go, Redis, dashboard admin,
 autentikasi, dan API antrean berada di aplikasi Antosan yang terpisah.
 Simulasi antrean berjalan lokal di browser dan tidak mengakses API.
 
-## Versi alternatif
+## Sumber desain
 
-Branch `design/gateway-a` memuat arah visual navy–oranye berdasarkan brand board
-Gateway A. Versi ini berangkat dari desain terracotta pada commit `edebef5`.
+Branch `design/stitch-architecture` menerapkan screen Stitch yang dipilih:
+**Antosan Landing Page (Simulasi Interaktif Arsitektur)**.
+
+- Project: `14784201623519037146`
+- Screen: `b031a7bba17748c2ab73371de2cde111`
+- Diambil melalui MCP Stitch pada 10 September 2026.
+- Palet teal–turquoise, panel kaca, font Plus Jakarta Sans, dan aset gerbang mengikuti screen tersebut.
+
+Versi navy–oranye tetap tersedia pada branch `design/gateway-a`.
 Domain publik tetap `antosan.com`.
+
+## Simulator arsitektur
+
+Enam skenario: trafik normal, flash sale, pre-queue, lonjakan latensi origin,
+trafik bot, dan akses VIP. Pengunjung dan kapasitas dapat diubah dengan slider.
+Pre-queue menahan semua pengunjung sampai tombol pembukaan ditekan. Validasi
+kode `VIP-ANTOSAN` memprioritaskan satu slot simulasi di dalam kapasitas origin.
+
+Model menggunakan **satu gelombang pengunjung**, bukan request per detik.
+Pengunjung selalu terbagi menjadi yang ditahan verifikasi, yang mengantre,
+dan yang masuk origin. Skenario bot secara eksplisit mengasumsikan 42% gagal
+verifikasi; tidak menganggap lonjakan trafik biasa sebagai bot.
+
+Log, kode VIP, serta angka pada contoh ruang tunggu adalah ilustrasi lokal.
+Tidak ada pengiriman trafik, penerbitan token akses, atau API backend.
+Simulasi antrean sederhana versi sebelumnya tersedia lewat panel yang dapat dibuka.
+
+Harga, statistik uptime, dan volume pelanggan pada mockup Stitch tidak dianggap
+sebagai data produk terverifikasi. Halaman menampilkan kebutuhan implementasi
+serta penjelasan bahwa harga belum dipublikasikan.
 
 ## Menjalankan lokal
 
@@ -35,7 +62,7 @@ Hasil build berupa file statis di `dist/`.
 1. Import repository `islamyakin/landingpage-wr` ke Vercel.
 2. Gunakan root directory repo (`.`).
 3. Tambahkan URL dashboard pada environment variable `VITE_DASHBOARD_URL`, jika sudah tersedia.
-4. Deploy.
+4. Pilih branch `design/stitch-architecture` untuk preview versi ini, lalu deploy.
 
 Konfigurasi sudah tersedia di `vercel.json`:
 
@@ -90,31 +117,19 @@ menautkan pengunjung langsung ke spesifikasi protokol connector.
 
 ## Struktur
 
-- `src/LandingPage.jsx`: konten dan interaksi landing page.
-- `src/landing.css`: tata letak dan responsivitas.
-- `src/redesign.css`: lapisan desain bersama dari versi sebelumnya.
-- `src/gateway.css`: komposisi dan gaya versi Gateway A.
-- `src/BrandVisuals.jsx`: ilustrasi hero dan contoh tampilan ruang tunggu.
-- `src/tokens.css`: warna, tipografi, dan spacing brand.
-- `src/siteConfig.js`: tautan dashboard dan dokumentasi.
-- `src/Mark.jsx` dan `src/Icon.jsx`: komponen visual bersama.
+- `src/LandingPage.jsx`: entry komponen halaman; mempertahankan model antrean dan komponen bersama.
+- `src/StitchPage.jsx`: komposisi landing page dari screen Stitch.
+- `src/ArchitectureSimulator.jsx`: kontrol skenario, slider, pre-queue, kode VIP, dan log lokal.
+- `src/architectureModel.js`: perhitungan pembagian pengunjung.
+- `src/stitch.css`: tata letak responsif dan interaksi versi Stitch.
+- `tokens.css`: token palet dan tipografi versi Stitch dalam OKLCH.
+- `src/siteConfig.js`: tautan publik dashboard dan dokumentasi.
+- `public/images/stitch/`: aset yang diambil dari screen pilihan pengguna.
 - `src/main.jsx`: entry point website; hanya memuat landing page.
-- `index.html`: metadata Antosan dan canonical URL untuk antosan.com.
-- `public/`: favicon, robots.txt, dan sitemap website.
+- `index.html`: metadata dan canonical URL untuk antosan.com.
 
-## Aset brand
-
-Palet diinterpretasikan dari brand board Gateway A: navy `#091D33`, oranye
-`#FF7A0A`, dan latar biru muda `#F3F7FB`. Teks tombol memakai navy agar
-kontrasnya tetap cukup di atas oranye. Mode gelap mengikuti pengaturan perangkat.
-Font Manrope disajikan dari build sendiri.
-
-`public/brand-gateway.svg` dan `src/Mark.jsx` merupakan adaptasi vektor konsep
-Gateway A dari referensi gambar, bukan file master logo asli. Warna logo dalam
-komponen menyesuaikan latar terang maupun gelap.
-
-Diagram hero dibuat langsung dalam SVG di `src/BrandVisuals.jsx`; memperlihatkan
-pengunjung → gerbang Antosan → situs. Simulasi antrean tetap berjalan lokal.
-Contoh ruang tunggu dan materi ilustratif diberi label pada halaman.
+Stylesheet dan aset versi terdahulu tetap tersedia di repository.
+Font Plus Jakarta Sans dan aset gambar disajikan dari build sendiri;
+website tidak memuat CDN Tailwind, Google Fonts, atau JavaScript dari Stitch.
 
 Jalankan `npm test` untuk memeriksa model simulasi dan kontrak konten.
