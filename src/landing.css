@@ -1,5 +1,5 @@
 /* Hallmark · pre-emit critique: P4 H5 E4 S5 R5 V4
- * macrostructure: Narrative Workflow · genre: modern-minimal · theme: existing waitingroom brand
+ * macrostructure: Narrative Workflow · genre: modern-minimal · theme: Antosan
  * nav: N1b SaaS three-section (previous: N3 Side-rail) · footer: Ft5 Statement
  * audience: event and website operators · use: product introduction · tone: clear, practical Indonesian
  * enrichment: interactive queue diagram · motion: control feedback only · shared palette: tokens.css
@@ -867,6 +867,10 @@ body {
 .lp-footer-bottom > p {
   font-size: 0.75rem;
   color: var(--lp-secondary-ink);
+}
+.lp-footer-bottom > p a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 .lp-footer-bottom > a {
   display: flex;

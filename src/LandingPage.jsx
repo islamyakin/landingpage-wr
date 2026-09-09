@@ -13,10 +13,11 @@ const capacity = 8;
 
 function Brand() {
   return (
-    <a className="lp-brand" href="/" aria-label="waitingroom, beranda">
+    <a className="lp-brand" href="/" aria-label={`${siteConfig.name}, beranda`}>
       <Mark />
       <span>
-        waitingroom<span className="lp-period">.</span>
+        {siteConfig.name.toLowerCase()}
+        <span className="lp-period">.</span>
       </span>
     </a>
   );
@@ -76,7 +77,7 @@ function QueueDemo() {
           <div className="lp-gate-mark">
             <Mark />
           </div>
-          <span>waitingroom</span>
+          <span>{siteConfig.name}</span>
         </div>
         <div className="lp-flow-connector">
           <Icon name="arrow" size={20} />
@@ -141,8 +142,8 @@ const integrations = {
   proxy: {
     title: "Satu gerbang sebelum situs Anda.",
     description:
-      "Arahkan domain ke gateway waitingroom. Setiap kunjungan melewati aturan antrean sebelum diteruskan ke server situs Anda.",
-    path: ["Pengunjung", "Gateway waitingroom", "Situs Anda"],
+      "Arahkan domain ke gateway Antosan. Setiap kunjungan melewati aturan antrean sebelum diteruskan ke server situs Anda.",
+    path: ["Pengunjung", "Gateway Antosan", "Situs Anda"],
     details: [
       "Atur seluruh domain atau path tertentu",
       "Trafik diteruskan melalui reverse proxy",
@@ -278,7 +279,7 @@ function Integrations() {
           {mode === "connector" && (
             <div className="lp-connector-branch">
               <span aria-hidden="true">↕</span>
-              <span>Halaman antrean waitingroom</span>
+              <span>Halaman antrean Antosan</span>
             </div>
           )}
           <p>
@@ -393,9 +394,9 @@ export default function LandingPage() {
               <span>Tetap terkendali.</span>
             </h1>
             <p className="lp-hero-description">
-              Sambut lonjakan trafik dengan antrean yang tertata. Jaga kapasitas
-              situs, beri setiap pengunjung giliran, dan kendalikan arus masuk
-              dari satu tempat.
+              Antosan menata lonjakan trafik dengan antrean virtual. Jaga
+              kapasitas situs, beri setiap pengunjung giliran, dan kendalikan
+              arus masuk dari satu tempat.
             </p>
             <div className="lp-hero-actions">
               <a className="lp-button" href={siteConfig.dashboardUrl}>
@@ -594,7 +595,9 @@ export default function LandingPage() {
           </div>
           <div className="lp-footer-bottom">
             <Brand />
-            <p>Ruang untuk semua. Giliran untuk setiap orang.</p>
+            <p>
+              <a href={siteConfig.url}>antosan.com</a> · Ruang untuk semua.
+            </p>
             <a href="#atas">
               Kembali ke atas<span aria-hidden="true">↑</span>
             </a>

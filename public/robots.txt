@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://antosan.com/sitemap.xml

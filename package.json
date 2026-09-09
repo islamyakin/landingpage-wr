@@ -1,5 +1,5 @@
 {
-  "name": "landingpage-wr",
+  "name": "antosan-landing",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -16,5 +16,5 @@
     "@vitejs/plugin-react": "^4.3.0",
     "vite": "^6.0.0"
   },
-  "description": "Standalone waitingroom landing page, built with React and Vite."
+  "description": "Antosan landing page for antosan.com, built with React and Vite."
 }

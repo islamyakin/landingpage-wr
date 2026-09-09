@@ -1,11 +1,11 @@
-# waitingroom landing page
+# Antosan — antosan.com
 
-Landing page berbahasa Indonesia untuk waitingroom. Proyek React + Vite mandiri,
+Landing page berbahasa Indonesia untuk [Antosan](https://antosan.com/). Proyek React + Vite mandiri,
 berisi simulasi antrean, alur kerja, fitur, pilihan integrasi, dan FAQ.
 Mendukung layar mobile, mode terang/gelap, dan navigasi keyboard.
 
 Repo ini hanya berisi website pemasaran. Backend Go, Redis, dashboard admin,
-autentikasi, dan API antrean berada di aplikasi waitingroom yang terpisah.
+autentikasi, dan API antrean berada di aplikasi Antosan yang terpisah.
 Simulasi antrean berjalan lokal di browser dan tidak mengakses API.
 
 ## Menjalankan lokal
@@ -40,6 +40,11 @@ Konfigurasi sudah tersedia di `vercel.json`:
 | Build command | `npm run build` |
 | Output directory | `dist` |
 
+Domain publik untuk website ini adalah `https://antosan.com/`. Canonical URL,
+metadata Open Graph, data terstruktur `WebSite`, `robots.txt`, dan sitemap
+menggunakan domain tersebut. Penyambungan domain dan pengaturan DNS dilakukan
+di layanan hosting dan registrar domain; file website ini tidak mengubah DNS.
+
 Lihat [panduan Vite di Vercel](https://vercel.com/docs/frameworks/frontend/vite)
 dan [konfigurasi proyek Vercel](https://vercel.com/docs/project-configuration).
 
@@ -58,13 +63,13 @@ jalankan build/deploy ulang setelah mengubahnya.
 
 ## Integrasi
 
-Pilihan integrasi berikut menjelaskan aplikasi waitingroom yang dipasarkan.
+Pilihan integrasi berikut menjelaskan aplikasi Antosan yang dipasarkan.
 Konfigurasi room dilakukan di dashboard aplikasi tersebut.
 
 ### Reverse proxy
 
 Daftarkan domain atau path yang dilindungi di dashboard, tentukan kapasitas dan
-laju masuk, lalu arahkan domain ke gateway waitingroom. Pengunjung melewati
+laju masuk, lalu arahkan domain ke gateway Antosan. Pengunjung melewati
 aturan antrean di gateway sebelum diteruskan ke server situs Anda.
 
 ### Edge connector
@@ -72,9 +77,9 @@ aturan antrean di gateway sebelum diteruskan ke server situs Anda.
 Pasang connector pada edge situs, seperti Cloudflare Workers atau AWS CloudFront.
 DNS tetap dikelola di sisi Anda. Connector mengarahkan pengunjung ke halaman
 antrean saat diperlukan, lalu memverifikasi token akses ketika pengunjung kembali.
-Trafik situs tidak diteruskan melalui gateway waitingroom.
+Trafik situs tidak diteruskan melalui gateway Antosan.
 
-Isi `VITE_CONNECTOR_DOCS_URL` dengan URL dokumentasi aplikasi waitingroom untuk
+Isi `VITE_CONNECTOR_DOCS_URL` dengan URL dokumentasi aplikasi Antosan untuk
 menautkan pengunjung langsung ke spesifikasi protokol connector.
 
 ## Struktur
@@ -85,3 +90,5 @@ menautkan pengunjung langsung ke spesifikasi protokol connector.
 - `src/siteConfig.js`: tautan dashboard dan dokumentasi.
 - `src/Mark.jsx` dan `src/Icon.jsx`: komponen visual bersama.
 - `src/main.jsx`: entry point website; hanya memuat landing page.
+- `index.html`: metadata Antosan dan canonical URL untuk antosan.com.
+- `public/`: favicon, robots.txt, dan sitemap website.
