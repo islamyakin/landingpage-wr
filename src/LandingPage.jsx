@@ -11,6 +11,25 @@ const trafficLevels = [
 ];
 const capacity = 8;
 
+// Demo instruction copy shown while a queue remains (`queued > 0`). Exported so
+// tests can assert against the real string rather than duplicating the literal.
+export const demoReleaseInstruction = "Loloskan 4 pengunjung ke dalam situs.";
+// Prompt shown when the queue is empty (`queued === 0`).
+export const demoEmptyQueuePrompt = "Ubah trafik untuk mencoba lagi.";
+
+// Pure derived-value model for the QueueDemo, extracted so it can be unit /
+// property tested without rendering React.
+// FIXED model: the present population (visitors) stays constant and `released`
+// counts queued visitors admitted into the site. `queued` drains as `released`
+// grows, `active` stays pinned at `capacity` while a queue remains, and
+// `remaining` (bound to the arrivals column) now shows the waiting queue.
+export function computeDemoState({ visitors, released, capacity }) {
+  const queued = Math.max(0, visitors - capacity - released);
+  const active = Math.min(capacity, visitors - queued);
+  const remaining = queued;
+  return { visitors, released, capacity, remaining, active, queued };
+}
+
 function Brand() {
   return (
     <a className="lp-brand" href="/" aria-label={`${siteConfig.name}, beranda`}>
@@ -27,9 +46,11 @@ function QueueDemo() {
   const [level, setLevel] = useState(1);
   const [released, setReleased] = useState(0);
   const visitors = trafficLevels[level].visitors;
-  const remaining = visitors - released;
-  const active = Math.min(remaining, capacity);
-  const queued = Math.max(0, remaining - capacity);
+  const { remaining, active, queued } = computeDemoState({
+    visitors,
+    released,
+    capacity,
+  });
 
   function changeLevel(index) {
     setLevel(index);
@@ -116,11 +137,7 @@ function QueueDemo() {
         </p>
       </div>
       <div className="lp-demo-action">
-        <span>
-          {queued > 0
-            ? "Coba kosongkan 4 slot di situs."
-            : "Ubah trafik untuk mencoba lagi."}
-        </span>
+        <span>{queued > 0 ? demoReleaseInstruction : demoEmptyQueuePrompt}</span>
         <button
           type="button"
           onClick={() => setReleased((value) => value + Math.min(4, queued))}
@@ -293,7 +310,7 @@ function Integrations() {
   );
 }
 
-const faqs = [
+export const faqs = [
   [
     "Kapan pengunjung mulai mengantre?",
     "Saat jumlah pengunjung aktif atau laju masuk mencapai batas yang Anda tetapkan. Selama kapasitas tersedia, pengunjung bisa langsung masuk. Anda juga dapat menahan semua pengunjung sebelum event dibuka.",
@@ -312,7 +329,7 @@ const faqs = [
   ],
   [
     "Bagaimana cara mendapatkan akses?",
-    "Masuk ke dashboard menggunakan akun dari administrator Anda. Akun dikelola oleh administrator platform, dan admin workspace dapat menambahkan anggota tim untuk mengelola atau memantau room.",
+    "Akun dashboard disiapkan oleh administrator workspace Anda. Admin juga dapat menambahkan anggota tim untuk mengelola atau memantau room.",
   ],
 ];
 
@@ -525,8 +542,8 @@ export default function LandingPage() {
               <div>
                 <dt>Pantau situasi saat itu juga.</dt>
                 <dd>
-                  Lihat pengunjung aktif, panjang antrean, estimasi tunggu, dan
-                  riwayat trafik 24 jam dari dashboard.
+                  Lihat pengunjung aktif, panjang antrean, estimasi waktu
+                  tunggu, dan riwayat trafik 24 jam dari dashboard.
                 </dd>
               </div>
               <div>

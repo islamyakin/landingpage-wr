@@ -1,0 +1,229 @@
+{
+  "pbtResults": {
+    "2. Write bug condition exploration test": {
+      "status": "passed",
+      "failingExample": "Counterexample: [18, 0] (Ramai, released=0). fast-check shrank to visitors=18 with 0 release presses already violating the expected model, and the example tests surfaced these concrete failures on the UNFIXED code:\n\n- Ramai first release (+4): expected arrivals column to show only the waiting queue (remaining === queued === 6), but got remaining === 14. AssertionError: expected 14 to be 6. The present arrivals pool dropped 18→14 — four visitors vanished from the simulation instead of moving into the site.\n- Ramai drain: same failure, remaining stays 4 higher than queued at every step (14 vs 6, 10 vs 2 ...) — the arrivals column keeps carrying the 8 people who should already be inside the site.\n- Lonjakan drain (+4): expected remaining === queued === 18, got remaining === 26. AssertionError: expected 26 to be 18. Present pool drains 30→26→...→8 as visitors disappear.\n- PBT [18,0]: even at released=0 the arrivals pool (remaining=18) carries queue(10)+capacity(8) instead of just the queue; expected remaining=10, got 18.\n\nRoot cause confirmed: remaining = visitors - released = queued + capacity, so the arrivals visualization (i < remaining) shrinks on every \"Loloskan antrean\" press — present visitors vanish rather than being admitted into the site's open slots.",
+      "lastRunTimestamp": 1788937285543
+    }
+  },
+  "executionHistory": {
+    "1. Set up the test runner (Vitest)": [
+      {
+        "executionId": "c8a0cad5-0e0a-488d-96f5-1b3513549124",
+        "chatSessionId": "sess_34585277-772f-412a-8439-01956b263e8f",
+        "timestamp": 1788936707353
+      },
+      {
+        "executionId": "c8a0cad5-0e0a-488d-96f5-1b3513549124",
+        "chatSessionId": "sess_34585277-772f-412a-8439-01956b263e8f",
+        "timestamp": 1788936717629
+      },
+      {
+        "executionId": "c8a0cad5-0e0a-488d-96f5-1b3513549124",
+        "chatSessionId": "sess_34585277-772f-412a-8439-01956b263e8f",
+        "timestamp": 1788936962496
+      }
+    ],
+    "2. Write bug condition exploration test": [
+      {
+        "executionId": "c8a0cad5-0e0a-488d-96f5-1b3513549124",
+        "chatSessionId": "sess_34585277-772f-412a-8439-01956b263e8f",
+        "timestamp": 1788936707386
+      },
+      {
+        "executionId": "c8a0cad5-0e0a-488d-96f5-1b3513549124",
+        "chatSessionId": "sess_34585277-772f-412a-8439-01956b263e8f",
+        "timestamp": 1788936967181
+      },
+      {
+        "executionId": "c8a0cad5-0e0a-488d-96f5-1b3513549124",
+        "chatSessionId": "sess_34585277-772f-412a-8439-01956b263e8f",
+        "timestamp": 1788937312299
+      }
+    ],
+    "3. Write preservation property tests (BEFORE implementing the fix)": [
+      {
+        "executionId": "c8a0cad5-0e0a-488d-96f5-1b3513549124",
+        "chatSessionId": "sess_34585277-772f-412a-8439-01956b263e8f",
+        "timestamp": 1788936707410
+      },
+      {
+        "executionId": "c8a0cad5-0e0a-488d-96f5-1b3513549124",
+        "chatSessionId": "sess_34585277-772f-412a-8439-01956b263e8f",
+        "timestamp": 1788937318141
+      },
+      {
+        "executionId": "b3f6c244-12bb-47e4-a7a1-ff0d6541f206",
+        "chatSessionId": "sess_afdddf2c-1ad6-47ad-a69c-35fb4ebbcec1",
+        "timestamp": 1788955959302
+      }
+    ],
+    "4.1 Redefine the derived values and instruction text in `QueueDemo`": [
+      {
+        "executionId": "c8a0cad5-0e0a-488d-96f5-1b3513549124",
+        "chatSessionId": "sess_34585277-772f-412a-8439-01956b263e8f",
+        "timestamp": 1788936707452
+      },
+      {
+        "executionId": "b3f6c244-12bb-47e4-a7a1-ff0d6541f206",
+        "chatSessionId": "sess_afdddf2c-1ad6-47ad-a69c-35fb4ebbcec1",
+        "timestamp": 1788955963862
+      },
+      {
+        "executionId": "b3f6c244-12bb-47e4-a7a1-ff0d6541f206",
+        "chatSessionId": "sess_afdddf2c-1ad6-47ad-a69c-35fb4ebbcec1",
+        "timestamp": 1788956535910
+      }
+    ],
+    "4.2 Verify the bug condition exploration test now passes": [
+      {
+        "executionId": "c8a0cad5-0e0a-488d-96f5-1b3513549124",
+        "chatSessionId": "sess_34585277-772f-412a-8439-01956b263e8f",
+        "timestamp": 1788936707477
+      },
+      {
+        "executionId": "b3f6c244-12bb-47e4-a7a1-ff0d6541f206",
+        "chatSessionId": "sess_afdddf2c-1ad6-47ad-a69c-35fb4ebbcec1",
+        "timestamp": 1788956553293
+      },
+      {
+        "executionId": "b3f6c244-12bb-47e4-a7a1-ff0d6541f206",
+        "chatSessionId": "sess_afdddf2c-1ad6-47ad-a69c-35fb4ebbcec1",
+        "timestamp": 1788956567264
+      }
+    ],
+    "4.3 Verify the preservation tests still pass": [
+      {
+        "executionId": "c8a0cad5-0e0a-488d-96f5-1b3513549124",
+        "chatSessionId": "sess_34585277-772f-412a-8439-01956b263e8f",
+        "timestamp": 1788936707496
+      },
+      {
+        "executionId": "b3f6c244-12bb-47e4-a7a1-ff0d6541f206",
+        "chatSessionId": "sess_afdddf2c-1ad6-47ad-a69c-35fb4ebbcec1",
+        "timestamp": 1788956572339
+      },
+      {
+        "executionId": "b3f6c244-12bb-47e4-a7a1-ff0d6541f206",
+        "chatSessionId": "sess_afdddf2c-1ad6-47ad-a69c-35fb4ebbcec1",
+        "timestamp": 1788956584939
+      }
+    ],
+    "5.1 Rewrite the redundant FAQ answer in `src/LandingPage.jsx`": [
+      {
+        "executionId": "c8a0cad5-0e0a-488d-96f5-1b3513549124",
+        "chatSessionId": "sess_34585277-772f-412a-8439-01956b263e8f",
+        "timestamp": 1788936707519
+      },
+      {
+        "executionId": "b3f6c244-12bb-47e4-a7a1-ff0d6541f206",
+        "chatSessionId": "sess_afdddf2c-1ad6-47ad-a69c-35fb4ebbcec1",
+        "timestamp": 1788956596919
+      },
+      {
+        "executionId": "b3f6c244-12bb-47e4-a7a1-ff0d6541f206",
+        "chatSessionId": "sess_afdddf2c-1ad6-47ad-a69c-35fb4ebbcec1",
+        "timestamp": 1788956652490
+      }
+    ],
+    "5.2 Consistency pass across page copy in `src/LandingPage.jsx`": [
+      {
+        "executionId": "c8a0cad5-0e0a-488d-96f5-1b3513549124",
+        "chatSessionId": "sess_34585277-772f-412a-8439-01956b263e8f",
+        "timestamp": 1788936707541
+      },
+      {
+        "executionId": "b3f6c244-12bb-47e4-a7a1-ff0d6541f206",
+        "chatSessionId": "sess_afdddf2c-1ad6-47ad-a69c-35fb4ebbcec1",
+        "timestamp": 1788956657186
+      },
+      {
+        "executionId": "b3f6c244-12bb-47e4-a7a1-ff0d6541f206",
+        "chatSessionId": "sess_afdddf2c-1ad6-47ad-a69c-35fb4ebbcec1",
+        "timestamp": 1788956739688
+      }
+    ],
+    "5.3 Align meta / social copy in `index.html`": [
+      {
+        "executionId": "c8a0cad5-0e0a-488d-96f5-1b3513549124",
+        "chatSessionId": "sess_34585277-772f-412a-8439-01956b263e8f",
+        "timestamp": 1788936707570
+      },
+      {
+        "executionId": "b3f6c244-12bb-47e4-a7a1-ff0d6541f206",
+        "chatSessionId": "sess_afdddf2c-1ad6-47ad-a69c-35fb4ebbcec1",
+        "timestamp": 1788956746402
+      },
+      {
+        "executionId": "b3f6c244-12bb-47e4-a7a1-ff0d6541f206",
+        "chatSessionId": "sess_afdddf2c-1ad6-47ad-a69c-35fb4ebbcec1",
+        "timestamp": 1788956801309
+      }
+    ],
+    "5.4 Add static string assertions for the phrasing changes": [
+      {
+        "executionId": "c8a0cad5-0e0a-488d-96f5-1b3513549124",
+        "chatSessionId": "sess_34585277-772f-412a-8439-01956b263e8f",
+        "timestamp": 1788936707594
+      },
+      {
+        "executionId": "b3f6c244-12bb-47e4-a7a1-ff0d6541f206",
+        "chatSessionId": "sess_afdddf2c-1ad6-47ad-a69c-35fb4ebbcec1",
+        "timestamp": 1788956805851
+      },
+      {
+        "executionId": "b3f6c244-12bb-47e4-a7a1-ff0d6541f206",
+        "chatSessionId": "sess_afdddf2c-1ad6-47ad-a69c-35fb4ebbcec1",
+        "timestamp": 1788956912794
+      }
+    ],
+    "6. Add the remaining unit and property-based tests from the Testing Strategy": [
+      {
+        "executionId": "c8a0cad5-0e0a-488d-96f5-1b3513549124",
+        "chatSessionId": "sess_34585277-772f-412a-8439-01956b263e8f",
+        "timestamp": 1788936707616
+      },
+      {
+        "executionId": "b3f6c244-12bb-47e4-a7a1-ff0d6541f206",
+        "chatSessionId": "sess_afdddf2c-1ad6-47ad-a69c-35fb4ebbcec1",
+        "timestamp": 1788956919168
+      },
+      {
+        "executionId": "b3f6c244-12bb-47e4-a7a1-ff0d6541f206",
+        "chatSessionId": "sess_afdddf2c-1ad6-47ad-a69c-35fb4ebbcec1",
+        "timestamp": 1788957032594
+      }
+    ],
+    "7. Checkpoint - Ensure all tests and the build pass": [
+      {
+        "executionId": "c8a0cad5-0e0a-488d-96f5-1b3513549124",
+        "chatSessionId": "sess_34585277-772f-412a-8439-01956b263e8f",
+        "timestamp": 1788936707635
+      },
+      {
+        "executionId": "b3f6c244-12bb-47e4-a7a1-ff0d6541f206",
+        "chatSessionId": "sess_afdddf2c-1ad6-47ad-a69c-35fb4ebbcec1",
+        "timestamp": 1788957037901
+      },
+      {
+        "executionId": "b3f6c244-12bb-47e4-a7a1-ff0d6541f206",
+        "chatSessionId": "sess_afdddf2c-1ad6-47ad-a69c-35fb4ebbcec1",
+        "timestamp": 1788957159794
+      }
+    ],
+    "4. Fix the QueueDemo queue-simulation logic": [
+      {
+        "executionId": "b3f6c244-12bb-47e4-a7a1-ff0d6541f206",
+        "chatSessionId": "sess_afdddf2c-1ad6-47ad-a69c-35fb4ebbcec1",
+        "timestamp": 1788956584964
+      }
+    ],
+    "5. Apply the text / phrasing corrections": [
+      {
+        "executionId": "b3f6c244-12bb-47e4-a7a1-ff0d6541f206",
+        "chatSessionId": "sess_afdddf2c-1ad6-47ad-a69c-35fb4ebbcec1",
+        "timestamp": 1788956912860
+      }
+    ]
+  }
+}
