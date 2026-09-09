@@ -832,6 +832,241 @@ body {
   padding-right: var(--space-8);
 }
 
+/* --- Redesign sections: Scenarios, HowItWorks plays, Fairness,
+ * TrafficControl, BrandExperience, Trust, plus Hero/Simulation tweaks.
+ * All token-driven so light/dark follows tokens.css automatically. --- */
+.lp-scenarios,
+.lp-fairness,
+.lp-traffic-section,
+.lp-brand-experience,
+.lp-trust,
+.lp-simulation {
+  padding-block: var(--lp-section-gap);
+}
+
+/* Scenarios */
+.lp-scenario-list {
+  list-style: none;
+  display: grid;
+  gap: var(--space-5);
+  margin: var(--space-10) 0 0;
+  padding: 0;
+}
+.lp-scenario-item {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  background: var(--lp-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.lp-scenario-label {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+.lp-scenario-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.5rem;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  color: var(--accent-deep);
+  font-size: 0.625rem;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.lp-scenario-item > p {
+  color: var(--lp-secondary-ink);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  max-width: 52ch;
+}
+
+/* HowItWorks activation modes (plays) */
+.lp-plays {
+  display: grid;
+  gap: var(--space-6);
+  margin-top: var(--space-12);
+  padding-top: var(--space-10);
+  border-top: 1px solid var(--line);
+}
+.lp-play {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  background: var(--lp-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.lp-play-description {
+  color: var(--lp-secondary-ink);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+}
+.lp-play-when {
+  color: var(--lp-secondary-ink);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+.lp-play-when-label {
+  display: block;
+  color: var(--accent-deep);
+  font-size: 0.6875rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-2);
+}
+
+/* Fairness + TrafficControl point lists */
+.lp-fairness-list,
+.lp-traffic-list {
+  list-style: none;
+  display: grid;
+  gap: var(--space-6);
+  margin: var(--space-10) 0 0;
+  padding: 0;
+}
+.lp-fairness-item,
+.lp-traffic-item {
+  display: grid;
+  gap: var(--space-3);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--lp-diagram-line);
+}
+.lp-fairness-item > p,
+.lp-traffic-item > p {
+  color: var(--lp-secondary-ink);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  max-width: 54ch;
+}
+
+/* BrandExperience */
+.lp-brand-list {
+  list-style: none;
+  display: grid;
+  gap: var(--space-6);
+  margin: var(--space-10) 0 0;
+  padding: 0;
+}
+.lp-brand-item {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  background: var(--lp-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.lp-brand-item > p {
+  color: var(--lp-secondary-ink);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  max-width: 54ch;
+}
+
+/* Simulation section wrapper (QueueDemo lives here) */
+.lp-simulation {
+  display: grid;
+  gap: var(--space-8);
+}
+.lp-simulation > .lp-demo {
+  width: min(100%, 560px);
+}
+
+/* Trust — dark contrast band via --story-* tokens */
+.lp-trust-quote {
+  margin: var(--space-10) 0 0;
+  padding: var(--space-10);
+  background: var(--story-bg);
+  color: var(--story-ink);
+  border-radius: var(--radius);
+}
+.lp-trust-quote blockquote {
+  margin: 0;
+}
+.lp-trust-quote blockquote p {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  color: var(--story-ink);
+}
+.lp-trust-quote figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-8);
+}
+.lp-trust-author {
+  font-weight: 650;
+  color: var(--story-ink);
+}
+.lp-trust-role {
+  color: var(--story-muted);
+  font-size: 0.875rem;
+}
+.lp-trust-stats {
+  list-style: none;
+  display: grid;
+  gap: var(--space-6);
+  margin: var(--space-8) 0 0;
+  padding: 0;
+}
+.lp-trust-stat {
+  display: grid;
+  gap: var(--space-2);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--lp-diagram-line);
+}
+.lp-trust-stat-value {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 620;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.lp-trust-stat-label {
+  color: var(--lp-secondary-ink);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  max-width: 40ch;
+}
+
+/* Illustrative badge — small, visibly distinct marker */
+.lp-illustrative {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--lp-soft);
+  color: var(--lp-secondary-ink);
+  font-size: 0.625rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.lp-trust-quote .lp-illustrative {
+  border-color: var(--story-line);
+  background: var(--clear);
+  color: var(--story-muted);
+}
+
+/* Hero — secondary "Coba simulasi" link */
+.lp-hero-sim-link {
+  color: var(--info) !important;
+  font-weight: 550;
+}
+.lp-hero-sim-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
 .lp-footer {
   background: var(--lp-soft);
   color: var(--ink);
@@ -935,6 +1170,14 @@ body {
   .lp-footer-bottom {
     align-items: center;
   }
+  .lp-scenario-list,
+  .lp-brand-list,
+  .lp-trust-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .lp-plays {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 @media (min-width: 60rem) {
   .landing-page h1 {
@@ -1003,6 +1246,15 @@ body {
     flex-direction: row;
     align-items: center;
     padding-block: var(--space-16);
+  }
+  .lp-fairness-list,
+  .lp-traffic-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-10);
+  }
+  .lp-trust-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-10);
   }
 }
 @media (min-width: 75rem) {

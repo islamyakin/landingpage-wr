@@ -1,13 +1,15 @@
 import React from "react";
 
-// Mark is the four-dot product mark used in the brand lockup.
+// Compact vector adaptation of the supplied doorway-and-queue brand mark.
 export default function Mark() {
   return (
-    <div className="mark" aria-hidden="true">
-      <i></i>
-      <i></i>
-      <i></i>
-      <i></i>
-    </div>
+    <img
+      className="mark"
+      src="/brand-mark.svg"
+      width="40"
+      height="48"
+      alt=""
+      aria-hidden="true"
+    />
   );
 }

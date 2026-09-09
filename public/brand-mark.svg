@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 122">
+  <defs>
+    <linearGradient id="arch" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#F7931E"/>
+      <stop offset=".32" stop-color="#ffac39"/>
+      <stop offset="1" stop-color="#D3542F"/>
+    </linearGradient>
+    <linearGradient id="person" x1="0" y1="0" x2=".5" y2="1">
+      <stop stop-color="#F7931E"/>
+      <stop offset="1" stop-color="#D3542F"/>
+    </linearGradient>
+  </defs>
+  <path d="M12 67V40C12 17 30 5 51 5C74 5 92 20 92 43V97L76 87V24L55 27C41 28 34 36 34 49V56L15 70Q12 72 12 67Z" fill="url(#arch)"/>
+  <path d="M38 116L92 97L76 87Z" fill="#FFD8B1"/>
+  <g fill="url(#person)">
+    <circle cx="55" cy="61" r="6"/>
+    <path d="M47 77Q47 69 55 69Q64 69 64 78V94L51 102V88Q51 81 47 79Z"/>
+    <circle cx="38" cy="73" r="6.5"/>
+    <path d="M29 90Q29 81 38 81Q48 81 48 91V105L35 115V101Q35 94 29 92Z"/>
+    <circle cx="20" cy="86" r="7"/>
+    <rect x="8" y="97" width="24" height="25" rx="10"/>
+  </g>
+</svg>

@@ -1,8 +1,10 @@
 import React, { useRef, useState } from "react";
 import Mark from "./Mark.jsx";
 import Icon from "./Icon.jsx";
+import { HeroVisual, WaitingPreview } from "./BrandVisuals.jsx";
 import { siteConfig } from "./siteConfig.js";
 import "./landing.css";
+import "./redesign.css";
 
 const trafficLevels = [
   { label: "Normal", visitors: 6 },
@@ -16,6 +18,154 @@ const capacity = 8;
 export const demoReleaseInstruction = "Loloskan 4 pengunjung ke dalam situs.";
 // Prompt shown when the queue is empty (`queued === 0`).
 export const demoEmptyQueuePrompt = "Ubah trafik untuk mencoba lagi.";
+
+// Scenario_Section data (Req 2). Minimal empat skenario dasar berlabel
+// Penjualan tiket, Flash sale, Registrasi event, Peluncuran produk, plus satu
+// entri musiman (`seasonal: true`, Req 2.2). Tiap entri berbentuk
+// `{ id, label, outcome }` dengan `outcome` sebagai pernyataan hasil singkat
+// (Req 2.3). Diekspor sebagai ekspor internal agar dapat diuji tanpa render DOM.
+export const scenarios = [
+  {
+    id: "tiket",
+    label: "Penjualan tiket",
+    outcome:
+      "Tiket terjual tertib tanpa situs tumbang, pembeli dapat giliran yang adil.",
+  },
+  {
+    id: "flashsale",
+    label: "Flash sale",
+    outcome:
+      "Lonjakan menit pertama tertahan rapi, stok terbagi tanpa checkout gagal.",
+  },
+  {
+    id: "registrasi",
+    label: "Registrasi event",
+    outcome: "Pendaftaran tetap lancar meski ribuan orang mendaftar bersamaan.",
+  },
+  {
+    id: "peluncuran",
+    label: "Peluncuran produk",
+    outcome:
+      "Momen rilis tetap mulus, pengunjung masuk bertahap sesuai kapasitas.",
+  },
+  {
+    id: "musiman",
+    label: "Puncak musiman",
+    outcome:
+      "Trafik libur atau hari besar terkendali, situs siap sepanjang puncak.",
+    seasonal: true,
+  },
+];
+
+// How_It_Works activation modes (Req 3.2, 3.3): tepat tiga mode aktivasi.
+// Tiap entri berbentuk `{ id, title, description, when }`, dengan `when`
+// menyatakan kapan mode sebaiknya dipakai (Req 3.3). Diekspor sebagai ekspor
+// internal agar dapat diuji tanpa render DOM.
+export const plays = [
+  {
+    id: "jaring-pengaman",
+    title: "Jaring pengaman",
+    description:
+      "Antrean aktif otomatis hanya saat trafik melampaui ambang yang Anda tetapkan.",
+    when: "Dipakai saat Anda ingin situs berjalan normal dan antrean berjaga hanya ketika lonjakan datang.",
+  },
+  {
+    id: "terjadwal",
+    title: "Pelepasan terjadwal",
+    description:
+      "Tahan semua pengunjung dengan hitung mundur, lalu buka gerbang pada waktu yang ditentukan.",
+    when: "Dipakai untuk event dengan waktu mulai pasti, seperti penjualan tiket atau flash sale terjadwal.",
+  },
+  {
+    id: "eksklusif",
+    title: "Akses eksklusif",
+    description:
+      "Beri jalur masuk lewat undangan atau tautan unik untuk pengunjung terpilih.",
+    when: "Dipakai saat hanya sebagian pengunjung boleh masuk, seperti pre-sale anggota atau akses terbatas.",
+  },
+];
+
+// Fairness_Section data (Req 4): urutan FIFO (Req 4.1), pengacakan pre-queue
+// untuk event dengan mulai terjadwal (Req 4.2), dan keadilan terhadap bot
+// (Req 4.3) memakai frasa "mengurangi keuntungan tidak adil dari bot" tanpa
+// mengklaim pemblokiran bot secara mutlak (Req 4.4). Tiap entri berbentuk
+// `{ id, title, body }`. Diekspor sebagai ekspor internal agar dapat diuji
+// tanpa render DOM.
+export const fairnessPoints = [
+  {
+    id: "fifo",
+    title: "Urutan FIFO yang jelas",
+    body: "Antrean mendahulukan pengunjung yang datang lebih awal, sehingga giliran mengikuti waktu kedatangan.",
+  },
+  {
+    id: "acak",
+    title: "Pengacakan pre-queue",
+    body: "Untuk event dengan mulai terjadwal, urutan peserta pre-queue diacak saat gerbang dibuka agar tak ada yang diuntungkan hanya karena membuka halaman lebih dulu.",
+  },
+  {
+    id: "bot",
+    title: "Lebih adil terhadap bot",
+    body: "Mekanisme antrean mengurangi keuntungan tidak adil dari bot, sehingga pengunjung sungguhan mendapat peluang yang lebih setara.",
+  },
+];
+
+// Traffic_Control_Section data (Req 5): kapasitas & laju keluar per menit
+// (Req 5.1), penyesuaian laju saat event berjalan (Req 5.2), cakupan proteksi
+// seluruh situs/path/aksi dinamis (Req 5.3), dan mode tampil antrean selalu
+// tampil vs saat puncak (Req 5.4). Tiap entri berbentuk `{ id, title, body }`.
+// Diekspor sebagai ekspor internal agar dapat diuji tanpa render DOM.
+export const trafficControlPoints = [
+  {
+    id: "kapasitas",
+    title: "Kapasitas & laju keluar",
+    body: "Tetapkan kapasitas pengunjung situs dan laju keluar yang diukur dalam pengunjung per menit, sehingga arus masuk sesuai kemampuan situs.",
+  },
+  {
+    id: "penyesuaian",
+    title: "Sesuaikan saat event berjalan",
+    body: "Naikkan atau turunkan laju keluar secara langsung saat event berlangsung untuk mengikuti kondisi trafik yang berubah.",
+  },
+  {
+    id: "cakupan",
+    title: "Cakupan proteksi fleksibel",
+    body: "Lindungi seluruh situs, path tertentu seperti /checkout, atau aksi dinamis tertentu sesuai bagian yang perlu dijaga.",
+  },
+  {
+    id: "tampil",
+    title: "Mode tampil antrean",
+    body: "Pilih antrean yang selalu tampil untuk setiap pengunjung, atau antrean yang hanya muncul saat trafik mencapai puncak.",
+  },
+];
+
+// Features_Section data (Req 8): kontrol untuk tim. Mencakup penjadwalan
+// pembukaan event dengan hitung mundur pre-queue (Req 8.1), pemantauan
+// real-time atas pengunjung aktif, panjang antrean, dan estimasi waktu tunggu
+// (Req 8.2), penyesuaian halaman antrean lewat custom HTML (Req 8.3), serta
+// peran tim dan pemisahan room dalam workspace (Req 8.4). Tiap entri berbentuk
+// `{ term, detail }` untuk dirender sebagai `<dt>`/`<dd>`. Diekspor sebagai
+// ekspor internal agar dapat diuji tanpa render DOM.
+export const features = [
+  {
+    term: "Jadwalkan momen pembukaan.",
+    detail:
+      "Siapkan pre-queue dengan hitung mundur sebelum event dibuka. Pilih urutan FIFO atau pengacakan peserta saat gerbang dibuka.",
+  },
+  {
+    term: "Pantau situasi saat itu juga.",
+    detail:
+      "Lihat pengunjung aktif, panjang antrean, dan estimasi waktu tunggu secara real-time, lengkap dengan riwayat trafik dari dashboard.",
+  },
+  {
+    term: "Ruang tunggu, identitas Anda.",
+    detail:
+      "Gunakan custom HTML untuk menyesuaikan halaman antrean dengan brand atau tema event Anda.",
+  },
+  {
+    term: "Atur akses bersama tim.",
+    detail:
+      "Pisahkan room dalam workspace dan berikan peran admin atau akses pantau kepada anggota tim.",
+  },
+];
 
 // Pure derived-value model for the QueueDemo, extracted so it can be unit /
 // property tested without rendering React.
@@ -34,9 +184,9 @@ function Brand() {
   return (
     <a className="lp-brand" href="/" aria-label={`${siteConfig.name}, beranda`}>
       <Mark />
-      <span>
-        {siteConfig.name.toLowerCase()}
-        <span className="lp-period">.</span>
+      <span className="lp-wordmark">
+        <span>{siteConfig.name}</span>
+        <small>VIRTUAL WAITING ROOM</small>
       </span>
     </a>
   );
@@ -58,7 +208,7 @@ function QueueDemo() {
   }
 
   return (
-    <figure className="lp-demo" id="simulasi" aria-labelledby="demo-title">
+    <figure className="lp-demo" aria-labelledby="demo-title">
       <figcaption className="lp-demo-heading">
         <span id="demo-title">Sedikit antrean. Banyak ketenangan.</span>
         <span className="lp-demo-label">Simulasi</span>
@@ -137,7 +287,9 @@ function QueueDemo() {
         </p>
       </div>
       <div className="lp-demo-action">
-        <span>{queued > 0 ? demoReleaseInstruction : demoEmptyQueuePrompt}</span>
+        <span>
+          {queued > 0 ? demoReleaseInstruction : demoEmptyQueuePrompt}
+        </span>
         <button
           type="button"
           onClick={() => setReleased((value) => value + Math.min(4, queued))}
@@ -173,12 +325,44 @@ const integrations = {
       "Pasang connector di edge Anda. Pengunjung diarahkan ke antrean saat diperlukan, lalu kembali dengan token akses yang diverifikasi di edge.",
     path: ["Pengunjung", "Edge + connector", "Situs Anda"],
     details: [
-      "DNS tetap dikelola di sisi Anda",
-      "Cloudflare Workers dan AWS CloudFront",
-      "Trafik situs tidak melewati gateway kami",
+      "Jangkauan luas: sisi klien, sisi server, edge, dan seluler",
+      "Terpasang di edge seperti Cloudflare Workers dan AWS CloudFront",
+      "DNS tetap dikelola di sisi Anda, trafik situs tidak melewati gateway kami",
     ],
   },
 };
+
+// Trust_Section data (Req 10). Kutipan bergaya testimoni beserta atribusi
+// (Req 10.1) dan pernyataan keandalan/skala (Req 10.2). Karena angka dan
+// atribusi bukan data pelanggan nyata, keduanya ditandai `illustrative: true`
+// (Req 10.3) sehingga UI dapat menampilkan penanda "Ilustrasi" dan tidak tampil
+// sebagai klaim pelanggan nyata. Seluruh salinan berbahasa Indonesia (Req 10.4).
+// Diekspor sebagai ekspor internal agar dapat diuji tanpa render DOM.
+export const trustQuote = {
+  quote:
+    "Saat penjualan tiket dibuka, situs kami tetap tenang dan pelanggan mendapat giliran yang adil tanpa checkout gagal.",
+  author: "Rani Prakoso",
+  role: "Kepala Digital, contoh peritel (ilustrasi)",
+  illustrative: true,
+};
+
+export const trustStats = [
+  {
+    value: "Jutaan",
+    label: "pengunjung diantrekan pada satu event puncak (angka ilustrasi)",
+    illustrative: true,
+  },
+  {
+    value: "99,9%",
+    label: "target ketersediaan layanan antrean (angka ilustrasi)",
+    illustrative: true,
+  },
+  {
+    value: "< 1 detik",
+    label: "estimasi perpindahan dari antrean ke situs (angka ilustrasi)",
+    illustrative: true,
+  },
+];
 
 function Integrations() {
   const [mode, setMode] = useState("proxy");
@@ -310,6 +494,19 @@ function Integrations() {
   );
 }
 
+// Navigation anchors (Req 12.1, 12.2). Daftar tautan navigasi utama hasil
+// redesign sebagai satu sumber data agar nav desktop dan nav seluler memakai
+// tautan yang sama. Tiap entri berbentuk `{ href, label }`. Diekspor sebagai
+// ekspor internal agar dapat diperiksa oleh tes tanpa render DOM.
+export const navLinkItems = [
+  { href: "#cara-kerja", label: "Cara kerja" },
+  { href: "#keadilan", label: "Keadilan" },
+  { href: "#kontrol-trafik", label: "Kontrol trafik" },
+  { href: "#fitur", label: "Fitur" },
+  { href: "#integrasi", label: "Integrasi" },
+  { href: "#pertanyaan", label: "FAQ" },
+];
+
 export const faqs = [
   [
     "Kapan pengunjung mulai mengantre?",
@@ -333,15 +530,336 @@ export const faqs = [
   ],
 ];
 
+// Scenario_Section (Req 2). Me-render section `#skenario` dengan heading `h2`
+// (`aria-labelledby`) lalu me-map `scenarios` menjadi daftar (`ul`) skenario
+// (Req 2.1). Tiap item menampilkan label sebagai `h3` (tanpa melompati level
+// heading) plus kalimat hasil singkat dari `outcome` (Req 2.3). Entri musiman
+// (`seasonal: true`, Req 2.2) ditandai dengan badge "Musiman" yang terlihat.
+// Seluruh salinan berbahasa Indonesia (Req 2.4).
+function Scenarios() {
+  return (
+    <section
+      className="lp-scenarios lp-container"
+      id="skenario"
+      aria-labelledby="scenarios-title"
+    >
+      <div className="lp-section-intro">
+        <h2 id="scenarios-title">Momen yang paling ramai dinanti.</h2>
+        <p>
+          Dari penjualan tiket sampai puncak musiman, Antosan menjaga situs
+          tetap dapat diakses saat semua orang datang bersamaan.
+        </p>
+      </div>
+      <ul className="lp-scenario-list">
+        {scenarios.map((scenario, index) => (
+          <li key={scenario.id} className="lp-scenario-item">
+            <span className="lp-scenario-number" aria-hidden="true">
+              0{index + 1}
+            </span>
+            <div className="lp-scenario-label">
+              <h3>{scenario.label}</h3>
+              {scenario.seasonal && (
+                <span className="lp-scenario-tag">Musiman</span>
+              )}
+            </div>
+            <p>{scenario.outcome}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+// How_It_Works_Section (Req 3). Merefresh section `#cara-kerja` yang ada:
+// mempertahankan intro + `ol.lp-steps` (alur kedatangan → ruang tunggu → masuk,
+// Req 3.1) dan menambahkan blok tiga mode aktivasi dari `plays` sebagai
+// `<article>` statis tanpa state (Req 3.2). Tiap mode menyatakan judul,
+// deskripsi, dan "kapan digunakan" (Req 3.3). Sub-item memakai `h3` tanpa
+// melompati level heading (heading section adalah `h2#workflow-title`). Seluruh
+// salinan berbahasa Indonesia (Req 3.5); section dapat dijangkau lewat
+// Section_Anchor `#cara-kerja` (Req 3.4).
+function HowItWorks() {
+  return (
+    <section
+      className="lp-workflow lp-container"
+      id="cara-kerja"
+      aria-labelledby="workflow-title"
+    >
+      <div className="lp-section-intro">
+        <h2 id="workflow-title">
+          Beri ruang untuk antusiasme.
+          <br />
+          Atur jalannya dari awal.
+        </h2>
+        <p>
+          Dari sebelum gerbang dibuka sampai pengunjung masuk, Anda yang
+          menentukan ritmenya.
+        </p>
+      </div>
+      <ol className="lp-steps">
+        <li>
+          <span className="lp-step-number">01</span>
+          <h3>Tentukan batas aman.</h3>
+          <p>
+            Pilih domain atau halaman yang dilindungi. Atur kapasitas
+            pengunjung, laju masuk, dan durasi sesi sesuai kemampuan situs.
+          </p>
+          <span className="lp-step-detail">Kapasitas & laju masuk</span>
+        </li>
+        <li>
+          <span className="lp-step-number">02</span>
+          <h3>Sambut dalam antrean.</h3>
+          <p>
+            Saat trafik padat, pengunjung mendapat tempat di ruang tunggu dengan
+            posisi antrean dan estimasi waktu yang diperbarui otomatis.
+          </p>
+          <span className="lp-step-detail">Antrean & estimasi waktu</span>
+        </li>
+        <li>
+          <span className="lp-step-number">03</span>
+          <h3>Masuk saat gilirannya.</h3>
+          <p>
+            Ketika slot tersedia, pengunjung diteruskan ke situs. Pantau arus
+            masuk dan sesuaikan pengaturan selama event berjalan.
+          </p>
+          <span className="lp-step-detail">Admisi & pemantauan langsung</span>
+        </li>
+      </ol>
+      <div className="lp-plays">
+        {plays.map((play) => (
+          <article key={play.id} className="lp-play">
+            <h3>{play.title}</h3>
+            <p className="lp-play-description">{play.description}</p>
+            <p className="lp-play-when">
+              <span className="lp-play-when-label">Kapan digunakan</span>
+              {play.when}
+            </p>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// Fairness_Section (Req 4). Me-render section `#keadilan` dengan heading `h2`
+// (`aria-labelledby`) lalu me-map `fairnessPoints` menjadi daftar (`ul`) poin
+// keadilan: urutan FIFO (Req 4.1), pengacakan pre-queue untuk mulai terjadwal
+// (Req 4.2), dan keadilan terhadap bot (Req 4.3). Tiap item memakai `h3` (tanpa
+// melompati level heading) untuk judul plus teks penjelas dari `body`. Salinan
+// tidak mengklaim pemblokiran bot secara mutlak — frasa data memakai "mengurangi
+// keuntungan tidak adil dari bot" (Req 4.4). Seluruh salinan berbahasa Indonesia.
+function Fairness() {
+  return (
+    <section
+      className="lp-fairness lp-container"
+      id="keadilan"
+      aria-labelledby="fairness-title"
+    >
+      <div className="lp-section-intro">
+        <h2 id="fairness-title">Giliran yang adil untuk semua.</h2>
+        <p>
+          Antrean Antosan menjaga urutan tetap masuk akal: yang datang lebih
+          awal didahulukan, event terjadwal dimulai secara setara, dan
+          pengunjung sungguhan tidak kalah oleh bot.
+        </p>
+      </div>
+      <ul className="lp-fairness-list">
+        {fairnessPoints.map((point) => (
+          <li key={point.id} className="lp-fairness-item">
+            <h3>{point.title}</h3>
+            <p>{point.body}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+// Traffic_Control_Section (Req 5). Me-render section `#kontrol-trafik` dengan
+// heading `h2` (`aria-labelledby`) lalu me-map `trafficControlPoints` menjadi
+// daftar (`ul`) poin: kapasitas & laju keluar per menit (Req 5.1), penyesuaian
+// laju saat event berjalan (Req 5.2), cakupan proteksi seluruh situs/path/aksi
+// dinamis (Req 5.3), dan mode tampil antrean selalu-tampil vs saat-puncak
+// (Req 5.4). Tiap item memakai `h3` (tanpa melompati level heading) untuk judul
+// plus teks penjelas dari `body`. Kelas kontainer memakai `lp-traffic-section`
+// agar tidak bentrok dengan `.lp-traffic-control` internal QueueDemo, sementara
+// id tetap `#kontrol-trafik` sesuai Section_Anchor. Seluruh salinan berbahasa
+// Indonesia (Req 5.5).
+function TrafficControl() {
+  return (
+    <section
+      className="lp-traffic-section lp-container"
+      id="kontrol-trafik"
+      aria-labelledby="traffic-control-title"
+    >
+      <div className="lp-section-intro">
+        <h2 id="traffic-control-title">Kendali penuh atas arus masuk.</h2>
+        <p>
+          Atur berapa banyak pengunjung yang masuk dan seberapa cepat, lalu
+          tentukan bagian situs mana yang dijaga. Semua bisa disetel sebelum dan
+          selama event berlangsung.
+        </p>
+      </div>
+      <ul className="lp-traffic-list">
+        {trafficControlPoints.map((point) => (
+          <li key={point.id} className="lp-traffic-item">
+            <h3>{point.title}</h3>
+            <p>{point.body}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+// Brand_Experience_Section (Req 7). Me-render section `#brand` dengan heading
+// `h2` (`aria-labelledby`), intro yang menjelaskan bahwa halaman antrean dapat
+// disesuaikan dengan identitas brand pelanggan melalui custom HTML (Req 7.1),
+// lalu daftar (`ul`) dengan sub-item `h3` (tanpa melompati level heading): satu
+// item menegaskan kustomisasi tampilan via custom HTML, dan satu item menegaskan
+// bahwa posisi antrean serta estimasi waktu tunggu tetap ditampilkan (Req 7.2).
+// Seluruh salinan berbahasa Indonesia (Req 7.3). Statis, tanpa state.
+function BrandExperience() {
+  return (
+    <section
+      className="lp-brand-experience lp-container"
+      id="brand"
+      aria-labelledby="brand-experience-title"
+    >
+      <div className="lp-section-intro">
+        <h2 id="brand-experience-title">Ruang tunggu dengan identitas Anda.</h2>
+        <p>
+          Halaman antrean bukan halaman asing bagi pengunjung Anda. Sesuaikan
+          tampilannya dengan custom HTML sehingga logo, warna, dan gaya situs
+          Anda ikut hadir saat pengunjung menunggu giliran masuk.
+        </p>
+      </div>
+      <WaitingPreview />
+      <ul className="lp-brand-list">
+        <li className="lp-brand-item">
+          <h3>Tampil sesuai brand Anda</h3>
+          <p>
+            Rancang halaman antrean dengan custom HTML: pasang logo, terapkan
+            warna dan tipografi merek, serta tambahkan pesan Anda sendiri. Ruang
+            tunggu terasa menyatu dengan situs Anda, bukan tempat perantara yang
+            terpisah.
+          </p>
+        </li>
+        <li className="lp-brand-item">
+          <h3>Informasi antrean tetap tampil</h3>
+          <p>
+            Sekustom apa pun tampilannya, halaman antrean selalu menampilkan
+            posisi pengunjung dalam antrean dan estimasi waktu tunggu.
+            Pengunjung tahu di mana giliran mereka dan berapa lama lagi
+            menunggu, sehingga tetap tenang sampai masuk.
+          </p>
+        </li>
+      </ul>
+    </section>
+  );
+}
+
+// Features_Section (Req 8). Merender `section.lp-features#fitur` dengan
+// `aria-labelledby` ke `h2#features-title`, sebuah `dl` dari data `features`
+// (`dt`/`dd`), dan `a.lp-dark-link` menuju `siteConfig.dashboardUrl` dengan
+// label `siteConfig.dashboardFeatureLabel` (Req 8.5). Anchor `#fitur` dirujuk
+// Navigation (Req 8.6). Statis, tanpa state — pola sama seperti section lain.
+function Features() {
+  return (
+    <section
+      className="lp-features"
+      id="fitur"
+      aria-labelledby="features-title"
+    >
+      <div className="lp-feature-layout lp-container">
+        <div className="lp-feature-heading">
+          <Icon name="settings" size={30} />
+          <h2 id="features-title">
+            Di balik keramaian,
+            <br />
+            Anda pegang kendali.
+          </h2>
+          <p>
+            Siapkan event bersama tim. Saat trafik mulai naik, semua pengaturan
+            penting tetap dalam jangkauan.
+          </p>
+          <a className="lp-dark-link" href={siteConfig.dashboardUrl}>
+            {siteConfig.dashboardFeatureLabel}
+            <Icon name="arrow" size={18} />
+          </a>
+        </div>
+        <dl className="lp-feature-list">
+          {features.map((feature) => (
+            <div key={feature.term}>
+              <dt>{feature.term}</dt>
+              <dd>{feature.detail}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+  );
+}
+
+// Trust_Section (Req 10). Merender `section.lp-trust#kepercayaan` dengan
+// `aria-labelledby` ke `h2#trust-title`. Menampilkan `trustQuote` sebagai
+// `figure`/`blockquote` beserta atribusi (author + role) di band gelap
+// `.lp-trust-quote` (Req 10.1), dan `trustStats` sebagai daftar pernyataan
+// keandalan/skala (Req 10.2). Karena data bersifat ilustratif
+// (`illustrative: true`), penanda "Ilustrasi" (`.lp-illustrative`) ditampilkan
+// terlihat agar tidak terbaca sebagai klaim pelanggan nyata (Req 10.3).
+// Seluruh salinan berbahasa Indonesia (Req 10.4). Statis, tanpa state.
+function Trust() {
+  return (
+    <section
+      className="lp-trust lp-container"
+      id="kepercayaan"
+      aria-labelledby="trust-title"
+    >
+      <div className="lp-section-intro">
+        <h2 id="trust-title">Diandalkan saat momen paling penting.</h2>
+        <p>
+          Contoh cerita dan angka berikut menggambarkan bagaimana Antosan
+          menjaga situs tetap tenang saat lonjakan trafik.
+        </p>
+      </div>
+      <figure className="lp-trust-quote">
+        <blockquote>
+          <p>{trustQuote.quote}</p>
+        </blockquote>
+        <figcaption>
+          <span className="lp-trust-author">{trustQuote.author}</span>
+          <span className="lp-trust-role">{trustQuote.role}</span>
+          {trustQuote.illustrative ? (
+            <span className="lp-illustrative">Ilustrasi</span>
+          ) : null}
+        </figcaption>
+      </figure>
+      <ul className="lp-trust-stats">
+        {trustStats.map((stat) => (
+          <li key={stat.label} className="lp-trust-stat">
+            <span className="lp-trust-stat-value">{stat.value}</span>
+            <span className="lp-trust-stat-label">{stat.label}</span>
+            {stat.illustrative ? (
+              <span className="lp-illustrative">Ilustrasi</span>
+            ) : null}
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 export default function LandingPage() {
   const menuButtonRef = useRef(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const navLinks = (
     <>
-      <a href="#cara-kerja">Cara kerja</a>
-      <a href="#fitur">Fitur</a>
-      <a href="#integrasi">Integrasi</a>
-      <a href="#pertanyaan">FAQ</a>
+      {navLinkItems.map(({ href, label }) => (
+        <a key={href} href={href}>
+          {label}
+        </a>
+      ))}
     </>
   );
   return (
@@ -349,6 +867,10 @@ export default function LandingPage() {
       <a className="lp-skip" href="#konten">
         Lewati navigasi
       </a>
+      <div className="lp-brand-ribbon">
+        <span>Antrean yang adil. Kesempatan lebih luas.</span>
+        <span className="lp-ribbon-signature">A fairer way to wait.</span>
+      </div>
       <header
         className="lp-header"
         onBlur={(event) => {
@@ -403,7 +925,7 @@ export default function LandingPage() {
           <div className="lp-hero-copy">
             <p className="lp-product-type">
               <span aria-hidden="true" />
-              Antrean virtual untuk momen besar
+              Virtual waiting room · Antosan
             </p>
             <h1 id="hero-title">
               Ramai pengunjung.
@@ -411,9 +933,9 @@ export default function LandingPage() {
               <span>Tetap terkendali.</span>
             </h1>
             <p className="lp-hero-description">
-              Antosan menata lonjakan trafik dengan antrean virtual. Jaga
-              kapasitas situs, beri setiap pengunjung giliran, dan kendalikan
-              arus masuk dari satu tempat.
+              Sambut antusiasme tanpa kewalahan. Antosan mengatur arus masuk
+              sesuai kapasitas situs, memberi pengunjung giliran yang adil, dan
+              membantu menjaga checkout tetap lancar.
             </p>
             <div className="lp-hero-actions">
               <a className="lp-button" href={siteConfig.dashboardUrl}>
@@ -427,144 +949,74 @@ export default function LandingPage() {
             </div>
             <p className="lp-hero-note">
               <Icon name="shield" size={15} />
-              Kapasitas Anda. Aturan Anda.
+              Situs tetap tenang. Pengunjung tetap mendapat giliran.
             </p>
+          </div>
+          <HeroVisual />
+        </section>
+
+        <div
+          className="lp-values-strip lp-container"
+          aria-label="Nilai Antosan"
+        >
+          <span>
+            <Icon name="members" size={20} />
+            Akses yang adil
+          </span>
+          <span>
+            <Icon name="activity" size={20} />
+            Arus yang tertib
+          </span>
+          <span>
+            <Icon name="shield" size={20} />
+            Kapasitas terjaga
+          </span>
+          <span>
+            <Icon name="clock" size={20} />
+            Menunggu lebih tenang
+          </span>
+        </div>
+
+        <Scenarios />
+
+        <HowItWorks />
+
+        <Fairness />
+
+        <TrafficControl />
+
+        <section
+          className="lp-simulation lp-container"
+          id="simulasi"
+          aria-labelledby="simulation-title"
+        >
+          <div className="lp-simulation-copy">
+            <p className="lp-eyebrow">LIHAT ANTOSAN BEKERJA</p>
+            <h2 id="simulation-title">
+              Trafik naik.
+              <br />
+              Anda atur ritmenya.
+            </h2>
+            <p>
+              Ubah tingkat trafik dan lihat bagaimana antrean terbentuk. Lalu,
+              loloskan pengunjung secara bertahap saat situs siap menerima
+              mereka.
+            </p>
+            <div className="lp-simulation-hint">
+              <Icon name="arrow" size={20} />
+              <span>Coba pilih “Lonjakan” pada simulasi.</span>
+            </div>
           </div>
           <QueueDemo />
         </section>
 
-        <div className="lp-use-cases lp-container">
-          <p>
-            Siap untuk momen
-            <br />
-            <strong>yang ramai dinanti.</strong>
-          </p>
-          <ul aria-label="Contoh penggunaan">
-            <li>
-              Penjualan tiket
-              <Icon name="arrow" size={17} />
-            </li>
-            <li>
-              Flash sale
-              <Icon name="arrow" size={17} />
-            </li>
-            <li>
-              Registrasi event
-              <Icon name="arrow" size={17} />
-            </li>
-            <li>
-              Peluncuran produk
-              <Icon name="arrow" size={17} />
-            </li>
-          </ul>
-        </div>
+        <BrandExperience />
 
-        <section
-          className="lp-workflow lp-container"
-          id="cara-kerja"
-          aria-labelledby="workflow-title"
-        >
-          <div className="lp-section-intro">
-            <h2 id="workflow-title">
-              Beri ruang untuk antusiasme.
-              <br />
-              Atur jalannya dari awal.
-            </h2>
-            <p>
-              Dari sebelum gerbang dibuka sampai pengunjung masuk, Anda yang
-              menentukan ritmenya.
-            </p>
-          </div>
-          <ol className="lp-steps">
-            <li>
-              <span className="lp-step-number">01</span>
-              <h3>Tentukan batas aman.</h3>
-              <p>
-                Pilih domain atau halaman yang dilindungi. Atur kapasitas
-                pengunjung, laju masuk, dan durasi sesi sesuai kemampuan situs.
-              </p>
-              <span className="lp-step-detail">Kapasitas & laju masuk</span>
-            </li>
-            <li>
-              <span className="lp-step-number">02</span>
-              <h3>Sambut dalam antrean.</h3>
-              <p>
-                Saat trafik padat, pengunjung mendapat tempat di ruang tunggu
-                dengan posisi antrean dan estimasi waktu yang diperbarui
-                otomatis.
-              </p>
-              <span className="lp-step-detail">Antrean & estimasi waktu</span>
-            </li>
-            <li>
-              <span className="lp-step-number">03</span>
-              <h3>Masuk saat gilirannya.</h3>
-              <p>
-                Ketika slot tersedia, pengunjung diteruskan ke situs. Pantau
-                arus masuk dan sesuaikan pengaturan selama event berjalan.
-              </p>
-              <span className="lp-step-detail">
-                Admisi & pemantauan langsung
-              </span>
-            </li>
-          </ol>
-        </section>
-
-        <section
-          className="lp-features"
-          id="fitur"
-          aria-labelledby="features-title"
-        >
-          <div className="lp-feature-layout lp-container">
-            <div className="lp-feature-heading">
-              <Icon name="settings" size={30} />
-              <h2 id="features-title">
-                Di balik keramaian,
-                <br />
-                Anda pegang kendali.
-              </h2>
-              <p>
-                Siapkan event bersama tim. Saat trafik mulai naik, semua
-                pengaturan penting tetap dalam jangkauan.
-              </p>
-              <a className="lp-dark-link" href={siteConfig.dashboardUrl}>
-                {siteConfig.dashboardFeatureLabel}
-                <Icon name="arrow" size={18} />
-              </a>
-            </div>
-            <dl className="lp-feature-list">
-              <div>
-                <dt>Jadwalkan momen pembukaan.</dt>
-                <dd>
-                  Pre-queue dengan hitung mundur. Pilih urutan FIFO atau
-                  pengacakan peserta sebelum event dimulai.
-                </dd>
-              </div>
-              <div>
-                <dt>Pantau situasi saat itu juga.</dt>
-                <dd>
-                  Lihat pengunjung aktif, panjang antrean, estimasi waktu
-                  tunggu, dan riwayat trafik 24 jam dari dashboard.
-                </dd>
-              </div>
-              <div>
-                <dt>Ruang tunggu, identitas Anda.</dt>
-                <dd>
-                  Gunakan custom HTML untuk menyesuaikan halaman antrean dengan
-                  brand atau tema event.
-                </dd>
-              </div>
-              <div>
-                <dt>Atur akses bersama tim.</dt>
-                <dd>
-                  Pisahkan room dalam workspace. Berikan peran admin atau akses
-                  pantau kepada anggota tim.
-                </dd>
-              </div>
-            </dl>
-          </div>
-        </section>
+        <Features />
 
         <Integrations />
+
+        <Trust />
 
         <section
           className="lp-faq lp-container"
@@ -613,6 +1065,8 @@ export default function LandingPage() {
           <div className="lp-footer-bottom">
             <Brand />
             <p>
+              A fairer way to wait.
+              <br />
               <a href={siteConfig.url}>antosan.com</a> · Ruang untuk semua.
             </p>
             <a href="#atas">

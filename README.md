@@ -86,9 +86,24 @@ menautkan pengunjung langsung ke spesifikasi protokol connector.
 
 - `src/LandingPage.jsx`: konten dan interaksi landing page.
 - `src/landing.css`: tata letak dan responsivitas.
+- `src/redesign.css`: lapisan desain Antosan sesuai brand identity.
+- `src/BrandVisuals.jsx`: ilustrasi hero dan contoh tampilan ruang tunggu.
 - `src/tokens.css`: warna, tipografi, dan spacing brand.
 - `src/siteConfig.js`: tautan dashboard dan dokumentasi.
 - `src/Mark.jsx` dan `src/Icon.jsx`: komponen visual bersama.
 - `src/main.jsx`: entry point website; hanya memuat landing page.
 - `index.html`: metadata Antosan dan canonical URL untuk antosan.com.
 - `public/`: favicon, robots.txt, dan sitemap website.
+
+## Aset brand
+
+Palet mengikuti brand board Antosan: terracotta `#D3542F`, amber `#F7931E`,
+peach `#FFD8B1`, dan charcoal `#2E2E2E`. Warna teks/tombol memiliki varian
+untuk keterbacaan dan mode gelap. Font Nunito Sans disajikan dari build sendiri.
+
+Logo di `public/brand-mark.svg` merupakan adaptasi vektor dari referensi gambar,
+dengan wordmark berupa teks Nunito Sans. Ini bukan file master logo asli.
+Ilustrasi hero dan catatan pembuatannya tersedia di
+[`public/images/README.md`](public/images/README.md).
+
+Jalankan `npm test` untuk memeriksa model simulasi dan kontrak konten.
