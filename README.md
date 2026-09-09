@@ -1,4 +1,4 @@
-# Antosan — antosan.com
+# Antosan — Gateway A
 
 Landing page berbahasa Indonesia untuk [Antosan](https://antosan.com/). Proyek React + Vite mandiri,
 berisi simulasi antrean, alur kerja, fitur, pilihan integrasi, dan FAQ.
@@ -7,6 +7,12 @@ Mendukung layar mobile, mode terang/gelap, dan navigasi keyboard.
 Repo ini hanya berisi website pemasaran. Backend Go, Redis, dashboard admin,
 autentikasi, dan API antrean berada di aplikasi Antosan yang terpisah.
 Simulasi antrean berjalan lokal di browser dan tidak mengakses API.
+
+## Versi alternatif
+
+Branch `design/gateway-a` memuat arah visual navy–oranye berdasarkan brand board
+Gateway A. Versi ini berangkat dari desain terracotta pada commit `edebef5`.
+Domain publik tetap `antosan.com`.
 
 ## Menjalankan lokal
 
@@ -33,12 +39,12 @@ Hasil build berupa file statis di `dist/`.
 
 Konfigurasi sudah tersedia di `vercel.json`:
 
-| Pengaturan | Nilai |
-| --- | --- |
-| Framework | Vite |
-| Install command | `npm ci` |
-| Build command | `npm run build` |
-| Output directory | `dist` |
+| Pengaturan       | Nilai           |
+| ---------------- | --------------- |
+| Framework        | Vite            |
+| Install command  | `npm ci`        |
+| Build command    | `npm run build` |
+| Output directory | `dist`          |
 
 Domain publik untuk website ini adalah `https://antosan.com/`. Canonical URL,
 metadata Open Graph, data terstruktur `WebSite`, `robots.txt`, dan sitemap
@@ -53,10 +59,10 @@ dan [konfigurasi proyek Vercel](https://vercel.com/docs/project-configuration).
 Untuk pengembangan lokal, salin `.env.example` menjadi `.env.local`.
 Untuk deployment, isi variabel yang sama di pengaturan proyek Vercel.
 
-| Variabel | Isi | Perilaku saat kosong |
-| --- | --- | --- |
-| `VITE_DASHBOARD_URL` | URL lengkap dashboard eksternal, termasuk protokol dan path login | Tombol menjadi **Coba simulasi** dan mengarah ke simulasi di halaman ini |
-| `VITE_CONNECTOR_DOCS_URL` | URL lengkap dokumentasi protokol connector | Tautan **Panduan integrasi** membuka bagian integrasi di README ini |
+| Variabel                  | Isi                                                               | Perilaku saat kosong                                                     |
+| ------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| `VITE_DASHBOARD_URL`      | URL lengkap dashboard eksternal, termasuk protokol dan path login | Tombol menjadi **Coba simulasi** dan mengarah ke simulasi di halaman ini |
+| `VITE_CONNECTOR_DOCS_URL` | URL lengkap dokumentasi protokol connector                        | Tautan **Panduan integrasi** membuka bagian integrasi di README ini      |
 
 Variabel ini hanya untuk URL publik. Nilainya masuk ke bundle saat build;
 jalankan build/deploy ulang setelah mengubahnya.
@@ -86,7 +92,8 @@ menautkan pengunjung langsung ke spesifikasi protokol connector.
 
 - `src/LandingPage.jsx`: konten dan interaksi landing page.
 - `src/landing.css`: tata letak dan responsivitas.
-- `src/redesign.css`: lapisan desain Antosan sesuai brand identity.
+- `src/redesign.css`: lapisan desain bersama dari versi sebelumnya.
+- `src/gateway.css`: komposisi dan gaya versi Gateway A.
 - `src/BrandVisuals.jsx`: ilustrasi hero dan contoh tampilan ruang tunggu.
 - `src/tokens.css`: warna, tipografi, dan spacing brand.
 - `src/siteConfig.js`: tautan dashboard dan dokumentasi.
@@ -97,13 +104,17 @@ menautkan pengunjung langsung ke spesifikasi protokol connector.
 
 ## Aset brand
 
-Palet mengikuti brand board Antosan: terracotta `#D3542F`, amber `#F7931E`,
-peach `#FFD8B1`, dan charcoal `#2E2E2E`. Warna teks/tombol memiliki varian
-untuk keterbacaan dan mode gelap. Font Nunito Sans disajikan dari build sendiri.
+Palet diinterpretasikan dari brand board Gateway A: navy `#091D33`, oranye
+`#FF7A0A`, dan latar biru muda `#F3F7FB`. Teks tombol memakai navy agar
+kontrasnya tetap cukup di atas oranye. Mode gelap mengikuti pengaturan perangkat.
+Font Manrope disajikan dari build sendiri.
 
-Logo di `public/brand-mark.svg` merupakan adaptasi vektor dari referensi gambar,
-dengan wordmark berupa teks Nunito Sans. Ini bukan file master logo asli.
-Ilustrasi hero dan catatan pembuatannya tersedia di
-[`public/images/README.md`](public/images/README.md).
+`public/brand-gateway.svg` dan `src/Mark.jsx` merupakan adaptasi vektor konsep
+Gateway A dari referensi gambar, bukan file master logo asli. Warna logo dalam
+komponen menyesuaikan latar terang maupun gelap.
+
+Diagram hero dibuat langsung dalam SVG di `src/BrandVisuals.jsx`; memperlihatkan
+pengunjung → gerbang Antosan → situs. Simulasi antrean tetap berjalan lokal.
+Contoh ruang tunggu dan materi ilustratif diberi label pada halaman.
 
 Jalankan `npm test` untuk memeriksa model simulasi dan kontrak konten.

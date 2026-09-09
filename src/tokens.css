@@ -1,49 +1,60 @@
-/* Antosan brand board: Terracotta, Amber, Peach, Charcoal.
- * Darker action/text variants retain readable contrast on light surfaces. */
+/* Alternative Antosan identity: Gateway A, navy and vivid orange.
+ * Palette sampled visually from the supplied board; text variants ensure contrast. */
 :root {
   color-scheme: light;
   background: var(--panel);
-  --brand-terracotta: #d3542f;
-  --brand-amber: #f7931e;
-  --brand-peach: #ffd8b1;
-  --brand-charcoal: #2e2e2e;
-  --panel: #fffcf8;
-  --surface: #fffefa;
-  --ink: var(--brand-charcoal);
-  --text-secondary: #6b615a;
-  --line: #e6ddd4;
-  --input-line: #978b80;
-  --accent: var(--brand-terracotta);
-  --accent-deep: #ad3e21;
-  --accent-ink: #fffaf6;
-  --action-bg: #b94324;
-  --action-hover: #99351b;
+  --brand-navy: #091d33;
+  --brand-orange: #ff7a0a;
+  --brand-orange-soft: #ffe7ce;
+  --brand-blue: #355d7e;
+  --brand-terracotta: var(--brand-orange);
+  --brand-amber: #ffaf54;
+  --brand-peach: var(--brand-orange-soft);
+  --brand-charcoal: var(--brand-navy);
+  --panel: #ffffff;
+  --surface: #ffffff;
+  --ink: var(--brand-navy);
+  --logo-ink: var(--brand-navy);
+  --text-secondary: #526477;
+  --line: #dce5ed;
+  --input-line: #73899d;
+  --accent: var(--brand-orange);
+  --accent-deep: #a64605;
+  --accent-ink: var(--brand-navy);
+  --action-bg: var(--brand-orange);
+  --action-hover: #ff963c;
   --info: var(--accent-deep);
   --success: #26724f;
-  --paper-soft: #f6eee5;
-  --paper-peach: #fae8d6;
-  --paper-accent: #fff1e5;
-  --art-paper: #fff8ef;
-  --art-ink: var(--brand-charcoal);
-  --art-muted: #786657;
-  --art-line: #e4d4c5;
-  --art-peach: var(--brand-peach);
+  --paper-soft: #f3f7fb;
+  --paper-peach: #eaf1f7;
+  --paper-accent: #fff3e6;
+  --art-paper: #f1f6fb;
+  --art-ink: var(--brand-navy);
+  --art-muted: #8ea5b9;
+  --art-line: #c8d9e7;
+  --art-peach: var(--brand-orange-soft);
   --art-amber: var(--brand-amber);
-  --art-terracotta: var(--brand-terracotta);
+  --art-terracotta: var(--brand-orange);
+  --art-white: #ffffff;
+  --art-floor: #e1ebf4;
+  --art-figure: #28445e;
+  --art-figure-side: #132f48;
+  --art-grid: #dce7f0;
+  --art-shadow: #cbd8e4;
   --dot-blue: #197ecf;
   --dot-cyan: #70e9f0;
   --dot-purple: #bdbbff;
   --dot-pink: #f7b0df;
   --clear: transparent;
-  --soft-shadow: 0 2px 5px rgb(73 44 25 / 5%);
-  --card-shadow: 0 18px 64px -32px rgb(100 54 25 / 28%);
-  --story-bg: var(--brand-charcoal);
-  --story-ink: #fff8ef;
-  --story-muted: #d0c5bc;
-  --story-line: #574e47;
+  --soft-shadow: 0 2px 5px rgb(9 29 51 / 5%);
+  --card-shadow: 0 24px 72px -32px rgb(31 64 99 / 24%);
+  --story-bg: var(--brand-navy);
+  --story-ink: #f8fbff;
+  --story-muted: #b9cad9;
+  --story-line: #30485f;
   --font-body:
-    "Nunito Sans Variable", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, sans-serif;
+    "Manrope Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
   --font-display: var(--font-body);
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -55,28 +66,26 @@
   --space-10: 2.5rem;
   --space-12: 3rem;
   --space-16: 4rem;
-  --radius: 20px;
-  --radius-sm: 10px;
+  --radius: 14px;
+  --radius-sm: 7px;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --dur-short: 160ms;
 }
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark;
-    --panel: #211f1d;
-    --surface: #2c2825;
-    --ink: #fff3e9;
-    --text-secondary: #c8b9ac;
-    --line: #48403a;
-    --input-line: #9f8d80;
-    --accent: #f6976d;
-    --accent-deep: #ffae88;
-    --accent-ink: #261b15;
-    --action-bg: #ffa778;
-    --action-hover: #ffbb96;
-    --paper-soft: #2a2521;
-    --paper-peach: #3a2b22;
-    --paper-accent: #382a21;
+    --panel: #071725;
+    --surface: #102538;
+    --ink: #eff6fc;
+    --logo-ink: #eff6fc;
+    --text-secondary: #adc1d3;
+    --line: #2b4257;
+    --input-line: #8ba4bb;
+    --accent: var(--brand-orange);
+    --accent-deep: #ffb470;
+    --paper-soft: #0c2032;
+    --paper-peach: #152c40;
+    --paper-accent: #34291f;
     --success: #8ad4aa;
     --soft-shadow: 0 2px 5px rgb(0 0 0 / 12%);
     --card-shadow: 0 18px 64px -32px rgb(0 0 0 / 35%);

@@ -5,6 +5,7 @@ import { HeroVisual, WaitingPreview } from "./BrandVisuals.jsx";
 import { siteConfig } from "./siteConfig.js";
 import "./landing.css";
 import "./redesign.css";
+import "./gateway.css";
 
 const trafficLevels = [
   { label: "Normal", visitors: 6 },
@@ -186,7 +187,7 @@ function Brand() {
       <Mark />
       <span className="lp-wordmark">
         <span>{siteConfig.name}</span>
-        <small>VIRTUAL WAITING ROOM</small>
+        <small>Virtual Waiting Room</small>
       </span>
     </a>
   );
@@ -801,15 +802,31 @@ function Features() {
   );
 }
 
-// Trust_Section (Req 10). Merender `section.lp-trust#kepercayaan` dengan
-// `aria-labelledby` ke `h2#trust-title`. Menampilkan `trustQuote` sebagai
-// `figure`/`blockquote` beserta atribusi (author + role) di band gelap
-// `.lp-trust-quote` (Req 10.1), dan `trustStats` sebagai daftar pernyataan
-// keandalan/skala (Req 10.2). Karena data bersifat ilustratif
-// (`illustrative: true`), penanda "Ilustrasi" (`.lp-illustrative`) ditampilkan
-// terlihat agar tidak terbaca sebagai klaim pelanggan nyata (Req 10.3).
-// Seluruh salinan berbahasa Indonesia (Req 10.4). Statis, tanpa state.
+// Gateway A uses the values in the supplied brand board as its trust section.
+// Legacy illustrative content exports remain available for the original design.
 function Trust() {
+  const principles = [
+    {
+      icon: "shield",
+      title: "Lindungi infrastruktur Anda",
+      body: "Beri situs ruang untuk melayani. Arus masuk mengikuti kapasitas yang Anda tetapkan.",
+    },
+    {
+      icon: "members",
+      title: "Antrean yang adil dan transparan",
+      body: "Pengunjung mendapat giliran yang jelas, dengan posisi antrean dan estimasi menunggu.",
+    },
+    {
+      icon: "activity",
+      title: "Siap menghadapi lonjakan",
+      body: "Atur laju masuk sebelum event, lalu sesuaikan ketika kebutuhan trafik berubah.",
+    },
+    {
+      icon: "clock",
+      title: "Pengalaman yang lebih baik",
+      body: "Sambut pengunjung dengan ruang tunggu yang informatif dan tetap terasa seperti brand Anda.",
+    },
+  ];
   return (
     <section
       className="lp-trust lp-container"
@@ -817,32 +834,24 @@ function Trust() {
       aria-labelledby="trust-title"
     >
       <div className="lp-section-intro">
-        <h2 id="trust-title">Diandalkan saat momen paling penting.</h2>
+        <h2 id="trust-title">
+          Antrean yang tertib.
+          <br />
+          Akses yang lebih baik.
+        </h2>
         <p>
-          Contoh cerita dan angka berikut menggambarkan bagaimana Antosan
-          menjaga situs tetap tenang saat lonjakan trafik.
+          Infrastruktur yang terjaga dan pengunjung yang mendapat kejelasan. Dua
+          hal yang berjalan bersama di Antosan.
         </p>
       </div>
-      <figure className="lp-trust-quote">
-        <blockquote>
-          <p>{trustQuote.quote}</p>
-        </blockquote>
-        <figcaption>
-          <span className="lp-trust-author">{trustQuote.author}</span>
-          <span className="lp-trust-role">{trustQuote.role}</span>
-          {trustQuote.illustrative ? (
-            <span className="lp-illustrative">Ilustrasi</span>
-          ) : null}
-        </figcaption>
-      </figure>
-      <ul className="lp-trust-stats">
-        {trustStats.map((stat) => (
-          <li key={stat.label} className="lp-trust-stat">
-            <span className="lp-trust-stat-value">{stat.value}</span>
-            <span className="lp-trust-stat-label">{stat.label}</span>
-            {stat.illustrative ? (
-              <span className="lp-illustrative">Ilustrasi</span>
-            ) : null}
+      <ul className="gateway-principles">
+        {principles.map(({ icon, title, body }) => (
+          <li key={title}>
+            <Icon name={icon} size={25} />
+            <div>
+              <h3>{title}</h3>
+              <p>{body}</p>
+            </div>
           </li>
         ))}
       </ul>
@@ -863,14 +872,10 @@ export default function LandingPage() {
     </>
   );
   return (
-    <div className="landing-page" id="atas">
+    <div className="landing-page gateway-version" id="atas">
       <a className="lp-skip" href="#konten">
         Lewati navigasi
       </a>
-      <div className="lp-brand-ribbon">
-        <span>Antrean yang adil. Kesempatan lebih luas.</span>
-        <span className="lp-ribbon-signature">A fairer way to wait.</span>
-      </div>
       <header
         className="lp-header"
         onBlur={(event) => {
@@ -923,34 +928,38 @@ export default function LandingPage() {
       <main id="konten" tabIndex={-1}>
         <section className="lp-hero lp-container" aria-labelledby="hero-title">
           <div className="lp-hero-copy">
-            <p className="lp-product-type">
-              <span aria-hidden="true" />
-              Virtual waiting room · Antosan
-            </p>
-            <h1 id="hero-title">
-              Ramai pengunjung.
-              <br />
-              <span>Tetap terkendali.</span>
-            </h1>
-            <p className="lp-hero-description">
-              Sambut antusiasme tanpa kewalahan. Antosan mengatur arus masuk
-              sesuai kapasitas situs, memberi pengunjung giliran yang adil, dan
-              membantu menjaga checkout tetap lancar.
-            </p>
-            <div className="lp-hero-actions">
-              <a className="lp-button" href={siteConfig.dashboardUrl}>
-                {siteConfig.dashboardLabel}
-                <Icon name="arrow" size={19} />
-              </a>
-              <a className="lp-secondary-link" href="#cara-kerja">
-                Lihat cara kerja
-                <Icon name="chevron" size={16} />
-              </a>
+            <div className="gateway-hero-heading">
+              <p className="lp-product-type">
+                <span aria-hidden="true" />
+                VIRTUAL WAITING ROOM
+              </p>
+              <h1 id="hero-title">
+                Tetap stabil.
+                <br />
+                <span>Di saat ramai.</span>
+              </h1>
             </div>
-            <p className="lp-hero-note">
-              <Icon name="shield" size={15} />
-              Situs tetap tenang. Pengunjung tetap mendapat giliran.
-            </p>
+            <div className="gateway-hero-summary">
+              <p className="lp-hero-description">
+                Momen besar layak mendapat pengalaman yang baik. Kelola lonjakan
+                pengunjung dengan antrean virtual yang tertib, adil, dan sesuai
+                kapasitas infrastruktur Anda.
+              </p>
+              <div className="lp-hero-actions">
+                <a className="lp-button" href={siteConfig.dashboardUrl}>
+                  {siteConfig.dashboardLabel}
+                  <Icon name="arrow" size={19} />
+                </a>
+                <a className="lp-secondary-link" href="#cara-kerja">
+                  Lihat cara kerja
+                  <Icon name="chevron" size={16} />
+                </a>
+              </div>
+              <p className="lp-hero-note">
+                <Icon name="shield" size={15} />
+                Satu gerbang untuk akses yang lebih baik.
+              </p>
+            </div>
           </div>
           <HeroVisual />
         </section>
@@ -977,25 +986,17 @@ export default function LandingPage() {
           </span>
         </div>
 
-        <Scenarios />
-
-        <HowItWorks />
-
-        <Fairness />
-
-        <TrafficControl />
-
         <section
           className="lp-simulation lp-container"
           id="simulasi"
           aria-labelledby="simulation-title"
         >
           <div className="lp-simulation-copy">
-            <p className="lp-eyebrow">LIHAT ANTOSAN BEKERJA</p>
+            <p className="lp-eyebrow">KENDALI DI TANGAN ANDA</p>
             <h2 id="simulation-title">
-              Trafik naik.
+              Lihat bedanya.
               <br />
-              Anda atur ritmenya.
+              Coba alurnya.
             </h2>
             <p>
               Ubah tingkat trafik dan lihat bagaimana antrean terbentuk. Lalu,
@@ -1009,6 +1010,14 @@ export default function LandingPage() {
           </div>
           <QueueDemo />
         </section>
+
+        <HowItWorks />
+
+        <Scenarios />
+
+        <Fairness />
+
+        <TrafficControl />
 
         <BrandExperience />
 
@@ -1053,9 +1062,9 @@ export default function LandingPage() {
         <div className="lp-container">
           <div className="lp-closing">
             <h2>
-              Biarkan ramai.
+              Siap menyambut
               <br />
-              <span>Kami bantu atur antreannya.</span>
+              <span>momen besar Anda?</span>
             </h2>
             <a className="lp-button" href={siteConfig.dashboardUrl}>
               {siteConfig.dashboardLabel}
@@ -1065,7 +1074,7 @@ export default function LandingPage() {
           <div className="lp-footer-bottom">
             <Brand />
             <p>
-              A fairer way to wait.
+              Antrean yang tertib, akses yang lebih baik.
               <br />
               <a href={siteConfig.url}>antosan.com</a> · Ruang untuk semua.
             </p>

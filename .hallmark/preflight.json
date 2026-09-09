@@ -1,9 +1,14 @@
 {
   "date": "2026-09-09",
   "framework": "React 19 + Vite 6, standalone static landing page",
-  "sources": ["package.json", "src/tokens.css", "src/landing.css"],
-  "font": "Nunito Sans Variable, self-hosted Latin WOFF2",
-  "palette": "User-supplied Antosan brand identity supersedes earlier orange/four-dot identity",
+  "sources": [
+    "package.json",
+    "src/tokens.css",
+    "src/landing.css",
+    "src/gateway.css"
+  ],
+  "font": "Manrope Variable, self-hosted Latin WOFF2",
+  "palette": "User-supplied Gateway A identity; navy, orange, cool blue surfaces",
   "motion": "CSS interaction feedback, reduced-motion support",
   "spacing": "Existing 4px token scale",
   "preserved": [

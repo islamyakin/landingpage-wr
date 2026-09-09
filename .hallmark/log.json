@@ -1,6 +1,26 @@
 [
   {
     "date": "2026-09-09",
+    "macrostructure": "Map / Diagram",
+    "previous_macrostructure": "Split Studio",
+    "theme": "studied-DNA — Antosan Gateway A brand board",
+    "theme_axes": "light / geometric-sans / navy + orange",
+    "vibe": "orderly, clear, dependable",
+    "nav": "N1b product navigation",
+    "footer": "Ft5 Statement",
+    "enrichment": "Native SVG gateway flow, local queue simulation shown early",
+    "brief": "Alternative version on design/gateway-a; keep the terracotta version available",
+    "scores": {
+      "P": 4,
+      "H": 5,
+      "E": 4,
+      "S": 5,
+      "R": 4,
+      "V": 5
+    }
+  },
+  {
+    "date": "2026-09-09",
     "macrostructure": "Split Studio",
     "previous_macrostructure": "Narrative Workflow",
     "theme": "custom — Antosan brand board",
@@ -10,6 +30,13 @@
     "footer": "Ft1 Mast-headed with closing CTA",
     "enrichment": "Original architectural hero image + local queue simulation",
     "brief": "Antosan standalone landing page; Queue-it content inspiration, user-supplied brand identity",
-    "scores": { "P": 4, "H": 5, "E": 4, "S": 5, "R": 4, "V": 4 }
+    "scores": {
+      "P": 4,
+      "H": 5,
+      "E": 4,
+      "S": 5,
+      "R": 4,
+      "V": 4
+    }
   }
 ]
