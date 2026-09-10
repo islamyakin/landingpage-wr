@@ -7,10 +7,11 @@
 @import "./tokens.css";
 
 :root {
-  --lp-secondary-ink: #595960;
-  --lp-action-ink: #18181b;
-  --lp-soft: #fafafa;
-  --lp-diagram-line: #d6d6da;
+  /* Official palette (see tokens.css) - no standalone greys. */
+  --lp-secondary-ink: var(--text-secondary);
+  --lp-action-ink: var(--ink);
+  --lp-soft: var(--paper-peach);
+  --lp-diagram-line: var(--art-line);
   --lp-page-gutter: clamp(1.25rem, 4vw, 4rem);
   --lp-section-gap: clamp(4rem, 8vw, 7rem);
   --lp-z-header: 10;
@@ -977,7 +978,7 @@ body {
   width: min(100%, 560px);
 }
 
-/* Trust — dark contrast band via --story-* tokens */
+/* Trust - dark contrast band via --story-* tokens */
 .lp-trust-quote {
   margin: var(--space-10) 0 0;
   padding: var(--space-10);
@@ -1037,7 +1038,7 @@ body {
   max-width: 40ch;
 }
 
-/* Illustrative badge — small, visibly distinct marker */
+/* Illustrative badge - small, visibly distinct marker */
 .lp-illustrative {
   display: inline-flex;
   align-items: center;
@@ -1057,7 +1058,7 @@ body {
   color: var(--story-muted);
 }
 
-/* Hero — secondary "Coba simulasi" link */
+/* Hero - secondary "Coba simulasi" link */
 .lp-hero-sim-link {
   color: var(--info) !important;
   font-weight: 550;
@@ -1293,13 +1294,6 @@ body {
   .lp-use-cases li {
     font-size: 0.6875rem;
     gap: var(--space-1);
-  }
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --lp-secondary-ink: #abb4c0;
-    --lp-soft: #1b1f24;
-    --lp-diagram-line: #46505a;
   }
 }
 @media (pointer: coarse) {

@@ -1,33 +1,64 @@
-/* Antosan · Stitch architectural simulation · portable design tokens */
+/* Antosan · design tokens · portable palette
+ *
+ * Source of truth: Stitch screen "Antosan Landing Page (Palet Resmi Deep Teal
+ * & Warm Ivory)" (project 14784201623519037146, screen 0c5711a8…e784c).
+ * Palette is the strict 8-swatch set declared in that screen's Tailwind config;
+ * geometry and type scale keep the Stitch architectural language the screen
+ * uses (pill actions, 16–24px cards, teal-tinted ambient depth).
+ *
+ * DESIGN.md's prose describes a stricter "no pill / hairline only" variant that
+ * the official screen does not follow - the screen wins where the two disagree.
+ */
 :root {
   color-scheme: light;
-  --color-paper: oklch(0.984152 0.003413 247.858);
-  --color-mist: oklch(0.981926 0.01806 155.826);
-  --color-mist-top: oklch(0.958417 0.032966 172.848);
-  --color-surface: oklch(1 0 89.876);
-  --color-glass: rgb(255 255 255 / 80%);
-  --color-ink: oklch(0.207682 0.039824 265.755);
-  --color-ink-secondary: oklch(0.445533 0.037447 257.281);
-  --color-muted: oklch(0.521691 0.034093 243.883);
-  --color-accent: oklch(0.510938 0.086055 186.391);
-  --color-accent-dark: oklch(0.359896 0.059492 186.54);
-  --color-turquoise: oklch(0.703753 0.123018 182.503);
-  --color-mint: oklch(0.904941 0.089488 164.15);
-  --color-soft: oklch(0.962494 0.022919 172.865);
-  --color-rule: oklch(0.921514 0.017218 187.873);
-  --color-input-rule: oklch(0.622286 0.029916 187.829);
-  --color-focus: oklch(0.510938 0.086055 186.391);
-  --color-error: oklch(0.505142 0.17894 17.426);
-  --color-telemetry: oklch(0.207682 0.039824 265.755);
-  --color-telemetry-text: oklch(0.868981 0.019848 252.894);
-  --color-telemetry-rule: oklch(0.371696 0.039156 257.287);
+
+  /* --- Official palette (Stitch · strict swatch set) --- */
+  --color-primary: #0f766e; /* deepTeal · primary CTA, anchor type */
+  --color-primary-deep: #084742; /* tealDark · deep tone accent, CTA panels */
+  --color-turquoise: #14b8a6; /* turquoise · secondary accent, focus, meters */
+  --color-mint: #a7f3d0; /* mint · tint & highlight */
+  --color-slate: #475569; /* slateGray · body / secondary text */
+  --color-ink: #0f172a; /* slateDark · headings, high contrast */
+  --color-canvas: #fffbf2; /* warmIvory · page background */
+  --color-card: #fffdf9; /* ivoryCard · elevated card background */
+  --color-surface: #ffffff; /* pure white · chips, type on teal */
+
+  /* --- Derived tints (mint over warm ivory) --- */
+  --color-mist: var(--color-canvas);
+  --color-mist-top: #e0f8e6; /* mint 35% · ambient hero glow */
+  --color-soft: #edf9eb; /* mint 20% · icon wells, soft panels */
+  --color-glass: rgb(255 251 242 / 90%); /* warmIvory/90 · glass islands */
+  --color-chip-bg: rgb(167 243 208 / 40%); /* mint/40 · pill badges */
+  --color-chip-rule: rgb(20 184 166 / 50%); /* turquoise/50 · pill border */
+
+  /* --- Hairlines & depth (deepTeal alpha, per the screen's own ring/shadow) --- */
+  --color-rule: rgb(15 118 110 / 15%); /* border-deepTeal/15 */
+  --color-input-rule: rgb(15 118 110 / 30%);
+  --color-shadow: rgb(15 118 110 / 8%); /* shadow-card-ivory ring/ambient */
+  --color-shadow-accent: rgb(15 118 110 / 18%); /* shadow-teal-sm */
+
+  /* --- Semantic --- */
+  --color-focus: var(--color-turquoise); /* shadow-glow-mint ring */
+  --color-error: #ba1a1a;
   --color-clear: transparent;
-  --color-shadow: rgb(15 118 110 / 8%);
-  --color-shadow-accent: rgb(15 118 110 / 16%);
+
+  /* --- Inverse surface · dark telemetry readouts --- */
+  --color-telemetry: var(--color-ink);
+  --color-telemetry-text: #e2f8e6;
+  --color-telemetry-rule: rgb(167 243 208 / 18%);
+
+  /* --- Typography · Plus Jakarta Sans + JetBrains Mono, per the screen --- */
   --font-body:
     "Plus Jakarta Sans Variable", system-ui, -apple-system, sans-serif;
   --font-display: var(--font-body);
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-mono:
+    "JetBrains Mono Variable", ui-monospace, SFMono-Regular, Menlo, Consolas,
+    monospace;
+  --text-display: clamp(2.25rem, 4.45vw, 3.75rem);
+  --text-heading: clamp(1.8rem, 3vw, 2.4rem);
+  --text-body: 1rem;
+
+  /* --- Spacing --- */
   --space-xs: 0.5rem;
   --space-sm: 1rem;
   --space-md: 1.5rem;
@@ -35,32 +66,39 @@
   --space-xl: 3rem;
   --space-2xl: 4rem;
   --space-3xl: 5rem;
-  --text-display: clamp(2.25rem, 4.45vw, 3.75rem);
-  --text-heading: clamp(1.8rem, 3vw, 2.4rem);
-  --text-body: 1rem;
+
+  /* --- Shapes --- */
   --radius-card: 24px;
   --radius-input: 10px;
   --radius-pill: 999px;
+
+  /* --- Motion --- */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --dur-short: 160ms;
-  /* Shared components inherit the Stitch palette. */
-  --panel: var(--color-paper);
-  --surface: var(--color-surface);
+
+  /* --- Aliases · shared components inherit the same palette --- */
+  --color-paper: var(--color-canvas);
+  --color-accent: var(--color-primary);
+  --color-accent-dark: var(--color-primary-deep);
+  --color-ink-secondary: var(--color-slate);
+  --color-muted: var(--color-slate);
+  --panel: var(--color-canvas);
+  --surface: var(--color-card);
   --ink: var(--color-ink);
-  --text-secondary: var(--color-ink-secondary);
+  --text-secondary: var(--color-slate);
   --line: var(--color-rule);
   --input-line: var(--color-input-rule);
-  --accent: var(--color-accent);
-  --accent-deep: var(--color-accent);
+  --accent: var(--color-primary);
+  --accent-deep: var(--color-primary-deep);
   --accent-ink: var(--color-surface);
-  --action-bg: var(--color-accent);
-  --action-hover: var(--color-accent-dark);
-  --paper-soft: var(--color-paper);
+  --action-bg: var(--color-primary);
+  --action-hover: var(--color-turquoise);
+  --paper-soft: var(--color-canvas);
   --paper-peach: var(--color-soft);
   --paper-accent: var(--color-soft);
-  --success: var(--color-accent);
+  --success: var(--color-primary);
   --brand-orange: var(--color-turquoise);
   --brand-orange-soft: var(--color-mint);
 }
