@@ -327,9 +327,10 @@ const integrations = {
       "Pasang connector di edge Anda. Pengunjung diarahkan ke antrean saat diperlukan, lalu kembali dengan token akses yang diverifikasi di edge.",
     path: ["Pengunjung", "Edge + connector", "Situs Anda"],
     details: [
-      "Jangkauan luas: sisi klien, sisi server, edge, dan seluler",
-      "Terpasang di edge seperti Cloudflare Workers dan AWS CloudFront",
+      "Connector siap pakai untuk Cloudflare Workers dan AWS CloudFront (Lambda@Edge)",
+      "Keduanya berjalan di atas satu protokol bersama, dikirim sebagai source yang Anda deploy sendiri",
       "DNS tetap dikelola di sisi Anda, trafik situs tidak melewati gateway kami",
+      "Token akses diverifikasi offline di edge Anda, jadi situs tetap hidup meski gateway tak terjangkau",
     ],
   },
 };
@@ -440,8 +441,8 @@ function Integrations() {
                 ))}
               </ul>
               {key === "connector" ? (
-                <a className="lp-text-link" href={siteConfig.connectorDocsUrl}>
-                  {siteConfig.connectorDocsLabel}
+                <a className="lp-text-link" href={siteConfig.subscribeUrl}>
+                  Tanyakan pemasangan connector
                   <Icon name="arrow" size={17} />
                 </a>
               ) : (
@@ -648,7 +649,7 @@ function HowItWorks() {
 // keadilan: urutan FIFO (Req 4.1), pengacakan pre-queue untuk mulai terjadwal
 // (Req 4.2), dan keadilan terhadap bot (Req 4.3). Tiap item memakai `h3` (tanpa
 // melompati level heading) untuk judul plus teks penjelas dari `body`. Salinan
-// tidak mengklaim pemblokiran bot secara mutlak — frasa data memakai "mengurangi
+// tidak mengklaim pemblokiran bot secara mutlak - frasa data memakai "mengurangi
 // keuntungan tidak adil dari bot" (Req 4.4). Seluruh salinan berbahasa Indonesia.
 function Fairness() {
   return (
@@ -765,7 +766,7 @@ function BrandExperience() {
 // `aria-labelledby` ke `h2#features-title`, sebuah `dl` dari data `features`
 // (`dt`/`dd`), dan `a.lp-dark-link` menuju `siteConfig.dashboardUrl` dengan
 // label `siteConfig.dashboardFeatureLabel` (Req 8.5). Anchor `#fitur` dirujuk
-// Navigation (Req 8.6). Statis, tanpa state — pola sama seperti section lain.
+// Navigation (Req 8.6). Statis, tanpa state - pola sama seperti section lain.
 function Features() {
   return (
     <section
