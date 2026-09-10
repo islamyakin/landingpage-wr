@@ -1,0 +1,466 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1.1 Tambahkan `scenarios` dan `plays` sebagai ekspor internal": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961293913
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961310214
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961399864
+      }
+    ],
+    "1.2 Tambahkan `fairnessPoints` dan `trafficControlPoints` sebagai ekspor internal": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961293945
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961405452
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961502080
+      }
+    ],
+    "1.3 Refresh data `features`, perluas copy `integrations`, dan tambahkan data `trust`": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961293998
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961507051
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788962183379
+      }
+    ],
+    "1.4 Tulis tes contoh untuk struktur data konten baru": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961294027
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788962189482
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788962309763
+      }
+    ],
+    "2.1 Perbarui `navLinks` dan simpan sebagai fragment/data yang dapat diuji": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961294054
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788962190042
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788962310839
+      }
+    ],
+    "2.2 Susun ulang `main` mengikuti urutan bagian baru dengan landmark & anchor": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961294079
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788962319032
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788962482825
+      }
+    ],
+    "2.3 Refresh komponen `Hero` berorientasi hasil": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961294112
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788962489222
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788962679240
+      }
+    ],
+    "2.4 Implementasikan komponen `Scenarios`": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961294161
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788962684342
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788962768415
+      }
+    ],
+    "2.5 Refresh komponen `HowItWorks` dengan tiga mode aktivasi": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961294185
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788962773610
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788962865451
+      }
+    ],
+    "2.6 Implementasikan komponen `Fairness`": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961294212
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788962871852
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788962951740
+      }
+    ],
+    "2.7 Implementasikan komponen `TrafficControl`": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961294233
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788962958409
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788963047069
+      }
+    ],
+    "2.8 Implementasikan komponen `BrandExperience`": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961294255
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788963056721
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788963174252
+      }
+    ],
+    "2.9 Refresh komponen `Features` dari data `features`": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961294284
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788963180567
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788963280890
+      }
+    ],
+    "2.10 Implementasikan komponen `Trust`": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961294310
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788963287185
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788963385569
+      }
+    ],
+    "3. Checkpoint - pastikan halaman ter-compile dan tes tetap hijau": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961294330
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788963403273
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788963418033
+      }
+    ],
+    "4.1 Reposisikan `QueueDemo` menjadi bagian tersendiri setelah TrafficControl": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961294352
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788963424658
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788963500295
+      }
+    ],
+    "4.2 Property test - batas model selalu terjaga": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961294377
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788963507459
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788963888940
+      }
+    ],
+    "4.3 Property test - pelepasan memasukkan pengunjung antrean": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961294400
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788963508403
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788963889961
+      }
+    ],
+    "4.4 Property test - tombol nonaktif tepat saat antrean kosong": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961294427
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788963509805
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788963891124
+      }
+    ],
+    "4.5 Property test - ganti tingkat mereset dan menghitung ulang": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961294460
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788963511198
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788963892343
+      }
+    ],
+    "5.1 Gaya struktur & responsif untuk bagian baru": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961294483
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788963898570
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788964043726
+      }
+    ],
+    "5.2 Terapkan Color_Palette Cloudflare pada token warna": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961294529
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788964051651
+      }
+    ],
+    "5.3 Tes verifikasi token warna Cloudflare": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961294550
+      }
+    ],
+    "6.1 Verifikasi & rapikan wiring landmark, heading, dan fokus": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961294576
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788964052527
+      }
+    ],
+    "7.1 Perbarui salinan meta/OG/Twitter/JSON-LD tanpa merestrukturisasi tag": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961294600
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788963512164
+      },
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788964042765
+      }
+    ],
+    "8.1 Tes CTA & tautan dari `siteConfig`": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961294626
+      }
+    ],
+    "8.2 Tes struktur data Integrations & navigasi": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961294651
+      }
+    ],
+    "8.3 Tes traceability Fairness/TrafficControl/Features/Trust": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961294677
+      }
+    ],
+    "9.1 Jalankan `npm test` dan `npm run build`, rapikan berkas sementara": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788961294700
+      }
+    ],
+    "1. Tambahkan model data konten statis di scope modul `LandingPage.jsx`": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788962309805
+      }
+    ],
+    "2. Perbarui navigasi dan kerangka halaman (anchor + urutan bagian)": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788963385613
+      }
+    ],
+    "4. Pertahankan `QueueDemo` di bagian `#simulasi` tanpa mengubah perilaku/kontrak": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788963892392
+      }
+    ],
+    "7. Selaraskan meta `index.html` dengan copy Hero/bagian baru": [
+      {
+        "executionId": "209e8fe6-8357-4af4-958c-41ff6930e969",
+        "chatSessionId": "sess_dc79900d-dbb9-42e2-b911-e776d227c380",
+        "timestamp": 1788964042874
+      }
+    ]
+  }
+}

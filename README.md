@@ -1,4 +1,4 @@
-# Antosan — Stitch Architecture
+# Antosan - Stitch Architecture
 
 Landing page berbahasa Indonesia untuk [Antosan](https://antosan.com/). Proyek React + Vite mandiri,
 berisi simulasi antrean, alur kerja, fitur, pilihan integrasi, dan FAQ.

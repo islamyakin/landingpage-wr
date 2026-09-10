@@ -1,7 +1,15 @@
 import { useRef, useState } from "react";
 import Icon from "./Icon.jsx";
 import ArchitectureSimulator from "./ArchitectureSimulator.jsx";
-import { siteConfig } from "./siteConfig.js";
+import SubscribePanel from "./SubscribePanel.jsx";
+import {
+  siteConfig,
+  entryPackage,
+  entryPackagePriced,
+  entryPackageLimits,
+  entryPriceHeadline,
+  formatIDR,
+} from "./siteConfig.js";
 import "./stitch.css";
 
 function Brand({ footer = false }) {
@@ -82,8 +90,10 @@ function HeroPreview() {
       <div className="st-hero-art">
         <img
           src="/images/stitch/gateway.webp"
-          width="512"
-          height="288"
+          srcSet="/images/stitch/gateway-640.webp 640w, /images/stitch/gateway.webp 1280w"
+          sizes="(min-width: 1024px) 545px, (min-width: 768px) 595px, 90vw"
+          width="1280"
+          height="720"
           alt="Pengunjung mengantre menuju gerbang Antosan berwarna teal"
           fetchPriority="high"
         />
@@ -108,10 +118,9 @@ function HeroPreview() {
           <span className="st-status">Giliran berikutnya</span>
         </div>
         <div className="st-waiting-message">
-          <h2>Mohon bersiap, gerbang segera terbuka.</h2>
+          <h2>Sebentar lagi giliran Anda. </h2>
           <p>
-            Anda sudah mendapat tempat. Pengunjung masuk secara bertahap saat
-            kapasitas tersedia.
+            Tempat Anda sudah aman. Akses akan diberikan secara bertahap saat kapasitas tersedia.
           </p>
         </div>
         <div className="st-waiting-progress">
@@ -171,8 +180,9 @@ export default function StitchPage({
     ["#solusi", "Solusi"],
     ["#metode-antrean", "Metode"],
     ["#security-controls", "Keamanan"],
+    ["#otomasi", "Otomasi"],
     ["#arsitektur", "Arsitektur"],
-    ["#harga", "Kebutuhan"],
+    ["#harga", "Harga"],
   ];
   return (
     <div className="stitch-page" id="atas">
@@ -202,9 +212,6 @@ export default function StitchPage({
             ))}
           </nav>
           <div className="st-nav-actions">
-            <a className="st-nav-docs" href={siteConfig.connectorDocsUrl}>
-              Dokumentasi
-            </a>
             <a className="st-button st-nav-cta" href={siteConfig.dashboardUrl}>
               {siteConfig.dashboardNavLabel}
             </a>
@@ -235,7 +242,6 @@ export default function StitchPage({
               {label}
             </a>
           ))}
-          <a href={siteConfig.connectorDocsUrl}>Dokumentasi</a>
         </nav>
       </header>
       <main id="konten" tabIndex={-1}>
@@ -250,34 +256,32 @@ export default function StitchPage({
               Virtual Waiting Room
             </p>
             <h1 id="st-hero-title">
-              Tetap Tenang dan Stabil <span>di Saat Trafik Memuncak</span>
+              Traffic rame? Santai,<span>Antosan yang atur.</span>
             </h1>
-            <p className="st-hero-subtitle">
-              Antrean tertib, akses lebih baik.
-            </p>
+            <p className="st-hero-subtitle">Antosan dulu. Biar server nggak langsung diserbu.</p>
             <p className="st-hero-description">
-              Antosan membantu Anda mengelola lonjakan pengunjung dengan antrean
-              digital yang tenang, transparan, dan teratur. Beri origin server
-              ruang untuk melayani.
+              Antosan membantu mengatur lonjakan pengunjung lewat virtual waiting room. Akses dibuka bertahap sesuai kapasitas, jadi aplikasi tetap lancar meski banyak orang datang bersamaan.
             </p>
             <div className="st-hero-actions">
               <Action>{siteConfig.dashboardLabel}</Action>
-              <Action href={siteConfig.connectorDocsUrl} secondary>
-                Lihat dokumentasi
+              <Action href={siteConfig.subscribeUrl} secondary>
+                {siteConfig.subscribeLabel}
               </Action>
             </div>
             <ul className="st-hero-highlights">
-              <li>
-                <Icon name="shield" size={17} />
-                Kapasitas terkendali
+              <li className="st-highlight-price">
+                <a href="#harga">
+                  <Icon name="activity" size={17} />
+                  {entryPriceHeadline()}
+                </a>
               </li>
               <li>
-                <Icon name="check" size={17} />
-                Integrasi fleksibel
+                <Icon name="shield" size={17} />
+                Batasi akses sesuai kapasitas
               </li>
               <li>
                 <Icon name="members" size={17} />
-                Giliran yang adil
+                FIFO atau Random
               </li>
             </ul>
           </div>
@@ -494,14 +498,15 @@ export default function StitchPage({
                 Invitation Codes
               </h2>
               <p>
-                Sediakan jalur masuk khusus bagi anggota, mitra, atau pemegang
-                kode undangan. Kelola akses prioritas sesuai kebutuhan event
-                Anda.
+                Terbitkan kode sekali pakai untuk anggota, mitra, atau pemegang
+                tiket. Pemegang kode masuk lewat tautan tiket dan melewati
+                antrean, tetap melalui verifikasi anti-bot.
               </p>
               <CheckList
                 items={[
-                  "Kode undangan untuk pengunjung yang memenuhi syarat.",
-                  "Akses khusus dikelola bersama aturan room Anda.",
+                  "Generate batch kode acak atau impor kode dari sistem tiket Anda.",
+                  "Admisi prioritas mengabaikan batas kapasitas - beban diatur lewat jumlah kode yang diterbitkan.",
+                  "Kode ditukar sekali pakai secara atomik, dan bisa dicabut kapan pun.",
                 ]}
               />
               <a className="st-card-footer st-text-link" href="#simulasi">
@@ -680,6 +685,183 @@ export default function StitchPage({
               </div>
             </div>
           </div>
+          <div className="st-subheading">
+            <h3>Proteksi bawaan, tanpa konfigurasi</h3>
+            <p>
+              Berlaku otomatis di setiap room, sebelum pengunjung menyentuh
+              antrean.
+            </p>
+          </div>
+          <div className="st-grid st-grid-three">
+            <FeatureCard
+              icon="clock"
+              title="Rate limit per-IP"
+              footer="429 + Retry-After"
+            >
+              Penerbitan dan verifikasi challenge dibatasi per alamat IP, jadi
+              satu sumber tidak bisa membanjiri CPU gateway.
+            </FeatureCard>
+            <FeatureCard
+              icon="shield"
+              title="Token terikat IP"
+              footer="Satu solve, satu sumber"
+            >
+              Challenge yang sudah dipecahkan tidak bisa dipakai ulang dari
+              alamat lain. Cookie sesi sengaja tidak diikat IP agar pengguna
+              seluler yang berpindah jaringan tidak terlempar keluar.
+            </FeatureCard>
+            <FeatureCard
+              icon="settings"
+              title="Rotasi kunci connector"
+              footer="Overlap window"
+            >
+              Kunci connector dirotasi dengan masa tumpang tindih: kunci lama
+              masih diterima sampai rotasi berikutnya, jadi deploy di edge Anda
+              tidak perlu serentak.
+            </FeatureCard>
+          </div>
+        </section>
+
+        <section
+          className="st-section st-container"
+          id="operasional"
+          aria-labelledby="ops-title"
+        >
+          <SectionHeading id="ops-title" title="Kendali selama event berjalan.">
+            Ketika antrean sudah hidup, yang Anda butuhkan bukan konfigurasi
+            baru - melainkan sakelar yang jelas dan angka yang jujur.
+          </SectionHeading>
+          <div className="st-grid st-grid-four">
+            <FeatureCard
+              icon="rooms"
+              title="Tahan Barisan"
+              footer="Mode maintenance"
+            >
+              Tahan seluruh pengunjung tanpa mengadmit siapa pun, untuk jendela
+              pemeliharaan atau menunggu aba-aba manual sebelum dibuka.
+            </FeatureCard>
+            <FeatureCard
+              icon="clock"
+              title="Kendali Sesi"
+              footer="Idle atau batas keras"
+              highlight
+            >
+              Sesi diperpanjang selama pengunjung aktif, jadi durasi sesi
+              berlaku sebagai batas diam. Pilih batas keras absolut bila giliran
+              harus benar-benar bergulir.
+            </FeatureCard>
+            <FeatureCard
+              icon="close"
+              title="Halaman Tutup Sendiri"
+              footer="Terpisah dari antrean"
+            >
+              Halaman "belum dibuka" punya template sendiri, terpisah dari
+              halaman antrean - keduanya menyampaikan hal yang berlawanan, jadi
+              masing-masing perlu dirancang.
+            </FeatureCard>
+            <FeatureCard
+              icon="activity"
+              title="Angka Operasional"
+              footer="Yang dipantau saat ramai"
+            >
+              Laju admisi per menit, estimasi tunggu, dan penanda satu identitas
+              yang terlihat dari perangkat berbeda - sinyal, bukan putusan.
+            </FeatureCard>
+          </div>
+        </section>
+
+        <section
+          className="st-section st-container"
+          id="otomasi"
+          aria-labelledby="automation-title"
+        >
+          <SectionHeading
+            id="automation-title"
+            title="Beri kabar ke sistem Anda."
+          >
+            Antrean tidak perlu ditunggui. Ia mengabari sistem Anda saat keadaan
+            berubah, dan bisa menjawab sebagai data ketika yang bertanya adalah
+            aplikasi.
+          </SectionHeading>
+          <div className="st-grid st-grid-two">
+            <article className="st-glass st-large-card">
+              <span className="st-icon">
+                <Icon name="activity" size={24} />
+              </span>
+              <h2>Webhook Events</h2>
+              <p>
+                Setiap transisi penting dikirim sebagai POST JSON ke endpoint
+                Anda, ditandatangani HMAC-SHA256 agar bisa Anda verifikasi.
+              </p>
+              <div className="st-countdown-preview">
+                <div>
+                  <strong>Event per room</strong>
+                  <span className="st-status">POST JSON</span>
+                </div>
+                <dl>
+                  <div>
+                    <dt>room.opened</dt>
+                    <dd>Room terjadwal melewati waktu buka</dd>
+                  </div>
+                  <div>
+                    <dt>queue.started</dt>
+                    <dd>Antrean mulai terisi</dd>
+                  </div>
+                  <div>
+                    <dt>queue.threshold</dt>
+                    <dd>Antrean mencapai ambang Anda</dd>
+                  </div>
+                  <div>
+                    <dt>queue.drained</dt>
+                    <dd>Antrean kembali kosong</dd>
+                  </div>
+                </dl>
+              </div>
+              <CheckList
+                items={[
+                  "Tiap transisi terkirim tepat sekali, meski control plane direplikasi.",
+                  "Pengiriman diulang dengan backoff sampai endpoint Anda membalas 2xx.",
+                  "URL yang menunjuk alamat privat ditolak, dan redirect tidak diikuti.",
+                ]}
+              />
+            </article>
+            <article className="st-glass st-large-card">
+              <span className="st-icon">
+                <Icon name="settings" size={24} />
+              </span>
+              <h2>JSON Queue State</h2>
+              <p>
+                Client yang meminta JSON menerima keadaan antrean sebagai data,
+                bukan halaman HTML - untuk SPA, aplikasi, atau integrasi API.
+              </p>
+              <div className="st-adaptive-example st-status-codes">
+                <span>Status respons antrean</span>
+                <div className="st-meter" aria-hidden="true">
+                  <span />
+                </div>
+                <dl>
+                  <div>
+                    <dt>Default</dt>
+                    <dd>200</dd>
+                  </div>
+                  <div>
+                    <dt>Diproses</dt>
+                    <dd>202</dd>
+                  </div>
+                  <div>
+                    <dt>Ditahan</dt>
+                    <dd>429</dd>
+                  </div>
+                </dl>
+              </div>
+              <CheckList
+                items={[
+                  "Aktifkan per room, dipicu oleh header Accept dari client.",
+                  "Pilih status HTTP respons antrean sesuai cara client Anda menanganinya.",
+                ]}
+              />
+            </article>
+          </div>
         </section>
 
         <ArchitectureSimulator />
@@ -771,63 +953,70 @@ export default function StitchPage({
         >
           <SectionHeading
             id="needs-title"
-            title="Sesuaikan dengan kebutuhan Anda."
+            title="Mulai dari satu event."
           >
-            Mulai dari skenario penggunaan, kapasitas origin, dan cara
-            integrasi. Rincian paket dan harga belum dipublikasikan.
+            Antosan dijual per event, bukan langganan bulanan. Anda hanya
+            membayar untuk momen yang perlu dijaga.
           </SectionHeading>
-          <div className="st-grid st-grid-three st-needs">
-            <article className="st-glass">
-              <h3>Untuk satu event</h3>
+          <div className="st-grid st-grid-two st-needs">
+            <article className="st-glass st-highlight st-package">
+              <h3>{entryPackage.name}</h3>
+              <div className="st-price">
+                {entryPackagePriced ? (
+                  <>
+                    <strong>{formatIDR(entryPackage.priceIDR)}</strong>
+                    <span>per event</span>
+                  </>
+                ) : (
+                  <>
+                    <strong>Buat hype-nya. Bukan chaos-nya.</strong>
+                    <span>Biar antrean-nya Antosan yang atur.</span>
+                  </>
+                )}
+              </div>
               <p>
-                Persiapkan satu momen pembukaan dengan jadwal, pre-queue, dan
-                kapasitas yang terukur.
+                Cocok untuk ticketing, registrasi, atau event dengan lonjakan trafik menengah. Atur jadwal buka, kapasitas, dan mekanisme antrean dari awal supaya saat akses dibuka, pengunjung masuk bertahap tanpa langsung membebani origin.
               </p>
               <CheckList
                 items={[
-                  "Penjualan tiket atau registrasi",
-                  "Jadwal pembukaan",
-                  "Identitas event pada antrean",
+                  ...entryPackageLimits(),
+                  "Pre-queue sebelum event mulai lengkap dengan countdown",
+                  "FIFO atau random untuk User yang sudah menunggu",
+                  "Anti-bot challenge dengan captcha, aritmetika, atau proof-of-work",
+                  "Waiting room sesuai brand Anda dengan logo dan warna sendiri",
+                  "Pantau antrean secara live plus histori hingga 24 jam",
                 ]}
               />
-              <Action href="#simulasi" secondary>
-                Coba skenario event
+              <Action href={siteConfig.subscribeUrl}>
+                {siteConfig.subscribeLabel}
               </Action>
             </article>
-            <article className="st-glass st-highlight">
-              <h3>Untuk trafik rutin</h3>
+            <article className="st-glass st-package">
+              <h3>Skala lebih besar</h3>
+              <div className="st-price">
+                <strong>Penawaran per kebutuhan</strong>
+                <span>beberapa room atau trafik rutin</span>
+              </div>
               <p>
-                Tempatkan antrean sebagai penjaga ketika kunjungan harian
-                melewati kapasitas layanan.
+                Kapasitas lebih tinggi, beberapa room sekaligus, trafik rutin
+                harian, atau operasional bersama anggota workspace.
               </p>
               <CheckList
                 items={[
-                  "Antrean aktif sesuai ambang",
-                  "Pemantauan trafik",
-                  "Pengaturan laju masuk",
+                  "Beberapa room dalam satu workspace",
+                  "Kapasitas dan laju masuk sesuai origin Anda",
+                  "Mode proxy atau connector di edge Anda",
+                  "Webhook event dan mode JSON untuk otomasi",
                 ]}
               />
-              <Action href="#integrasi">Pelajari integrasi</Action>
-            </article>
-            <article className="st-glass">
-              <h3>Untuk banyak layanan</h3>
-              <p>
-                Atur kebutuhan beberapa room dan kolaborasikan operasional
-                bersama anggota workspace.
-              </p>
-              <CheckList
-                items={[
-                  "Room dan workspace",
-                  "Akses anggota tim",
-                  "Kontrol per layanan",
-                ]}
-              />
-              <Action href={siteConfig.connectorDocsUrl} secondary>
-                Baca panduan
+              <Action href={siteConfig.subscribeUrl} secondary>
+                Kirim detail event
               </Action>
             </article>
           </div>
         </section>
+
+        <SubscribePanel />
 
         <section
           className="st-section st-container st-faq"
@@ -859,16 +1048,19 @@ export default function StitchPage({
             <h2 id="cta-title">
               Beri ruang untuk antusiasme.
               <br />
-              Kami bantu atur antreannya.
+              Antosan bantu atur antreannya.
             </h2>
             <p>
               Siapkan pengalaman akses yang tertib, tenang, dan sesuai kapasitas
-              layanan Anda.
+              layanan Anda. Langganan diatur lewat email - kami balas dengan
+              harga per event dan menyiapkan room-nya.
             </p>
             <div className="st-hero-actions">
-              <Action>{siteConfig.dashboardLabel}</Action>
-              <Action href={siteConfig.connectorDocsUrl} secondary>
-                Lihat dokumentasi
+              <Action href={siteConfig.subscribeUrl}>
+                {siteConfig.subscribeLabel}
+              </Action>
+              <Action href={siteConfig.dashboardUrl} secondary>
+                {siteConfig.dashboardLabel}
               </Action>
             </div>
           </div>
@@ -885,12 +1077,16 @@ export default function StitchPage({
                 Ruang untuk semua.
               </p>
               <a href={siteConfig.url}>antosan.com</a>
+              <a href={`mailto:${siteConfig.contactEmail}`}>
+                {siteConfig.contactEmail}
+              </a>
             </div>
             <div>
               <h2>Produk</h2>
               <a href="#produk">Virtual Waiting Room</a>
               <a href="#metode-antrean">Metode antrean</a>
               <a href="#security-controls">Keamanan</a>
+              <a href="#operasional">Kendali operasional</a>
               <a href="#simulasi">Simulasi interaktif</a>
             </div>
             <div>
@@ -904,8 +1100,9 @@ export default function StitchPage({
               <h2>Pelajari</h2>
               <a href="#arsitektur">Cara kerja</a>
               <a href="#integrasi">Integrasi</a>
-              <a href={siteConfig.connectorDocsUrl}>Dokumentasi</a>
+              <a href="#otomasi">Webhook &amp; JSON</a>
               <a href="#pertanyaan">Pertanyaan umum</a>
+              <a href={siteConfig.subscribeUrl}>Berlangganan</a>
             </div>
           </div>
           <div className="st-footer-bottom">

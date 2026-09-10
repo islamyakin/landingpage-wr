@@ -13,6 +13,14 @@
   src: url("@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2")
     format("woff2-variations");
 }
+@font-face {
+  font-family: "JetBrains Mono Variable";
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url("@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2")
+    format("woff2-variations");
+}
 html,
 body {
   overflow-x: clip;
@@ -297,7 +305,7 @@ body {
 .st-mobile-nav {
   display: grid;
   gap: 4px;
-  background: var(--color-surface);
+  background: var(--color-card);
   padding: 16px;
   margin-top: 12px;
   border-radius: 20px;
@@ -390,6 +398,21 @@ body {
   font-size: 0.73rem;
   font-weight: 600;
 }
+.st-highlight-price a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px 6px 11px;
+  border-radius: var(--radius-pill);
+  background: var(--color-chip-bg);
+  border: 1px solid var(--color-chip-rule);
+  color: var(--color-primary);
+  font-weight: 750;
+  transition: background var(--dur-short) var(--ease-out);
+}
+.st-highlight-price a:hover {
+  background: var(--color-mint);
+}
 .st-hero-highlights svg {
   color: var(--color-accent);
 }
@@ -435,7 +458,7 @@ body {
 }
 .st-waiting-card {
   border-radius: 18px;
-  background: var(--color-surface);
+  background: var(--color-card);
   padding: 24px;
   margin-top: 20px;
   box-shadow: 0 1px 4px var(--color-shadow);
@@ -574,7 +597,7 @@ body {
   border: 1px solid var(--color-mint);
   border-radius: 16px;
   padding: 12px 20px 12px 12px;
-  background: var(--color-surface);
+  background: var(--color-card);
   box-shadow: 0 16px 32px -14px var(--color-shadow-accent);
 }
 .st-protection-note strong {
@@ -677,7 +700,7 @@ body {
 .st-logo-showcase figure {
   margin: 0;
   padding: 24px 12px;
-  background: var(--color-surface);
+  background: var(--color-card);
   border-radius: 16px;
   display: flex;
   flex-direction: column;
@@ -755,7 +778,7 @@ body {
   width: 100%;
   border-radius: 16px;
   padding: 20px;
-  background: var(--color-surface);
+  background: var(--color-card);
   margin: 24px 0 32px;
 }
 .st-adaptive-example > span {
@@ -783,6 +806,144 @@ body {
 .st-adaptive-example dl div:nth-child(2) {
   background: var(--color-soft);
   color: var(--color-accent-dark);
+}
+/* The status-code list is in numeric order, so the highlight has to sit on the
+   default (the first cell) rather than the second one the adaptive-limit card
+   wants - otherwise it contradicts the "200 = default" label beside it. */
+.st-status-codes dl div:nth-child(2) {
+  background: var(--color-paper);
+  color: inherit;
+}
+.st-status-codes dl div:nth-child(1) {
+  background: var(--color-soft);
+  color: var(--color-accent-dark);
+}
+.st-package {
+  display: flex;
+  flex-direction: column;
+}
+.st-package .st-checks {
+  margin-bottom: 28px;
+}
+.st-package .st-button {
+  margin-top: auto;
+  align-self: flex-start;
+}
+.st-price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  margin: 14px 0 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--color-rule);
+}
+.st-price strong {
+  font-family: var(--font-display);
+  font-size: 1.85rem;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: var(--color-ink);
+  font-variant-numeric: tabular-nums;
+}
+.st-price span {
+  /* Always its own row, so a short figure and a long "per kebutuhan" label
+     align the same way across cards instead of one wrapping and one not. */
+  flex-basis: 100%;
+  font-size: 0.72rem;
+  font-weight: 650;
+  color: var(--color-accent);
+}
+.st-price strong:not(:only-child) + span,
+.st-price span {
+  color: var(--color-accent);
+}
+.st-subscribe {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 48px;
+  padding: 48px;
+  align-items: start;
+}
+.st-subscribe h2 {
+  font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+  margin-bottom: 16px;
+}
+.st-subscribe-copy > p {
+  font-size: 0.9rem;
+}
+.st-subscribe-detail-label {
+  margin-top: 24px !important;
+  font-weight: 700;
+  color: var(--color-ink);
+  font-size: 0.82rem !important;
+}
+.st-subscribe-copy .st-checks {
+  margin-top: 14px;
+}
+.st-subscribe-actions {
+  background: var(--color-paper);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-input);
+  padding: 28px;
+}
+.st-subscribe-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  font-weight: 600;
+}
+.st-subscribe-address {
+  margin: 10px 0 22px !important;
+}
+.st-subscribe-address a {
+  font-family: var(--font-mono);
+  font-size: clamp(0.95rem, 2.2vw, 1.25rem);
+  font-weight: 600;
+  color: var(--color-ink);
+  letter-spacing: -0.01em;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  overflow-wrap: anywhere;
+}
+.st-subscribe-primary {
+  width: 100%;
+}
+.st-subscribe-status {
+  margin-top: 12px !important;
+  font-size: 0.72rem;
+  line-height: 1.65;
+  min-height: 2.6em;
+}
+.st-subscribe-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 18px;
+  border-top: 1px solid var(--color-rule);
+}
+.st-subscribe-links .st-button {
+  flex: 1 1 auto;
+  min-height: 42px;
+  font-size: 0.74rem !important;
+  padding: 10px 14px;
+  background: var(--color-surface);
+}
+@media (max-width: 900px) {
+  .st-subscribe {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+    padding: 32px 24px;
+  }
+  .st-subscribe-actions {
+    padding: 22px;
+  }
+  .st-subscribe-links .st-button {
+    flex: 1 1 100%;
+  }
 }
 .st-adaptive-example dt {
   font-size: 0.58rem;
@@ -813,7 +974,7 @@ body {
 .st-countdown-preview {
   padding: 24px;
   border-radius: 18px;
-  background: var(--color-surface);
+  background: var(--color-card);
 }
 .st-countdown-preview > div:first-child {
   display: flex;
@@ -893,7 +1054,7 @@ body {
   margin-top: 28px;
 }
 .st-access-rules .st-grid > div {
-  background: var(--color-surface);
+  background: var(--color-card);
   border-radius: 16px;
   padding: 24px;
 }
@@ -944,9 +1105,27 @@ body {
   border-color: var(--color-accent);
 }
 .st-scenario-note {
-  margin-block: 20px !important;
+  margin-block: 20px 8px !important;
   font-size: 0.82rem;
   min-height: 3.4em;
+  color: var(--color-ink);
+}
+.st-scenario-premise {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 20px !important;
+  font-size: 0.72rem;
+  line-height: 1.6;
+  color: var(--color-ink-secondary);
+}
+.st-scenario-premise svg {
+  margin-top: 3px;
+  color: var(--color-accent);
+}
+.st-scenario-premise strong {
+  color: var(--color-accent);
+  font-weight: 750;
 }
 .st-flow-nodes {
   display: grid;
@@ -956,7 +1135,7 @@ body {
 .st-flow-node {
   position: relative;
   padding: 22px 18px;
-  background: var(--color-surface);
+  background: var(--color-card);
   border: 1px solid var(--color-rule);
   border-radius: 16px;
 }
@@ -994,6 +1173,14 @@ body {
 .st-node-unit {
   display: block;
   font-size: 0.65rem;
+}
+.st-node-extra {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.6rem;
+  line-height: 1.5;
+  color: var(--color-accent);
+  font-weight: 650;
 }
 .st-flow-node .st-meter {
   margin-top: 16px;
@@ -1353,6 +1540,17 @@ body {
   max-width: 580px;
   margin: 22px auto 0;
   font-size: 0.93rem;
+}
+/* `.stitch-page a` strips link affordance globally, which leaves the mailto in
+   this paragraph indistinguishable from the text around it. */
+.st-final-cta p a {
+  color: var(--color-surface);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.st-final-cta p a:hover {
+  text-decoration-thickness: 2px;
 }
 .st-final-cta .st-hero-actions {
   justify-content: center;

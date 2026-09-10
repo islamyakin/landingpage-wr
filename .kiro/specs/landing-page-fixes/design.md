@@ -6,22 +6,22 @@ This bugfix targets two problems on the Antosan landing page (a React/Vite SPA w
 
 1. **Queue simulation logic bug** in the `QueueDemo` component. The interactive hero demo is meant to illustrate a virtual queue: releasing the queue ("Loloskan antrean") should *admit waiting visitors into the site's open slots*. The current code instead treats `released` as a subtraction from the present visitor pool (`remaining = visitors - released`), which drains people out of the simulation entirely and lets "Di dalam situs" fall below capacity while a queue still exists. The fix reworks the derived state so that the present population (`visitors`) stays constant, `released` counts *queued visitors admitted into the site*, "Di dalam situs" (`active`) stays pinned at `capacity` while a queue remains, and the waiting pool (`queued`) drains toward zero. The contradictory instruction text ("Coba kosongkan 4 slot di situs.") is replaced with copy consistent with the release action.
 
-2. **Text / phrasing corrections** in the Indonesian copy. A redundant FAQ answer ("Bagaimana cara mendapatkan akses?") is rewritten, and a light consistency pass is applied across hero, workflow, features, integrations, footer, metric labels, and the demo instruction text, plus `index.html` meta/social copy — preserving meaning and tone.
+2. **Text / phrasing corrections** in the Indonesian copy. A redundant FAQ answer ("Bagaimana cara mendapatkan akses?") is rewritten, and a light consistency pass is applied across hero, workflow, features, integrations, footer, metric labels, and the demo instruction text, plus `index.html` meta/social copy - preserving meaning and tone.
 
 The strategy is minimal and targeted: change only the `QueueDemo` derived-value computation, its button handler, and its instruction text for the logic bug; and edit only the specific copy strings for the phrasing pass. All layout, structure, links, accessibility attributes, and other interactive controls remain untouched.
 
 ## Glossary
 
-- **Bug_Condition (C)**: The condition that triggers the queue-demo bug — a queue exists (`visitors - capacity > released` in the fixed model, i.e. present visitors exceed capacity and are not yet fully admitted) and the user releases the queue, causing present visitors to be removed from the simulation instead of admitted into the site.
-- **Property (P)**: The desired behavior on release — queued visitors move into the site's open slots; "Di dalam situs" stays at `capacity` while a queue remains and only falls below `capacity` once the queue is empty and present visitors are fewer than `capacity`; no present visitor disappears from the simulation.
-- **Preservation**: Existing behavior that must remain unchanged — the Normal traffic level (no queue, disabled button), the empty-queue disabled state, level-change resets, the status-line logic, and all copy/structure outside the targeted strings.
+- **Bug_Condition (C)**: The condition that triggers the queue-demo bug - a queue exists (`visitors - capacity > released` in the fixed model, i.e. present visitors exceed capacity and are not yet fully admitted) and the user releases the queue, causing present visitors to be removed from the simulation instead of admitted into the site.
+- **Property (P)**: The desired behavior on release - queued visitors move into the site's open slots; "Di dalam situs" stays at `capacity` while a queue remains and only falls below `capacity` once the queue is empty and present visitors are fewer than `capacity`; no present visitor disappears from the simulation.
+- **Preservation**: Existing behavior that must remain unchanged - the Normal traffic level (no queue, disabled button), the empty-queue disabled state, level-change resets, the status-line logic, and all copy/structure outside the targeted strings.
 - **`QueueDemo`**: The React component in `src/LandingPage.jsx` that renders the interactive hero queue simulation.
-- **`level`**: State (`useState(1)`) — index into `trafficLevels` selecting the traffic scenario (`Normal` = 6, `Ramai` = 18, `Lonjakan` = 30 visitors).
-- **`released`**: State (`useState(0)`) — in the fixed model, the number of queued visitors that have been admitted into the site so far.
-- **`visitors`**: Derived — `trafficLevels[level].visitors`, the constant present population for the current level.
-- **`capacity`**: Module constant `8` — the number of in-site slots.
-- **`active`**: Derived — visitors currently "Di dalam situs" (in the site), rendered by the `lp-site-slots` dots.
-- **`queued`**: Derived — visitors currently waiting in the queue ("Dalam antrean").
+- **`level`**: State (`useState(1)`) - index into `trafficLevels` selecting the traffic scenario (`Normal` = 6, `Ramai` = 18, `Lonjakan` = 30 visitors).
+- **`released`**: State (`useState(0)`) - in the fixed model, the number of queued visitors that have been admitted into the site so far.
+- **`visitors`**: Derived - `trafficLevels[level].visitors`, the constant present population for the current level.
+- **`capacity`**: Module constant `8` - the number of in-site slots.
+- **`active`**: Derived - visitors currently "Di dalam situs" (in the site), rendered by the `lp-site-slots` dots.
+- **`queued`**: Derived - visitors currently waiting in the queue ("Dalam antrean").
 - **`remaining`**: Derived value used for the arrivals ("Pengunjung") visualization; in the fixed model it represents the count still shown in the arrivals column (the waiting queue).
 
 ## Bug Details
@@ -47,8 +47,8 @@ END FUNCTION
 
 ### Examples
 
-- **Ramai, first release (bug):** `visitors = 18`, `released = 0` → buggy `remaining = 18`, `active = 8`, `queued = 10`. Press release (+4): buggy `released = 4` → `remaining = 14`, `active = 8`, `queued = 6`. Present pool dropped from 18 to 14 — four visitors vanished from the simulation instead of moving into the site. Expected: `active` stays `8`, `queued` drops `10 → 6`, present population stays `18`.
-- **Ramai, near queue end (bug):** `visitors = 18`, `released = 8` → buggy `remaining = 10`, `active = 8`, `queued = 2`. Press release (+2): buggy `released = 10` → `remaining = 8`, `active = 8`, `queued = 0`. Present pool now `8` — ten visitors vanished. Expected: `active` = `8`, `queued` = `0`, present population still `18` (10 admitted + 8 in-site = but only 8 slots, so the excess remain represented as admitted-then-flowed-through in the illustration; key invariant: `active` never drops below `capacity` while any queue existed).
+- **Ramai, first release (bug):** `visitors = 18`, `released = 0` → buggy `remaining = 18`, `active = 8`, `queued = 10`. Press release (+4): buggy `released = 4` → `remaining = 14`, `active = 8`, `queued = 6`. Present pool dropped from 18 to 14 - four visitors vanished from the simulation instead of moving into the site. Expected: `active` stays `8`, `queued` drops `10 → 6`, present population stays `18`.
+- **Ramai, near queue end (bug):** `visitors = 18`, `released = 8` → buggy `remaining = 10`, `active = 8`, `queued = 2`. Press release (+2): buggy `released = 10` → `remaining = 8`, `active = 8`, `queued = 0`. Present pool now `8` - ten visitors vanished. Expected: `active` = `8`, `queued` = `0`, present population still `18` (10 admitted + 8 in-site = but only 8 slots, so the excess remain represented as admitted-then-flowed-through in the illustration; key invariant: `active` never drops below `capacity` while any queue existed).
 - **Lonjakan, full drain (bug):** `visitors = 30`. Releasing repeatedly drives `remaining` down toward `capacity`, so "Di dalam situs" appears to empty rather than stay full. Expected: `active` stays `8` throughout, `queued` drains `22 → 0`.
 - **Normal (edge, no bug):** `visitors = 6 <= capacity` → `queued = 0`, button disabled, `active = 6`. No release possible; behavior must stay identical after the fix.
 
@@ -82,7 +82,7 @@ Based on the bug analysis, the root cause is a modeling error in how `released` 
 
 2. **Visualization is bound to the shrinking pool.** The arrivals dots use `i < remaining`, so present visitors visibly disappear on release instead of flowing into the site.
 
-3. **Instruction text mismatch.** "Coba kosongkan 4 slot di situs." describes emptying site slots, which contradicts the "Loloskan antrean" (release the queue) button — a copy/logic inconsistency reinforcing the wrong mental model.
+3. **Instruction text mismatch.** "Coba kosongkan 4 slot di situs." describes emptying site slots, which contradicts the "Loloskan antrean" (release the queue) button - a copy/logic inconsistency reinforcing the wrong mental model.
 
 The fix keeps `visitors` constant and redefines the split between `active` and `queued` in terms of `released` as *admitted-from-queue*, so `active` is pinned at `capacity` while a queue remains.
 
@@ -96,7 +96,7 @@ _For any_ demo state where the bug condition holds (a queue exists and the user 
 
 Property 2: Preservation - Non-release and out-of-queue behavior unchanged
 
-_For any_ demo state where the bug condition does NOT hold (Normal level with no queue, an empty queue, or a level change reset), the fixed `QueueDemo` SHALL produce the same observable result as the original — the release button stays disabled when `queued === 0`, level changes reset `released` to `0`, the status line reports the same three states, and all copy/structure outside the targeted strings is preserved unchanged.
+_For any_ demo state where the bug condition does NOT hold (Normal level with no queue, an empty queue, or a level change reset), the fixed `QueueDemo` SHALL produce the same observable result as the original - the release button stays disabled when `queued === 0`, level changes reset `released` to `0`, the status line reports the same three states, and all copy/structure outside the targeted strings is preserved unchanged.
 
 **Validates: Requirements 3.1, 3.2, 3.3, 3.4, 3.5, 3.6**
 
@@ -120,7 +120,7 @@ Assuming the root-cause analysis is correct:
    const remaining = queued; // arrivals ("Pengunjung") column now shows the waiting queue
    ```
    - `queued` drains as `released` grows; it can never go negative.
-   - `active` equals `capacity` whenever a queue exists (`visitors - queued === capacity + released`, clamped to `capacity`), and equals `min(capacity, visitors)` once `queued === 0` — so it only drops below `capacity` when the queue is empty and `visitors < capacity` (Normal level).
+   - `active` equals `capacity` whenever a queue exists (`visitors - queued === capacity + released`, clamped to `capacity`), and equals `min(capacity, visitors)` once `queued === 0` - so it only drops below `capacity` when the queue is empty and `visitors < capacity` (Normal level).
    - `remaining` is retained as a named value (bound to the arrivals visualization) so the JSX `i < remaining` mapping keeps working, now showing the waiting queue draining into the site.
 
 2. **Fix the release handler to clamp against the fixed-model queue.** The existing expression already advances by up to 4 and stops at the queue size; keep it but ensure it reads the new `queued`:
@@ -135,13 +135,13 @@ Assuming the root-cause analysis is correct:
 
 4. **Leave the metrics and status line intact.** "Dalam antrean" binds to `queued`, "Di dalam situs" binds to `active` / `capacity`, and the status paragraph keeps its three-way conditional (`queued > 0` → "Kapasitas situs tetap terjaga"; else `released > 0` → "Antrean selesai, semua sudah masuk"; else "Slot tersedia, langsung masuk"). These now read correctly under the fixed model.
 
-5. **Leave `changeLevel` unchanged** — it already sets `level` and resets `released` to `0`, satisfying the level-change reset requirement.
+5. **Leave `changeLevel` unchanged** - it already sets `level` and resets `released` to `0`, satisfying the level-change reset requirement.
 
 **File**: `src/LandingPage.jsx` (phrasing pass)
 
 6. **Rewrite the redundant FAQ answer** for "Bagaimana cara mendapatkan akses?" to remove the "administrator Anda … administrator platform … admin workspace" repetition, keeping the same meaning (accounts are provisioned by an administrator; workspace admins can add team members).
 
-7. **Consistency pass** across hero, workflow steps, features, integrations, footer, and metric labels — adjust only wording where phrasing is inconsistent or unclear, preserving meaning, tone, structure, and all attributes.
+7. **Consistency pass** across hero, workflow steps, features, integrations, footer, and metric labels - adjust only wording where phrasing is inconsistent or unclear, preserving meaning, tone, structure, and all attributes.
 
 **File**: `index.html` (phrasing pass)
 
@@ -165,7 +165,7 @@ Note on running tests: this is a Vite/React project with no test runner configur
 1. **Ramai first release**: `visitors = 18`, release +4 → assert `active` stays `8` (will fail on unfixed code: `active` stays 8 here but present pool drops 18→14).
 2. **Ramai drain to end**: release repeatedly → assert present population stays `18` and `active` stays `8` until `queued === 0` (will fail on unfixed code: present pool and eventually `active` fall).
 3. **Lonjakan drain**: `visitors = 30`, release fully → assert "Di dalam situs" never drops below `capacity` while `queued > 0` (will fail on unfixed code).
-4. **Out-of-range / empty-queue edge**: at `queued === 0`, assert release is a no-op and button disabled (may already hold on unfixed code — used to confirm scope).
+4. **Out-of-range / empty-queue edge**: at `queued === 0`, assert release is a no-op and button disabled (may already hold on unfixed code - used to confirm scope).
 
 **Expected Counterexamples**:
 - After release, the present visitor count decreases (visitors vanish) and "Di dalam situs" eventually falls below `capacity` while a queue was supposed to be draining.

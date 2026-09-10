@@ -3,7 +3,7 @@ import fc from "fast-check";
 import { computeDemoState } from "./LandingPage.jsx";
 
 // ---------------------------------------------------------------------------
-// Task 6 — Remaining unit and property-based tests from the Testing Strategy.
+// Task 6 - Remaining unit and property-based tests from the Testing Strategy.
 //
 // These tests bind to the REAL fixed model by importing computeDemoState from
 // LandingPage.jsx; the formulas are never duplicated here. The release handler
@@ -60,7 +60,7 @@ function statusLine({ queued, released }) {
 }
 
 // -------------------------------------------------------------------------
-// Unit tests — derived-value computation per traffic level at released = 0.
+// Unit tests - derived-value computation per traffic level at released = 0.
 // _Requirements: 2.1, 2.2_
 // -------------------------------------------------------------------------
 describe("unit: derived values per traffic level at released = 0", () => {
@@ -88,7 +88,7 @@ describe("unit: derived values per traffic level at released = 0", () => {
 });
 
 // -------------------------------------------------------------------------
-// Unit tests — release handler advances by min(4, queued) and never overshoots.
+// Unit tests - release handler advances by min(4, queued) and never overshoots.
 // _Requirements: 2.1, 2.2_
 // -------------------------------------------------------------------------
 describe("unit: release handler advances by min(4, queued) and never overshoots", () => {
@@ -139,7 +139,7 @@ describe("unit: release handler advances by min(4, queued) and never overshoots"
 });
 
 // -------------------------------------------------------------------------
-// Unit tests — queued === 0 disables the button and release is a no-op.
+// Unit tests - queued === 0 disables the button and release is a no-op.
 // _Requirements: 3.1, 3.2_
 // -------------------------------------------------------------------------
 describe("unit: queued === 0 disables the button and release is a no-op", () => {
@@ -169,7 +169,7 @@ describe("unit: queued === 0 disables the button and release is a no-op", () => 
 });
 
 // -------------------------------------------------------------------------
-// Unit test — active never exceeds capacity across the domain.
+// Unit test - active never exceeds capacity across the domain.
 // _Requirements: 2.1, 2.2_
 // -------------------------------------------------------------------------
 describe("unit: active never exceeds capacity", () => {
@@ -184,7 +184,7 @@ describe("unit: active never exceeds capacity", () => {
 });
 
 // -------------------------------------------------------------------------
-// Unit test — the status-line conditional resolves to the correct string.
+// Unit test - the status-line conditional resolves to the correct string.
 // _Requirements: 3.4_
 // -------------------------------------------------------------------------
 describe("unit: status-line conditional resolves to the correct one of three strings", () => {

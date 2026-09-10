@@ -13,7 +13,7 @@ import { computeDemoState } from "./LandingPage.jsx";
 //   - released === 0                          (pelepasan direset)
 //
 // Test ini mengikat ke model NYATA dengan mengimpor `computeDemoState` dari
-// LandingPage.jsx dan TIDAK menduplikasi formula internalnya — ia hanya
+// LandingPage.jsx dan TIDAK menduplikasi formula internalnya - ia hanya
 // memanggil fungsi yang diimpor lalu memeriksa hasil di atas.
 //
 // **Validates: Requirements 6.4**

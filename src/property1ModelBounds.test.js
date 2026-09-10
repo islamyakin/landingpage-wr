@@ -12,7 +12,7 @@ import { computeDemoState } from "./LandingPage.jsx";
 //   - remaining === queued (kolom "menunggu" mencerminkan antrean)
 //
 // Test ini mengikat ke model NYATA dengan mengimpor `computeDemoState` dari
-// LandingPage.jsx dan TIDAK menduplikasi formula apa pun — ia hanya memanggil
+// LandingPage.jsx dan TIDAK menduplikasi formula apa pun - ia hanya memanggil
 // fungsi yang diimpor lalu memeriksa invarian di atas.
 //
 // **Validates: Requirements 6.1, 6.6**

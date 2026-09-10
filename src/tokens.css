@@ -1,61 +1,93 @@
-/* Alternative Antosan identity: Gateway A, navy and vivid orange.
- * Palette sampled visually from the supplied board; text variants ensure contrast. */
+/* Antosan · shared component tokens for the `lp-*` / `gw-*` rules that render
+ * inside the Stitch page (queue demo, integration layout, diagrams).
+ *
+ * Remapped from the retired Gateway A navy/orange identity onto the official
+ * palette: Stitch screen "Antosan Landing Page (Palet Resmi Deep Teal & Warm
+ * Ivory)". Token names are kept so landing.css / redesign.css / gateway.css
+ * keep resolving; only the values moved onto the teal-ivory axis.
+ * The page is light-only, matching that screen and the `color-scheme` meta.
+ */
 :root {
   color-scheme: light;
   background: var(--panel);
-  --brand-navy: #091d33;
-  --brand-orange: #ff7a0a;
-  --brand-orange-soft: #ffe7ce;
-  --brand-blue: #355d7e;
-  --brand-terracotta: var(--brand-orange);
-  --brand-amber: #ffaf54;
-  --brand-peach: var(--brand-orange-soft);
-  --brand-charcoal: var(--brand-navy);
-  --panel: #ffffff;
-  --surface: #ffffff;
-  --ink: var(--brand-navy);
-  --logo-ink: var(--brand-navy);
-  --text-secondary: #526477;
-  --line: #dce5ed;
-  --input-line: #73899d;
-  --accent: var(--brand-orange);
-  --accent-deep: #a64605;
-  --accent-ink: var(--brand-navy);
-  --action-bg: var(--brand-orange);
-  --action-hover: #ff963c;
-  --info: var(--accent-deep);
-  --success: #26724f;
-  --paper-soft: #f3f7fb;
-  --paper-peach: #eaf1f7;
-  --paper-accent: #fff3e6;
-  --art-paper: #f1f6fb;
-  --art-ink: var(--brand-navy);
-  --art-muted: #8ea5b9;
-  --art-line: #c8d9e7;
-  --art-peach: var(--brand-orange-soft);
-  --art-amber: var(--brand-amber);
-  --art-terracotta: var(--brand-orange);
+
+  /* --- Official palette --- */
+  --brand-teal: #0f766e;
+  --brand-teal-deep: #084742;
+  --brand-turquoise: #14b8a6;
+  --brand-mint: #a7f3d0;
+  --brand-slate: #475569;
+  --brand-ink: #0f172a;
+  --brand-ivory: #fffbf2;
+  --brand-ivory-card: #fffdf9;
+
+  /* --- Names the retired identity used, now pointing at the palette above --- */
+  --brand-navy: var(--brand-ink);
+  --brand-orange: var(--brand-turquoise);
+  --brand-orange-soft: var(--brand-mint);
+  --brand-blue: var(--brand-teal);
+  --brand-terracotta: var(--brand-teal);
+  --brand-amber: var(--brand-mint);
+  --brand-peach: var(--brand-mint);
+  --brand-charcoal: var(--brand-ink);
+
+  /* --- Surfaces & type --- */
+  --panel: var(--brand-ivory);
+  --surface: var(--brand-ivory-card);
+  --ink: var(--brand-ink);
+  --logo-ink: var(--brand-teal);
+  --text-secondary: var(--brand-slate);
+  --line: rgb(15 118 110 / 15%);
+  --input-line: rgb(15 118 110 / 30%);
+  --paper-soft: var(--brand-ivory);
+  --paper-peach: #edf9eb;
+  --paper-accent: #e0f8e6;
+
+  /* --- Actions --- */
+  --accent: var(--brand-teal);
+  --accent-deep: var(--brand-teal-deep);
+  --accent-ink: #ffffff;
+  --action-bg: var(--brand-teal);
+  --action-hover: var(--brand-turquoise);
+  --info: var(--brand-teal-deep);
+  --success: var(--brand-teal);
+
+  /* --- Diagram / illustration surfaces --- */
+  --art-paper: #edf9eb;
+  --art-ink: var(--brand-ink);
+  --art-muted: #8aa8a3;
+  --art-line: rgb(15 118 110 / 22%);
+  --art-peach: var(--brand-mint);
+  --art-amber: var(--brand-mint);
+  --art-terracotta: var(--brand-teal);
   --art-white: #ffffff;
-  --art-floor: #e1ebf4;
-  --art-figure: #28445e;
-  --art-figure-side: #132f48;
-  --art-grid: #dce7f0;
-  --art-shadow: #cbd8e4;
-  --dot-blue: #197ecf;
-  --dot-cyan: #70e9f0;
-  --dot-purple: #bdbbff;
-  --dot-pink: #f7b0df;
+  --art-floor: #e0f8e6;
+  --art-figure: var(--brand-teal);
+  --art-figure-side: var(--brand-teal-deep);
+  --art-grid: rgb(15 118 110 / 12%);
+  --art-shadow: rgb(15 118 110 / 14%);
+
+  /* --- Queue dots: stay inside the teal-mint axis --- */
+  --dot-blue: var(--brand-teal);
+  --dot-cyan: var(--brand-turquoise);
+  --dot-purple: var(--brand-mint);
+  --dot-pink: #6ee7c7;
+
+  /* --- Dark story panel --- */
+  --story-bg: var(--brand-ink);
+  --story-ink: #e2f8e6;
+  --story-muted: #9fc7bd;
+  --story-line: rgb(167 243 208 / 18%);
+
   --clear: transparent;
-  --soft-shadow: 0 2px 5px rgb(9 29 51 / 5%);
-  --card-shadow: 0 24px 72px -32px rgb(31 64 99 / 24%);
-  --story-bg: var(--brand-navy);
-  --story-ink: #f8fbff;
-  --story-muted: #b9cad9;
-  --story-line: #30485f;
+  --soft-shadow: 0 2px 5px rgb(15 118 110 / 8%);
+  --card-shadow: 0 15px 35px -10px rgb(15 118 110 / 14%);
+
   --font-body:
-    "Manrope Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
+    "Plus Jakarta Sans Variable", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-display: var(--font-body);
+
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -66,28 +98,9 @@
   --space-10: 2.5rem;
   --space-12: 3rem;
   --space-16: 4rem;
-  --radius: 14px;
-  --radius-sm: 7px;
+
+  --radius: 16px;
+  --radius-sm: 10px;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --dur-short: 160ms;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-    --panel: #071725;
-    --surface: #102538;
-    --ink: #eff6fc;
-    --logo-ink: #eff6fc;
-    --text-secondary: #adc1d3;
-    --line: #2b4257;
-    --input-line: #8ba4bb;
-    --accent: var(--brand-orange);
-    --accent-deep: #ffb470;
-    --paper-soft: #0c2032;
-    --paper-peach: #152c40;
-    --paper-accent: #34291f;
-    --success: #8ad4aa;
-    --soft-shadow: 0 2px 5px rgb(0 0 0 / 12%);
-    --card-shadow: 0 18px 64px -32px rgb(0 0 0 / 35%);
-  }
 }
