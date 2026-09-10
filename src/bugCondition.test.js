@@ -3,7 +3,7 @@ import fc from "fast-check";
 import { computeDemoState } from "./LandingPage.jsx";
 
 // ---------------------------------------------------------------------------
-// Task 2 — Bug condition exploration test (Property 1 / bugfix 2.1, 2.2)
+// Task 2 - Bug condition exploration test (Property 1 / bugfix 2.1, 2.2)
 //
 // CRITICAL: This test encodes the EXPECTED (correct) behavior of QueueDemo.
 // It is EXPECTED TO FAIL on the current (unfixed) computeDemoState, and that
@@ -47,7 +47,7 @@ function pressRelease(visitors, released) {
 // In the BUGGY model, `remaining = visitors - released`, so the arrivals column
 // shows the queue PLUS the people who should already be inside the site
 // (`remaining === queued + capacity` while a queue exists). Each release shrinks
-// that pool — present visitors visibly vanish from the simulation instead of
+// that pool - present visitors visibly vanish from the simulation instead of
 // flowing into the site.
 
 describe("Property 1: releasing the queue admits waiting visitors into the site", () => {
@@ -76,7 +76,7 @@ describe("Property 1: releasing the queue admits waiting visitors into the site"
     // 3. No visitor disappears: the arrivals column shows exactly the waiting
     //    queue (admitted visitors are inside the site, not vanished). On the
     //    buggy code `remaining = visitors - released = queued + capacity`, so
-    //    this fails — the arrivals pool still carries the people who should be
+    //    this fails - the arrivals pool still carries the people who should be
     //    inside, and shrinks on release as visitors vanish.
     expect(after.remaining).toBe(after.queued);
   });

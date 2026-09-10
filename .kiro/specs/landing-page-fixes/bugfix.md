@@ -4,7 +4,7 @@
 
 This bugfix addresses two problems on the Antosan landing page (a React/Vite single-page app whose UI copy is in Indonesian):
 
-1. **Queue simulation logic bug** in the `QueueDemo` component (`src/LandingPage.jsx`). The interactive demo is meant to illustrate a virtual queue: as the queue is released, waiting visitors should be *admitted into the open slots of the site*. Instead, pressing the "Loloskan antrean" (release the queue) button decreases the pool of `remaining` visitors, which drains people out of the simulation entirely. The visualization and metrics no longer read as "queued visitors moving into the site" — visitors appear to vanish, and the accompanying instruction text ("Coba kosongkan 4 slot di situs.") contradicts the button that releases the queue. This makes the core product demo misleading.
+1. **Queue simulation logic bug** in the `QueueDemo` component (`src/LandingPage.jsx`). The interactive demo is meant to illustrate a virtual queue: as the queue is released, waiting visitors should be *admitted into the open slots of the site*. Instead, pressing the "Loloskan antrean" (release the queue) button decreases the pool of `remaining` visitors, which drains people out of the simulation entirely. The visualization and metrics no longer read as "queued visitors moving into the site" - visitors appear to vanish, and the accompanying instruction text ("Coba kosongkan 4 slot di situs.") contradicts the button that releases the queue. This makes the core product demo misleading.
 
 2. **Text / phrasing issues** in the Indonesian UI copy across `src/LandingPage.jsx` (and, where applicable, `index.html`). Several strings are inconsistent, redundant, or confusing and need to be corrected for clarity and consistency while preserving the meaning and tone of the marketing copy.
 
@@ -13,10 +13,10 @@ The impact is on the primary hero demo (the first interactive element visitors s
 ### Affected Code
 
 - `src/LandingPage.jsx`
-  - `QueueDemo` component — state `level` / `released`; derived values `visitors`, `remaining`, `active`, `queued`; the "Loloskan antrean" button handler `setReleased((value) => value + Math.min(4, queued))`; the demo action instruction text; the `lp-demo-metrics` block ("Dalam antrean" / "Di dalam situs").
-  - `faqs` array — the "Bagaimana cara mendapatkan akses?" answer.
+  - `QueueDemo` component - state `level` / `released`; derived values `visitors`, `remaining`, `active`, `queued`; the "Loloskan antrean" button handler `setReleased((value) => value + Math.min(4, queued))`; the demo action instruction text; the `lp-demo-metrics` block ("Dalam antrean" / "Di dalam situs").
+  - `faqs` array - the "Bagaimana cara mendapatkan akses?" answer.
   - Hero, workflow steps, features, integrations, and footer copy (phrasing review).
-- `index.html` — meta description / social copy (phrasing review, if inconsistent with page copy).
+- `index.html` - meta description / social copy (phrasing review, if inconsistent with page copy).
 
 ### Bug Condition (for the queue-demo logic bug)
 

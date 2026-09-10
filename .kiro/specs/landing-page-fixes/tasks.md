@@ -10,7 +10,7 @@ This plan fixes the `QueueDemo` queue-simulation bug in `src/LandingPage.jsx` (w
   - This is a Vite/React project with no test runner configured yet (see `package.json`: only `dev`, `build`, `preview` scripts)
   - Add dev dependencies: `vitest`, `@vitest/coverage` optional, and `fast-check` for property-based testing (Testing Strategy → Property-Based Tests, Preservation Checking)
   - Add a `"test": "vitest --run"` script to `package.json` (single execution, NOT watch mode; do not start a long-running dev server for verification)
-  - Configure Vitest in `vite.config.js` (or a `vitest.config.js`) with `environment: "node"` — the tests target the pure `QueueDemo` derived-value math, so no DOM environment is required
+  - Configure Vitest in `vite.config.js` (or a `vitest.config.js`) with `environment: "node"` - the tests target the pure `QueueDemo` derived-value math, so no DOM environment is required
   - Create a small extracted/mirrored pure helper module for the derived-value model so tests can import it without rendering React. Options: (a) export a `computeDemoState({ visitors, released, capacity })` helper from `src/LandingPage.jsx`, or (b) reproduce the exact formulas in the test file. Prefer (a) so tests bind to real code
   - Verify the runner works with a trivial passing test before proceeding
   - _Requirements: (tooling prerequisite for 2.1, 2.2, 3.1–3.4)_
@@ -19,14 +19,14 @@ This plan fixes the `QueueDemo` queue-simulation bug in `src/LandingPage.jsx` (w
   - **Property 1: Bug Condition** - Releasing the queue admits waiting visitors into the site
   - **CRITICAL**: This test MUST FAIL on the unfixed code - failure confirms the bug exists
   - **DO NOT attempt to fix the test or the code when it fails at this step**
-  - **NOTE**: This test encodes the expected behavior — it will validate the fix when it passes after implementation
+  - **NOTE**: This test encodes the expected behavior - it will validate the fix when it passes after implementation
   - **GOAL**: Surface counterexamples that demonstrate the bug in `QueueDemo` (`src/LandingPage.jsx`), confirming the root cause that `released` shrinks the present pool (`remaining = visitors - released`)
   - **Scoped PBT Approach**: The bug is deterministic; scope the property to the concrete failing traffic levels (`Ramai` = 18, `Lonjakan` = 30, both with `capacity = 8`) and a sequence of release presses (+`min(4, queued)` each). Reproduce the derived-value math against the UNFIXED formulas
   - Encode `isBugCondition(input)` from design: `(input.visitors - input.capacity - input.released) > 0 AND userReleasesQueue(input)`
   - Assert the Expected Behavior Properties (Property 1 / bugfix 2.1, 2.2):
     - After a release while a queue remains, `active` (`Di dalam situs`) stays at `capacity` (8)
     - `queued` strictly decreases by the number released (up to 4)
-    - The present population (`visitors`) does NOT decrease — no visitor disappears from the simulation
+    - The present population (`visitors`) does NOT decrease - no visitor disappears from the simulation
     - `active` only falls below `capacity` once `queued === 0` and `visitors < capacity`
   - Run test on UNFIXED code
   - **EXPECTED OUTCOME**: Test FAILS (this is correct - it proves the bug exists)
@@ -36,13 +36,13 @@ This plan fixes the `QueueDemo` queue-simulation bug in `src/LandingPage.jsx` (w
 
 - [x] 3. Write preservation property tests (BEFORE implementing the fix)
   - **Property 2: Preservation** - Non-release and out-of-queue behavior unchanged
-  - **IMPORTANT**: Follow the observation-first methodology — observe behavior on the UNFIXED code first, then encode it
+  - **IMPORTANT**: Follow the observation-first methodology - observe behavior on the UNFIXED code first, then encode it
   - Encode `NOT isBugCondition(input)`: Normal level (`visitors = 6 <= capacity`, no queue), empty-queue states (`queued === 0`), and level-change resets
   - Observe on UNFIXED code and record the outputs:
     - Normal level: `visitors = 6` → no queue (`queued = 0`), `active = 6`, release button disabled
     - Empty-queue: when `queued === 0` the release button is disabled and the `"Ubah trafik untuk mencoba lagi."` prompt shows
     - Level-change reset: changing `level` resets `released` to `0` and recomputes the queue from the new visitor total (`changeLevel`)
-    - Status line: three states — `queued > 0` → "Kapasitas situs tetap terjaga"; else `released > 0` → "Antrean selesai, semua sudah masuk"; else "Slot tersedia, langsung masuk"
+    - Status line: three states - `queued > 0` → "Kapasitas situs tetap terjaga"; else `released > 0` → "Antrean selesai, semua sudah masuk"; else "Slot tersedia, langsung masuk"
   - Write property-based tests (using `fast-check`) over random `(level, released)` combinations where the bug condition is false, asserting fixed output equals the observed original output (Preservation Checking pseudocode: `FOR ALL input WHERE NOT isBugCondition(input): originalDemo(input) == fixedDemo(input)`)
   - Run tests on UNFIXED code
   - **EXPECTED OUTCOME**: Tests PASS (this confirms the baseline behavior to preserve)
@@ -60,7 +60,7 @@ This plan fixes the `QueueDemo` queue-simulation bug in `src/LandingPage.jsx` (w
       - `const remaining = queued;` // arrivals ("Pengunjung") column now shows the waiting queue
     - Keep the release handler bound to the new `queued`: `onClick={() => setReleased((value) => value + Math.min(4, queued))}` (this stays correct since `released` is now bounded by `visitors - capacity`)
     - Replace the contradictory instruction text in `lp-demo-action`: when `queued > 0` use copy consistent with the release action (e.g. "Loloskan 4 pengunjung ke dalam situs.") instead of "Coba kosongkan 4 slot di situs."; keep "Ubah trafik untuk mencoba lagi." when `queued === 0`
-    - Leave the metrics ("Dalam antrean" → `queued`, "Di dalam situs" → `active` / `capacity`), the arrivals dots (`i < remaining`), the in-site slots (`i < active`), and the three-way status line intact — they read correctly under the fixed model
+    - Leave the metrics ("Dalam antrean" → `queued`, "Di dalam situs" → `active` / `capacity`), the arrivals dots (`i < remaining`), the in-site slots (`i < active`), and the three-way status line intact - they read correctly under the fixed model
     - If task 1 extracted a `computeDemoState` helper, update it to match these formulas so the tests bind to real code
     - _Bug_Condition: isBugCondition(input) = (input.visitors - input.capacity - input.released) > 0 AND userReleasesQueue(input) (from design)_
     - _Expected_Behavior: on release, `active` stays at `capacity` while a queue remains, `queued` strictly decreases by the number released, `visitors` unchanged, `active` falls below `capacity` only once `queued === 0` and `visitors < capacity` (Property 1)_
@@ -124,7 +124,7 @@ This plan fixes the `QueueDemo` queue-simulation bug in `src/LandingPage.jsx` (w
 ## Notes
 
 - **Test-runner setup**: This is a Vite/React project with no test runner configured (`package.json` only has `dev`, `build`, `preview`). Task 1 adds Vitest + `fast-check` and a `"test": "vitest --run"` script before any tests are written.
-- **Single-run only**: Always run tests with `vitest --run` (single execution). Do NOT use watch mode, and do NOT start a long-running dev server for verification — use `npm run build` at the checkpoint instead.
+- **Single-run only**: Always run tests with `vitest --run` (single execution). Do NOT use watch mode, and do NOT start a long-running dev server for verification - use `npm run build` at the checkpoint instead.
 - **Observation-first ordering**: The bug-condition exploration test (task 2) is expected to FAIL on unfixed code, and the preservation tests (task 3) are expected to PASS on unfixed code. Do not attempt to fix code while writing these tests.
 - **Bind tests to real code**: Prefer extracting a pure `computeDemoState` helper so tests import the actual formulas rather than duplicating them.
 - **Task ordering**: Exploration and preservation tests must be written and run before the fix (tasks 4–5).

@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { scenarios, plays, trustQuote } from "./LandingPage.jsx";
 
 // ---------------------------------------------------------------------------
-// Task 1.4 — Example tests for the new static content data structures.
+// Task 1.4 - Example tests for the new static content data structures.
 //
 // These verify the redesign's content model WITHOUT rendering React, by
 // importing the real exported data (`scenarios`, `plays`, `trustQuote`) from

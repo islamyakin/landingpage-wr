@@ -3,7 +3,7 @@ import fc from "fast-check";
 import { computeDemoState } from "./LandingPage.jsx";
 
 // ---------------------------------------------------------------------------
-// Task 3 — Preservation property tests (Property 2 / bugfix 3.1–3.6)
+// Task 3 - Preservation property tests (Property 2 / bugfix 3.1–3.6)
 //
 // METHODOLOGY: observable-behavior baseline.
 //
@@ -77,9 +77,9 @@ function expectedInitialQueue(visitors) {
   return Math.max(0, visitors - capacity);
 }
 
-describe("Property 2: preservation — non-release / out-of-queue behavior unchanged", () => {
+describe("Property 2: preservation - non-release / out-of-queue behavior unchanged", () => {
   // -------------------------------------------------------------------------
-  // Requirement 3.1 / 3.2 — the release button is disabled EXACTLY when the
+  // Requirement 3.1 / 3.2 - the release button is disabled EXACTLY when the
   // queue is empty. This is the core observable preservation invariant and
   // must hold across the entire non-buggy input domain.
   //
@@ -104,7 +104,7 @@ describe("Property 2: preservation — non-release / out-of-queue behavior uncha
   });
 
   // -------------------------------------------------------------------------
-  // Requirement 3.1 — Normal level (visitors = 6 <= capacity): all visitors
+  // Requirement 3.1 - Normal level (visitors = 6 <= capacity): all visitors
   // admitted, no queue, active === 6, release button disabled.
   // -------------------------------------------------------------------------
   it("Normal level: visitors=6 -> queued=0, active=6, release button disabled (observable)", () => {
@@ -136,7 +136,7 @@ describe("Property 2: preservation — non-release / out-of-queue behavior uncha
   });
 
   // -------------------------------------------------------------------------
-  // Requirement 3.2 — Empty-queue state (queued === 0): release button stays
+  // Requirement 3.2 - Empty-queue state (queued === 0): release button stays
   // disabled and the "Ubah trafik untuk mencoba lagi." prompt shows.
   // -------------------------------------------------------------------------
   it("empty-queue state: when queued === 0 the release button is disabled and the empty-queue prompt shows (observable)", () => {
@@ -157,7 +157,7 @@ describe("Property 2: preservation — non-release / out-of-queue behavior uncha
   });
 
   // -------------------------------------------------------------------------
-  // Requirement 3.3 — Level change resets released to 0 and recomputes the
+  // Requirement 3.3 - Level change resets released to 0 and recomputes the
   // queue from the new visitor total (changeLevel behavior). Observable
   // outcome: released === 0 and queued recomputed from the new visitor total
   // (Normal -> 0, Ramai -> 10, Lonjakan -> 22).
@@ -198,7 +198,7 @@ describe("Property 2: preservation — non-release / out-of-queue behavior uncha
   });
 
   // -------------------------------------------------------------------------
-  // Requirement 3.4 — Status line resolves to the correct one of three states
+  // Requirement 3.4 - Status line resolves to the correct one of three states
   // using the queued>0 / released>0 / else mapping. Assert the observable
   // string against the design's mapping directly.
   // -------------------------------------------------------------------------

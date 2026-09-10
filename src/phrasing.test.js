@@ -6,7 +6,7 @@ import {
 } from "./LandingPage.jsx";
 
 // ---------------------------------------------------------------------------
-// Task 5.4 — Static string assertions for the phrasing changes
+// Task 5.4 - Static string assertions for the phrasing changes
 // (bugfix requirements 2.3, 2.4, 2.5).
 //
 // These verify the phrasing corrections WITHOUT rendering React, by importing
