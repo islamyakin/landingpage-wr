@@ -23,7 +23,14 @@ describe("architecture simulation", () => {
             vipValid,
           });
           expect(state.blocked + state.admitted + state.queued).toBe(inflow);
-          expect(state.admitted).toBeLessThanOrEqual(capacity);
+          // Priority admissions sit OUTSIDE the concurrency ceiling: the
+          // gateway's VIP redeem script adds the holder to the active set
+          // without consulting max_active at all
+          // (waitingroom/internal/queue/vip.go). So the ceiling binds the
+          // regular lane, and total admissions may exceed it by the number of
+          // priority admissions.
+          expect(state.regular).toBeLessThanOrEqual(capacity);
+          expect(state.admitted).toBeLessThanOrEqual(capacity + state.priority);
           expect(state.priority).toBeLessThanOrEqual(state.admitted);
           expect(state.queued).toBeGreaterThanOrEqual(0);
         },
@@ -53,16 +60,27 @@ describe("architecture simulation", () => {
       priority: 0,
       mode: "PRE-QUEUE",
     });
+    // Once the gate opens the priority code takes effect, and it admits on top
+    // of the ceiling rather than inside it (see the VIP note above).
     expect(computeArchitecture({ ...input, gateOpen: true })).toMatchObject({
-      admitted: 3000,
-      queued: 4200,
+      regular: 3000,
+      admitted: 3001,
+      queued: 4199,
+      priority: 1,
       mode: "FAIR LOTTERY",
     });
   });
-  it("models filtering and priority without inventing extra origin slots", () => {
+  it("models filtering, and lets a priority code skip past the ceiling", () => {
     expect(
       computeArchitecture({ inflow: 13500, capacity: 3000, scenario: "ddos" }),
     ).toMatchObject({ blocked: 5670, admitted: 3000, queued: 4830 });
+
+    // This assertion previously expected admitted === 3000, i.e. the priority
+    // holder taking one of the 3.000 capacity slots. That contradicted the
+    // product: `redeemScript` in waitingroom/internal/queue/vip.go ZADDs the
+    // holder into the active set with no max_active check, and the README says
+    // VIP admission "mengabaikan max_active (itulah gunanya)". The regular lane
+    // still fills exactly the ceiling; the priority admission is on top.
     expect(
       computeArchitecture({
         inflow: 9500,
@@ -70,6 +88,6 @@ describe("architecture simulation", () => {
         scenario: "vip",
         vipValid: true,
       }),
-    ).toMatchObject({ admitted: 3000, queued: 6500, priority: 1 });
+    ).toMatchObject({ regular: 3000, admitted: 3001, queued: 6499, priority: 1 });
   });
 });

@@ -3,9 +3,11 @@ import Icon from "./Icon.jsx";
 import {
   architectureScenarios,
   computeArchitecture,
+  describeFlow,
 } from "./architectureModel.js";
 
 const number = (value) => value.toLocaleString("id-ID");
+const firstLog = "Sistem simulasi siap. Pilih skenario atau ubah parameter.";
 const initialState = {
   scenario: "normal",
   inflow: 1200,
@@ -14,13 +16,21 @@ const initialState = {
   code: "",
   validation: "idle",
   custom: false,
-  logs: ["Sistem simulasi siap. Pilih skenario atau ubah parameter."],
+  logSeq: 1,
+  logs: [{ n: 1, message: firstLog }],
 };
 function reducer(state, action) {
-  const record = (next, message) => ({
-    ...next,
-    logs: [...state.logs.slice(-7), message],
-  });
+  // `logSeq` is carried past every `...initialState` spread below, so the
+  // numbering in the log panel keeps counting instead of resetting to 01 each
+  // time the 8-entry window slides.
+  const record = (next, message) => {
+    const n = state.logSeq + 1;
+    return {
+      ...next,
+      logSeq: n,
+      logs: [...state.logs.slice(-7), { n, message }],
+    };
+  };
   if (action.type === "scenario") {
     const selected = architectureScenarios.find(
       (item) => item.id === action.id,
@@ -33,7 +43,7 @@ function reducer(state, action) {
         capacity: selected.capacity,
         code: selected.id === "vip" ? "VIP-ANTOSAN" : "",
       },
-      selected.note,
+      `Skenario ${selected.label} dipilih. ${selected.premise}`,
     );
   }
   if (action.type === "parameter")
@@ -53,11 +63,16 @@ function reducer(state, action) {
     return record(
       { ...state, validation: valid ? "valid" : "invalid" },
       valid
-        ? "Kode contoh valid. Satu slot diprioritaskan; batas kapasitas origin tetap berlaku."
+        ? "Kode contoh valid. Pemegang kode masuk tanpa antre; admisi prioritas mengabaikan batas kapasitas."
         : "Kode contoh tidak valid. Jalur antrean biasa tetap digunakan.",
     );
   }
-  return initialState;
+  if (action.type === "reset")
+    return record(
+      { ...initialState },
+      "Simulasi direset ke skenario Normal Traffic.",
+    );
+  return state;
 }
 
 export default function ArchitectureSimulator() {
@@ -73,38 +88,45 @@ export default function ArchitectureSimulator() {
   const selected = architectureScenarios.find(
     (item) => item.id === state.scenario,
   );
+  const liveDescription = describeFlow(flow, state.capacity);
   const feedback =
     state.validation === "valid"
       ? flow.preQueue
-        ? "Kode contoh valid. Slot prioritas tersedia setelah gerbang dibuka."
-        : "Kode contoh valid. Satu slot origin diprioritaskan tanpa melewati batas kapasitas."
+        ? "Kode contoh valid. Admisi prioritas berlaku setelah gerbang dibuka."
+        : "Kode contoh valid. Pemegang kode masuk tanpa antre, di luar batas kapasitas origin."
       : state.validation === "invalid"
         ? "Kode tidak valid. Coba gunakan VIP-ANTOSAN."
         : "Gunakan kode VIP-ANTOSAN untuk mencoba jalur prioritas.";
+  // Every meter is a share of the same inbound wave, so the three downstream
+  // bars decompose the inbound bar exactly (blocked + queued + admitted ===
+  // inflow). Origin capacity is a different quantity, so it is stated as text
+  // on the node instead of being smuggled into a bar with its own scale.
+  const share = (value) => (flow.inflow > 0 ? value / flow.inflow : 0);
+  const percent = (value) => `${Math.round(share(value) * 100)}% gelombang`;
   const nodes = [
     {
       icon: "members",
       title: "Inbound Traffic",
       value: flow.inflow,
       status: "Pengunjung datang",
-      label: "pengunjung",
-      ratio: flow.inflow / 15000,
+      label: "pengunjung · seluruh gelombang",
+      ratio: 1,
     },
     {
       icon: "shield",
       title: "Edge Protection",
       value: flow.blocked,
       status: flow.blocked ? "Verifikasi aktif" : "Siaga",
-      label: "tidak diteruskan",
-      ratio: flow.blocked / flow.inflow,
+      label: `tidak diteruskan · ${percent(flow.blocked)}`,
+      ratio: share(flow.blocked),
     },
     {
       icon: "rooms",
       title: "Virtual Waiting Room",
       value: flow.queued,
       status: flow.mode,
-      label: "dalam antrean",
-      ratio: flow.queued / flow.inflow,
+      label: `dalam antrean · ${percent(flow.queued)}`,
+      ratio: share(flow.queued),
     },
     {
       icon: "globe",
@@ -115,8 +137,13 @@ export default function ArchitectureSimulator() {
         : flow.queued
           ? "Kapasitas terjaga"
           : "Slot tersedia",
-      label: `dari ${number(state.capacity)} slot`,
-      ratio: flow.admitted / state.capacity,
+      label: `masuk origin · ${percent(flow.admitted)}`,
+      ratio: share(flow.admitted),
+      extra: `${number(flow.regular)} dari ${number(state.capacity)} slot origin terpakai${
+        flow.priority > 0
+          ? ` · +${number(flow.priority)} admisi prioritas di luar batas`
+          : ""
+      }`,
     },
   ];
   return (
@@ -146,7 +173,7 @@ export default function ArchitectureSimulator() {
             <button
               key={item.id}
               type="button"
-              aria-pressed={!state.custom && state.scenario === item.id}
+              aria-pressed={state.scenario === item.id}
               onClick={() => dispatch({ type: "scenario", id: item.id })}
             >
               {item.label}
@@ -155,7 +182,16 @@ export default function ArchitectureSimulator() {
         </div>
         <p className="st-scenario-note" role="status">
           {state.custom ? `Parameter kustom · ${selected.label}. ` : ""}
-          {selected.note}
+          {liveDescription}
+        </p>
+        {/* The preset's standing assumption. Kept separate from the status
+            line above so a custom parameter can never make it read as a claim
+            about the numbers currently on screen. */}
+        <p className="st-scenario-premise">
+          <Icon name="alert" size={14} />
+          <span>
+            <strong>Asumsi skenario</strong> · {selected.premise}
+          </span>
         </p>
         <div className="st-flow-nodes">
           {nodes.map((node, index) => (
@@ -170,6 +206,9 @@ export default function ArchitectureSimulator() {
               <div className="st-meter" aria-hidden="true">
                 <span style={{ transform: `scaleX(${node.ratio})` }} />
               </div>
+              {node.extra && (
+                <span className="st-node-extra">{node.extra}</span>
+              )}
               {index < 3 && (
                 <Icon name="arrow" className="st-node-arrow" size={20} />
               )}
@@ -291,10 +330,10 @@ export default function ArchitectureSimulator() {
               tabIndex={0}
               aria-label="Riwayat perubahan simulasi"
             >
-              {state.logs.map((log, index) => (
-                <li key={`${index}-${log}`}>
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  {log}
+              {state.logs.map((log) => (
+                <li key={log.n}>
+                  <span>{String(log.n).padStart(2, "0")}</span>
+                  {log.message}
                 </li>
               ))}
             </ol>
@@ -303,7 +342,9 @@ export default function ArchitectureSimulator() {
                 Mode <strong>{flow.mode}</strong>
               </span>
               <span>
-                {flow.priority ? "1 slot prioritas" : "Kapasitas terkendali"}
+                {flow.priority
+                  ? `${number(flow.priority)} admisi prioritas`
+                  : "Kapasitas terkendali"}
               </span>
             </div>
           </div>
