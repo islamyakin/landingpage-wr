@@ -1,5 +1,40 @@
 [
   {
+    "date": "2026-09-14",
+    "macrostructure": "Split Hero + Pricing Catalogue",
+    "theme": "studied-DNA — Antosan-harga / official deep teal and warm ivory",
+    "source": "projects/14784201623519037146/screens/2d316818fa8e48d983ada4a7691c1e44",
+    "enrichment": "Existing native queue demo; complete simulator moved to a dedicated page",
+    "brief": "Implement source pricing and reduce home to four sections, keeping package details off the home page",
+    "verification": {
+      "unit_tests": 77,
+      "viewports": [
+        320,
+        375,
+        414,
+        768,
+        1440
+      ],
+      "axe_wcag_21_aa_violations": 0,
+      "laptop_fold": "demo bottom 767px at 1280x800",
+      "interactions": [
+        "native navigation and direct refresh",
+        "package and add-on email context",
+        "mobile menu Escape and focus return",
+        "pre-queue gate and VIP validation",
+        "R2 logo error fallback"
+      ]
+    },
+    "scores": {
+      "P": 4,
+      "H": 5,
+      "E": 4,
+      "S": 4,
+      "R": 5,
+      "V": 4
+    }
+  },
+  {
     "date": "2026-09-10",
     "macrostructure": "Split Hero / Architectural Product Story",
     "theme": "studied-DNA - Stitch architectural simulation",

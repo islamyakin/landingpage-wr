@@ -1,16 +1,22 @@
 {
-  "date": "2026-09-10",
-  "framework": "React 19 + Vite 6, standalone static landing page",
-  "sources": ["package.json", "tokens.css", "src/stitch.css"],
+  "date": "2026-09-14",
+  "framework": "React 19 + Vite 6, native multi-page static build",
+  "sources": [
+    "package.json",
+    "tokens.css",
+    "src/stitch.css",
+    "src/marketing.css",
+    "Stitch Antosan-harga"
+  ],
   "font": "Plus Jakarta Sans Variable, self-hosted Latin WOFF2",
-  "palette": "User-selected Stitch screen: teal, turquoise, mint, slate",
+  "palette": "User-selected official deep teal and warm ivory",
   "motion": "Interaction feedback only; reduced motion supported",
   "spacing": "Existing 4px token scale",
   "preserved": [
-    "routes",
-    "siteConfig",
     "queue model",
+    "architecture simulator",
     "content exports",
-    "existing landing.css"
+    "existing global stylesheets",
+    "email contact flow"
   ]
 }
