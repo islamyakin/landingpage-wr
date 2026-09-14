@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Icon from "./Icon.jsx";
-import { siteConfig } from "./siteConfig.js";
+import { siteConfig, subscriptionLinks } from "./siteConfig.js";
 
 // The conversion path has to survive a visitor with no mail client. A bare
 // `mailto:` link does nothing at all in that case - no error, no new window -
@@ -40,7 +40,8 @@ async function copyText(text) {
   }
 }
 
-export default function SubscribePanel() {
+export default function SubscribePanel({ selection = "" }) {
+  const links = subscriptionLinks(selection);
   const [copied, setCopied] = useState("idle");
   const timer = useRef(null);
 
@@ -64,9 +65,14 @@ export default function SubscribePanel() {
           <span className="st-kicker">Berlangganan</span>
           <h2 id="subscribe-title">Kirim detail event Anda.</h2>
           <p>
-            Langganan diatur langsung lewat email. Kami balas dengan harga per
-            event dan menyiapkan room-nya untuk Anda.
+            Ceritakan rencana acara Anda. Kami bantu memastikan paket dan
+            kebutuhan sebelum menyiapkan ruang antrean.
           </p>
+          {selection && (
+            <p className="st-selected-package" role="status">
+              Pilihan Anda: <strong>{selection}</strong>
+            </p>
+          )}
           <p className="st-subscribe-detail-label">
             Sertakan ini supaya kami bisa langsung menghitung:
           </p>
@@ -82,9 +88,7 @@ export default function SubscribePanel() {
         <div className="st-subscribe-actions">
           <span className="st-subscribe-label">Alamat email kami</span>
           <p className="st-subscribe-address">
-            <a href={`mailto:${siteConfig.contactEmail}`}>
-              {siteConfig.contactEmail}
-            </a>
+            <a href={links.mailtoUrl}>{siteConfig.contactEmail}</a>
           </p>
           <button
             type="button"
@@ -108,7 +112,7 @@ export default function SubscribePanel() {
           <div className="st-subscribe-links">
             <a
               className="st-button st-button-secondary"
-              href={siteConfig.gmailComposeUrl}
+              href={links.gmailComposeUrl}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -117,17 +121,14 @@ export default function SubscribePanel() {
             </a>
             <a
               className="st-button st-button-secondary"
-              href={siteConfig.outlookComposeUrl}
+              href={links.outlookComposeUrl}
               target="_blank"
               rel="noopener noreferrer"
             >
               Tulis di Outlook
               <Icon name="arrow" size={17} />
             </a>
-            <a
-              className="st-button st-button-secondary"
-              href={siteConfig.mailtoUrl}
-            >
+            <a className="st-button st-button-secondary" href={links.mailtoUrl}>
               Aplikasi email saya
               <Icon name="arrow" size={17} />
             </a>

@@ -1091,13 +1091,5 @@ export function GatewayLandingPage() {
 }
 
 export default function LandingPage() {
-  return (
-    <StitchPage
-      queueDemo={<QueueDemo />}
-      integrations={<Integrations />}
-      faqs={faqs}
-      scenarios={scenarios}
-      features={features}
-    />
-  );
+  return <StitchPage queueDemo={<QueueDemo />} />;
 }
