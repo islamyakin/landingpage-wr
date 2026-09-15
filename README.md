@@ -1,7 +1,7 @@
 # Antosan — Website pemasaran
 
 Landing page berbahasa Indonesia untuk [Antosan](https://antosan.com/). Proyek React + Vite mandiri,
-dengan beranda ringkas, halaman harga, dan simulator antrean terpisah.
+dengan pengenalan produk untuk bisnis dan tim teknis, halaman harga, serta simulator antrean.
 Mendukung layar mobile dan navigasi keyboard, dengan tema terang mengikuti desain Stitch.
 
 Repo ini hanya berisi website pemasaran. Backend Go, Redis, dashboard admin,
@@ -18,9 +18,19 @@ Halaman `/harga` mengikuti **Antosan-harga** dari MCP Google Stitch:
 - Diambil pada 14 September 2026.
 
 Palet resmi deep teal–warm ivory, Plus Jakarta Sans, dan JetBrains Mono
-mengikuti screen tersebut dan `tokens.css`. Beranda memuat empat bagian:
-pengantar dengan demo kecil, manfaat, cara kerja, dan ajakan memilih paket.
-Detail add-on dibuka dengan disclosure bawaan browser di halaman Harga.
+mengikuti screen tersebut dan `tokens.css`. Beranda mempertahankan ilustrasi
+gerbang dan inti pengenalan produk dari landing page arsitektur sebelumnya.
+Pilihan audiens di bagian atas mengubah penjelasan yang ditampilkan:
+
+- **Bisnis / Non-tech** (default): pengertian produk, contoh penggunaan,
+  manfaat, tampilan ruang tunggu, cara kerja, dan demo sederhana.
+- **Teknis / Tech** (`/?audience=tech`): reverse proxy/edge connector, detail
+  antrean dan kontrol akses, serta simulator arsitektur lengkap.
+
+Keduanya dilanjutkan ringkasan harga, FAQ sesuai audiens, dan kontak.
+Pilihan disimpan di URL agar bertahan saat refresh dan dapat dibagikan.
+Navigasi dalam beranda mempertahankan pilihan tersebut.
+Detail paket dan add-on tetap berada di halaman Harga.
 
 Harga dan batas komersial dikelola di `src/siteConfig.js`:
 
@@ -58,7 +68,8 @@ verifikasi; tidak menganggap lonjakan trafik biasa sebagai bot.
 
 Log, kode VIP, serta angka pada contoh ruang tunggu adalah ilustrasi lokal.
 Tidak ada pengiriman trafik, penerbitan token akses, atau API backend.
-Simulator lengkap berada di `/simulasi`; demo sederhana ada di beranda.
+Simulator lengkap tersedia di mode Tech dan `/simulasi`; demo sederhana
+ditampilkan pada mode Bisnis / Non-tech.
 
 ## Menjalankan lokal
 
@@ -140,7 +151,7 @@ menautkan pengunjung langsung ke spesifikasi protokol connector.
 ## Struktur
 
 - `src/LandingPage.jsx`: entry komponen halaman; mempertahankan model antrean dan komponen bersama.
-- `src/StitchPage.jsx`: beranda ringkas.
+- `src/StitchPage.jsx`: pilihan audiens, pengenalan produk, mode bisnis/teknis, dan ringkasan harga.
 - `src/PricingPage.jsx`: paket, Event Pack, add-on, dan kontak.
 - `src/SimulationPage.jsx`: halaman simulator lengkap.
 - `src/SiteLayout.jsx`: header, footer, dan navigasi bersama.

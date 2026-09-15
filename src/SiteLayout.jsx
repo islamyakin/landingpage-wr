@@ -44,9 +44,10 @@ export function Action({ children, href, secondary = false, onClick }) {
 export default function SiteLayout({ children, page = "home" }) {
   const [open, setOpen] = useState(false);
   const toggle = useRef(null);
+  const home = page === "home" ? "" : "/";
   const links = [
-    ["/#produk", "Produk"],
-    ["/#cara-kerja", "Cara kerja"],
+    [`${home}#produk`, "Produk"],
+    [`${home}#cara-kerja`, "Cara kerja"],
     ["/harga", "Harga"],
     ["/simulasi", "Simulasi"],
   ];

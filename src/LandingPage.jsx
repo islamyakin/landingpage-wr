@@ -441,7 +441,7 @@ function Integrations() {
                 ))}
               </ul>
               {key === "connector" ? (
-                <a className="lp-text-link" href={siteConfig.subscribeUrl}>
+                <a className="lp-text-link" href="/harga#berlangganan">
                   Tanyakan pemasangan connector
                   <Icon name="arrow" size={17} />
                 </a>
@@ -1091,5 +1091,5 @@ export function GatewayLandingPage() {
 }
 
 export default function LandingPage() {
-  return <StitchPage queueDemo={<QueueDemo />} />;
+  return <StitchPage queueDemo={<QueueDemo />} faqs={faqs} integrations={<Integrations />} />;
 }
