@@ -13,7 +13,6 @@ const SHEETS = [
   "tokens.css",
   "src/tokens.css",
   "src/stitch.css",
-  "src/marketing.css",
   "src/landing.css",
   "src/redesign.css",
   "src/gateway.css",

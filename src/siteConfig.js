@@ -19,125 +19,6 @@ const subscribeBody = [
   "Terima kasih.",
 ].join("\n");
 
-// Keep the chosen package/add-on in every supported email route.
-export function subscriptionLinks(selection = "") {
-  const body = selection
-    ? `${subscribeBody}\n\nPilihan: ${selection}`
-    : subscribeBody;
-  return {
-    mailtoUrl: `mailto:${contactEmail}?subject=${encodeURIComponent(subscribeSubject)}&body=${encodeURIComponent(body)}`,
-    gmailComposeUrl: `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(contactEmail)}&su=${encodeURIComponent(subscribeSubject)}&body=${encodeURIComponent(body)}`,
-    outlookComposeUrl: `https://outlook.live.com/mail/0/deeplink/compose?to=${encodeURIComponent(contactEmail)}&subject=${encodeURIComponent(subscribeSubject)}&body=${encodeURIComponent(body)}`,
-  };
-}
-
-// Source: Stitch Antosan-harga, screen 2d316818fa8e48d983ada4a7691c1e44.
-// Commercial package allowances, not the origin's active-visitor setting.
-export const pricingPlans = [
-  {
-    name: "Starter",
-    priceIDR: 2900000,
-    concurrentVisitors: 2000,
-    rooms: 2,
-    members: 3,
-    retentionDays: 14,
-    description: "Untuk flash sale, pendaftaran sekolah, dan acara komunitas.",
-  },
-  {
-    name: "Growth",
-    priceIDR: 6900000,
-    concurrentVisitors: 10000,
-    rooms: 10,
-    members: 10,
-    retentionDays: 60,
-    description:
-      "Untuk tiket konser, event lari, dan promosi dengan trafik besar.",
-  },
-  {
-    name: "Scale",
-    priceIDR: 21000000,
-    concurrentVisitors: 50000,
-    rooms: 25,
-    members: 25,
-    retentionDays: 90,
-    description:
-      "Untuk pendaftaran nasional, ujian massal, dan layanan finansial.",
-  },
-  {
-    name: "Enterprise",
-    priceIDR: null,
-    description:
-      "Kapasitas, SLA, dan pendampingan sesuai kebutuhan organisasi Anda.",
-  },
-];
-export const eventPack = {
-  name: "Event Pack",
-  priceIDR: 7500000,
-  concurrentVisitors: 25000,
-  days: 7,
-};
-export const pricingAddons = [
-  {
-    name: "Bot Defense",
-    priceIDR: 499000,
-    unit: "event",
-    icon: "shield",
-    description:
-      "Verifikasi tambahan dengan Turnstile, hCaptcha, dan Proof-of-Work.",
-  },
-  {
-    name: "Custom Branding",
-    priceIDR: 799000,
-    unit: "event",
-    icon: "globe",
-    description: "Gunakan domain dan logo sendiri, tanpa watermark Antosan.",
-  },
-  {
-    name: "Akses VIP",
-    priceIDR: 350000,
-    unit: "event",
-    icon: "members",
-    description:
-      "Jalur prioritas untuk sponsor, undangan, atau peserta presale.",
-  },
-  {
-    name: "Webhook",
-    priceIDR: 299000,
-    unit: "event",
-    icon: "activity",
-    description: "Kirim perubahan status antrean ke endpoint layanan Anda.",
-  },
-  {
-    name: "Adaptive Concurrency",
-    priceIDR: 699000,
-    unit: "event",
-    icon: "settings",
-    description:
-      "Sesuaikan laju masuk secara otomatis mengikuti kondisi origin.",
-  },
-  {
-    name: "Laporan & Ekspor",
-    priceIDR: 250000,
-    unit: "event",
-    icon: "clock",
-    description: "Unduh data CSV/JSON untuk evaluasi setelah acara.",
-  },
-  {
-    name: "Ruang Antrean",
-    priceIDR: 150000,
-    unit: "room",
-    icon: "rooms",
-    description: "Tambahkan ruang untuk subdomain atau jalur akses terpisah.",
-  },
-  {
-    name: "Anggota Tim",
-    priceIDR: 75000,
-    unit: "akun",
-    icon: "members",
-    description: "Tambahkan akses dashboard untuk anggota tim Anda.",
-  },
-];
-
 export const siteConfig = {
   name: "Antosan",
   url: "https://antosan.com/",
@@ -146,14 +27,26 @@ export const siteConfig = {
   // registered, so it is never the only route: the CTAs point at the
   // #berlangganan panel, which offers copy-to-clipboard and a webmail compose
   // link alongside this one.
-  ...subscriptionLinks(),
+  mailtoUrl: `mailto:${contactEmail}?subject=${encodeURIComponent(
+    subscribeSubject,
+  )}&body=${encodeURIComponent(subscribeBody)}`,
+  gmailComposeUrl:
+    "https://mail.google.com/mail/?view=cm&fs=1" +
+    `&to=${encodeURIComponent(contactEmail)}` +
+    `&su=${encodeURIComponent(subscribeSubject)}` +
+    `&body=${encodeURIComponent(subscribeBody)}`,
+  outlookComposeUrl:
+    "https://outlook.live.com/mail/0/deeplink/compose" +
+    `?to=${encodeURIComponent(contactEmail)}` +
+    `&subject=${encodeURIComponent(subscribeSubject)}` +
+    `&body=${encodeURIComponent(subscribeBody)}`,
   subscribeSubject,
   subscribeBody,
   // In-page anchor: a same-document link cannot fail to activate, unlike a
   // protocol handler.
   subscribeUrl: "#berlangganan",
   subscribeLabel: "Berlangganan per event",
-  dashboardUrl: dashboardUrl || "/simulasi",
+  dashboardUrl: dashboardUrl || "#simulasi",
   dashboardLabel: dashboardUrl ? "Buka dashboard" : "Coba simulasi",
   dashboardNavLabel: dashboardUrl ? "Dashboard" : "Simulasi",
   dashboardInlineLabel: dashboardUrl ? "Atur di dashboard" : "Lihat simulasi",
@@ -169,16 +62,26 @@ export const siteConfig = {
     : "Panduan integrasi",
 };
 
-// Compatibility fields used by the existing landing variants. Prices now
-// come from the requested Stitch screen; unspecified origin settings stay unset.
+// ---------------------------------------------------------------------------
+// Entry package, sold per event. Subscription is by email for now, so this is
+// the only published price point; anything larger is quoted.
+//
+// Every limit below must be something a room can actually enforce - the field
+// names map onto waitingroom/internal/model/model.go, so support can set the
+// room up to match exactly what was sold.
+//
+// `null` means "not decided yet" and the pricing card renders an honest
+// "harga belum dipublikasikan" state instead of inventing a figure. Fill these
+// in and the card starts showing real numbers with no other change needed.
+// ---------------------------------------------------------------------------
 export const entryPackage = {
-  name: pricingPlans[0].name,
+  name: "Event Starter",
   // Harga per event, dalam rupiah penuh (mis. 2500000 untuk Rp 2.500.000).
-  priceIDR: pricingPlans[0].priceIDR,
+  priceIDR: null,
   // max_active - pengunjung aktif bersamaan di origin.
   maxActive: null,
   // Jumlah room aktif yang termasuk.
-  rooms: pricingPlans[0].rooms,
+  rooms: null,
   // Lama jendela event berlaku, dalam jam.
   eventWindowHours: null,
   // Tier challenge yang termasuk: "math" | "pow" | "turnstile" | "hcaptcha".
@@ -201,10 +104,9 @@ export function formatIDR(value) {
 export function entryPackageLimits(pkg = entryPackage) {
   const rows = [];
   if (typeof pkg.maxActive === "number")
-    rows.push(
-      `${pkg.maxActive.toLocaleString("id-ID")} pengunjung aktif bersamaan`,
-    );
-  if (typeof pkg.rooms === "number") rows.push(`${pkg.rooms} room aktif`);
+    rows.push(`${pkg.maxActive.toLocaleString("id-ID")} pengunjung aktif bersamaan`);
+  if (typeof pkg.rooms === "number")
+    rows.push(`${pkg.rooms} room aktif`);
   if (typeof pkg.eventWindowHours === "number")
     rows.push(`Jendela event ${pkg.eventWindowHours} jam`);
   if (Array.isArray(pkg.challengeTypes) && pkg.challengeTypes.length > 0)

@@ -2,10 +2,6 @@ import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import {
   siteConfig,
-  pricingPlans,
-  eventPack,
-  pricingAddons,
-  subscriptionLinks,
   entryPackage,
   entryPackagePriced,
   entryPackageLimits,
@@ -15,8 +11,9 @@ import {
 import { detailsToSend } from "./SubscribePanel.jsx";
 
 // ---------------------------------------------------------------------------
-// Published prices come from Stitch Antosan-harga. Contact stays email-based;
-// custom-contract pricing must not become a fake number or checkout.
+// Subscription is by email, and the entry package is the only published price
+// point. These lock the two things that must not go wrong: the address the CTA
+// points at, and the rule that an unset figure never renders as a number.
 // ---------------------------------------------------------------------------
 
 describe("subscription contact", () => {
@@ -118,10 +115,7 @@ describe("entry package never invents a figure", () => {
 });
 
 describe("the unpriced state reads as a quote, not as an unfinished page", () => {
-  const page = readFileSync(
-    new URL("./StitchPage.jsx", import.meta.url),
-    "utf8",
-  );
+  const page = readFileSync(new URL("./StitchPage.jsx", import.meta.url), "utf8");
 
   it("never tells visitors the price is undecided", () => {
     // "harga belum dipublikasikan" / "sedang difinalkan" is honest but it
@@ -167,73 +161,6 @@ describe("the price-led hero highlight", () => {
       expect(entryPriceHeadline(pkg)).not.toMatch(
         /termurah|paling murah|terbaik|termahal|no\.?\s*1/i,
       );
-    }
-  });
-});
-
-describe("Antosan-harga published pricing", () => {
-  it("preserves the source prices and commercial allowances", () => {
-    expect(
-      pricingPlans.map(
-        ({
-          name,
-          priceIDR,
-          concurrentVisitors,
-          rooms,
-          members,
-          retentionDays,
-        }) => [
-          name,
-          priceIDR,
-          concurrentVisitors,
-          rooms,
-          members,
-          retentionDays,
-        ],
-      ),
-    ).toEqual([
-      ["Starter", 2900000, 2000, 2, 3, 14],
-      ["Growth", 6900000, 10000, 10, 10, 60],
-      ["Scale", 21000000, 50000, 25, 25, 90],
-      ["Enterprise", null, undefined, undefined, undefined, undefined],
-    ]);
-    expect(eventPack).toMatchObject({
-      priceIDR: 7500000,
-      concurrentVisitors: 25000,
-      days: 7,
-    });
-    expect(entryPackage.priceIDR).toBe(pricingPlans[0].priceIDR);
-    expect(entryPackage.maxActive).toBeNull();
-  });
-
-  it("keeps per-event add-ons separate from per-room and per-account rates", () => {
-    expect(
-      pricingAddons.map(({ name, priceIDR, unit }) => [name, priceIDR, unit]),
-    ).toEqual([
-      ["Bot Defense", 499000, "event"],
-      ["Custom Branding", 799000, "event"],
-      ["Akses VIP", 350000, "event"],
-      ["Webhook", 299000, "event"],
-      ["Adaptive Concurrency", 699000, "event"],
-      ["Laporan & Ekspor", 250000, "event"],
-      ["Ruang Antrean", 150000, "room"],
-      ["Anggota Tim", 75000, "akun"],
-    ]);
-  });
-
-  it("encodes the chosen package or add-on intact in all email routes", () => {
-    for (const choice of [
-      "Growth · Rp 6.900.000 / event",
-      "Laporan & Ekspor · Rp 250.000 / event",
-      "Enterprise · penawaran khusus",
-    ]) {
-      for (const link of Object.values(subscriptionLinks(choice))) {
-        const url = new URL(link);
-        expect(url.searchParams.get("body")).toBe(
-          `${siteConfig.subscribeBody}\n\nPilihan: ${choice}`,
-        );
-        expect(url.searchParams.has("Ekspor")).toBe(false);
-      }
     }
   });
 });

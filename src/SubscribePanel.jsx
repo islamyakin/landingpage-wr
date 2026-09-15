@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Icon from "./Icon.jsx";
-import { siteConfig, subscriptionLinks } from "./siteConfig.js";
+import { siteConfig } from "./siteConfig.js";
 
 // The conversion path has to survive a visitor with no mail client. A bare
 // `mailto:` link does nothing at all in that case - no error, no new window -
@@ -40,8 +40,7 @@ async function copyText(text) {
   }
 }
 
-export default function SubscribePanel({ selection = "" }) {
-  const links = subscriptionLinks(selection);
+export default function SubscribePanel() {
   const [copied, setCopied] = useState("idle");
   const timer = useRef(null);
 
@@ -65,14 +64,9 @@ export default function SubscribePanel({ selection = "" }) {
           <span className="st-kicker">Berlangganan</span>
           <h2 id="subscribe-title">Kirim detail event Anda.</h2>
           <p>
-            Ceritakan rencana acara Anda. Kami bantu memastikan paket dan
-            kebutuhan sebelum menyiapkan ruang antrean.
+            Langganan diatur langsung lewat email. Kami balas dengan harga per
+            event dan menyiapkan room-nya untuk Anda.
           </p>
-          {selection && (
-            <p className="st-selected-package" role="status">
-              Pilihan Anda: <strong>{selection}</strong>
-            </p>
-          )}
           <p className="st-subscribe-detail-label">
             Sertakan ini supaya kami bisa langsung menghitung:
           </p>
@@ -88,7 +82,9 @@ export default function SubscribePanel({ selection = "" }) {
         <div className="st-subscribe-actions">
           <span className="st-subscribe-label">Alamat email kami</span>
           <p className="st-subscribe-address">
-            <a href={links.mailtoUrl}>{siteConfig.contactEmail}</a>
+            <a href={`mailto:${siteConfig.contactEmail}`}>
+              {siteConfig.contactEmail}
+            </a>
           </p>
           <button
             type="button"
@@ -112,7 +108,7 @@ export default function SubscribePanel({ selection = "" }) {
           <div className="st-subscribe-links">
             <a
               className="st-button st-button-secondary"
-              href={links.gmailComposeUrl}
+              href={siteConfig.gmailComposeUrl}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -121,14 +117,17 @@ export default function SubscribePanel({ selection = "" }) {
             </a>
             <a
               className="st-button st-button-secondary"
-              href={links.outlookComposeUrl}
+              href={siteConfig.outlookComposeUrl}
               target="_blank"
               rel="noopener noreferrer"
             >
               Tulis di Outlook
               <Icon name="arrow" size={17} />
             </a>
-            <a className="st-button st-button-secondary" href={links.mailtoUrl}>
+            <a
+              className="st-button st-button-secondary"
+              href={siteConfig.mailtoUrl}
+            >
               Aplikasi email saya
               <Icon name="arrow" size={17} />
             </a>
